@@ -1,0 +1,47 @@
+var courses = require('./mongodb.json');
+
+console.log(courses[0].teachers[0].course.courseTypes[0].schedules[0].testingDays);
+
+Utiliser une form avec fields label:value et bouton
+dropdown/Modifier/Nouveau
+Sauvegarder/Delete
+
+la liste des fields s auto popule avec un array.
+ fields =  [{
+    labelName : "",
+    varName: "",
+    defaultValue : "",
+  }]
+  ApiCreate = "/api/..."
+  ApiReplace = '/api/...'
+  ApiUpdate = "/api/..."
+  ApiDelete = "/api/..."
+
+child = < Component /> (show/hide)
+
+
+Courses : []
+  Teachers : []
+    each teacher is independant from the other courses
+    add a picture of teacher
+    course : 
+      add posibility of many pics/course
+      courseTypes : []
+        schedules : []
+          testingDays : []
+
+
+Ajout de commentaires
+  Recoit une notification dans l'admin.
+New feed, en slide...
+
+
+
+
+
+
+
+
+
+
+
