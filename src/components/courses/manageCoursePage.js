@@ -28,8 +28,7 @@ var ManageCoursePage = React.createClass({
 	},
 
 	componentWillMount: function() {
-		//var courseId = this.props.params.id; //from the path '/course:id'
-		var courseId = '1'; //from the path '/course:id'
+		var courseId = this.props.params.id; //from the path '/course:id'
 
 		if (courseId) {
 			this.setState({course: CourseApi.getCourseById(courseId) });
