@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Input = require('../common/textInput');
+var BtnDropdown = require('../common/btnDropdown');
 
 var CourseForm = React.createClass({
 	propTypes: {
@@ -23,6 +24,8 @@ var CourseForm = React.createClass({
 					error={this.props.errors.name} />
 
 				<input type="submit" value="Save" className="btn btn-default" onClick={this.props.onSave} />
+
+				<BtnDropdown />
 			</form>
 		);
 	}

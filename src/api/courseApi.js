@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 //This would be performed on the server in a real app. Just stubbing in.
 var _generateId = function(course) {
-	return course.firstName.toLowerCase() + '-' + course.lastName.toLowerCase();
+	return course.name.toLowerCase();
 };
 
 var CourseApi = {
