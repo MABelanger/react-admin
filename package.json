@@ -1,5 +1,5 @@
 {
-  "name": "react-admin",
+  "name": "react_",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,11 +14,12 @@
     "gulp-eslint": "^1.1.1",
     "gulp-open": "^1.0.0",
     "jquery": "^2.2.0",
+    "lodash": "^4.6.1",
     "radium": "^0.16.6",
     "react": "^0.13.3",
-    "react-bootstrap": "^0.28.3",
     "react-router": "^0.13.3",
     "reactify": "^1.1.1",
+    "toastr": "^2.1.2",
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {

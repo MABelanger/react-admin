@@ -3,8 +3,8 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = require('react-router').Link;
-var CourseApi = require('../../api/courseApi');
-var CourseList = require('./courseList');
+var CourseApi = require('../api/courseApi');
+
 
 var CoursePage = React.createClass({
 	getInitialState: function() {
@@ -24,7 +24,6 @@ var CoursePage = React.createClass({
 			<div>
 				<h1>Courses</h1>
 				<Link to="addCourse" className="btn btn-default">Add Course</Link>
-				<CourseList courses={this.state.courses} />
 			</div>
 		);
 	}

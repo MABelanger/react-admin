@@ -3,7 +3,7 @@
 var React = require('react');
 var Router = require('react-router');
 var CourseForm = require('./courseForm');
-var CourseApi = require('../../api/courseApi');
+var CourseApi = require('../api/courseApi');
 var toastr = require('toastr');
 
 var ManageCoursePage = React.createClass({

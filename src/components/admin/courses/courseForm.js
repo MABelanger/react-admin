@@ -12,6 +12,7 @@ var CourseForm = React.createClass({
 		errors: React.PropTypes.object
 	},
 
+
 	render: function() {
 		return (
 			<form>

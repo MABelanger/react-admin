@@ -11,7 +11,7 @@ React.render(<ManageCoursePage />, document.getElementById('app'));
 
 var React = require('react');
 var Router = require('react-router');
-var routes = require('./routes');
+var routes = require('./components/admin/routes');
 
 Router.run(routes, function(Handler) {
   React.render(<Handler/>, document.getElementById('app'));

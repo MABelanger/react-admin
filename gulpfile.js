@@ -14,24 +14,27 @@ var config = {
 	devBaseUrl: 'http://localhost',
 	paths: {
 		html: './src/*.html',
+
 		json: [
-				'./src/components/calendar/api/**/*.json',
+				'./src/components/admin/api/**/*.json',
 		],
+
 		js: './src/**/*.js',
+
 		css: [
 			'node_modules/bootstrap/dist/css/bootstrap.min.css',
 			'node_modules/toastr/build/toastr.css',
 			'./src/**/*.css',
 		],
 
-		scssSchedule: [
-			'./src/components/calendar/schedule/sass/**/*.scss',
-		],
 		scssCourses: [
-			'./src/components/calendar/courses/sass/**/*.scss',
+			'./src/components/admin/courses/sass/**/*.scss',
 		],
+
 		src: './src',
+
 		dist: './dist',
+
 		mainJs: './src/main.js'
 
 	}
@@ -73,18 +76,11 @@ gulp.task('json', function() {
 		.pipe(connect.reload());
 });
 
-gulp.task('scssSchedule', function () {
-  return gulp.src(config.paths.scssSchedule)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(concat('schedule.css'))
-    .pipe(gulp.dest(config.paths.src + '/components/calendar/schedule/sass/css'));
-});
-
 gulp.task('scssCourses', function () {
   return gulp.src(config.paths.scssCourses)
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('courses.css'))
-    .pipe(gulp.dest(config.paths.src + '/components/calendar/courses/sass/css'));
+    .pipe(gulp.dest(config.paths.src + '/components/admin/courses/sass/css'));
 });
 
 gulp.task('css', function() {
@@ -103,11 +99,10 @@ return gulp.src(config.paths.js)
 gulp.task('watch', function(){
 	gulp.watch(config.paths.html, ['html']);
 	gulp.watch(config.paths.json, ['json']);
-	gulp.watch(config.paths.scssSchedule, ['scssSchedule']);
 	gulp.watch(config.paths.scssCourses, ['scssCourses']);
 	gulp.watch(config.paths.css, ['css']);
 	gulp.watch(config.paths.js, ['js', 'lint']);
 	
 });
 
-gulp.task('default', ['html', 'json', 'js', 'scssSchedule', 'scssCourses', 'css', 'lint', 'open', 'watch']);
+gulp.task('default', ['html', 'json', 'js', 'scssCourses', 'css', 'lint', 'open', 'watch']);
