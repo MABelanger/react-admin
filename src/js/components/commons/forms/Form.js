@@ -4,17 +4,16 @@ import Dropdown                   from "../dropdown/Dropdown";
 import Request                    from "superagent";
 
 
-var colours = [{
-    name: "Red",
-    hex: "#F21B1B"
-}, {
-    name: "Blue",
-    hex: "#1B66F2"
-}, {
-    name: "Green",
-    hex: "#07BA16"
-}];
-
+var list = [
+  {
+    name : "yoga",
+    link : "#yoga"
+  },
+  {
+    name : "meditation",
+    link : "#meditation"
+  }
+];
 
 
 export default class Form extends React.Component {
@@ -22,7 +21,17 @@ export default class Form extends React.Component {
     super(props);
     this.state = {
       courses: [],
-      course: {}
+      course: {},
+      list:[
+        {
+          name : "yoga",
+          link : "#yoga"
+        },
+        {
+          name : "meditation",
+          link : "#meditation"
+        }
+      ]
     };
   }
 
@@ -49,7 +58,7 @@ export default class Form extends React.Component {
   render() {
     return (
       <div>
-        <Dropdown list={colours} selected={colours[0]} />
+        <Dropdown list={this.state.list} />
         <TextInput
           name="name"
           label="Nom"

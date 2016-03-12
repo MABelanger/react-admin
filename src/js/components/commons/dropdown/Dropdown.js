@@ -6,18 +6,17 @@ import './styles.css';
 
 export default class Dropdown extends React.Component {
 
-
-
   constructor(props) {
     super(props);
     this.state = {
       open: false
     };
-    // bind the function to this that is not Autobinding with class
+    // bind the functions to this because is not Autobinding with class es6
     this.toogleDropDown = this.toogleDropDown.bind(this);
     this.blurDropDown = this.blurDropDown.bind(this);
     this.mouseEnterMenu = this.mouseEnterMenu.bind(this);
     this.mouseLeaveMenu = this.mouseLeaveMenu.bind(this);
+    this.getRenderList = this.getRenderList.bind(this);
   }
 
 
@@ -37,9 +36,9 @@ export default class Dropdown extends React.Component {
 
   blurDropDown(e){
     e.preventDefault();
-    if(this.state.mouseEnterMenu){
-      console.log('Not close');
-    }else {
+    // if we are not in the menu and we blur the btn dropdown
+    // close the list.
+    if(! this.state.mouseEnterMenu){
       this.setState({ open: false });
     }
   }
@@ -56,14 +55,33 @@ export default class Dropdown extends React.Component {
     console.log('mouseLeaveMenu');
   }
 
+  getItem(name, link){
+    return(
+      <li>
+          <a href={link}>
+              {name}
+          </a>
+      </li>
+    );
+  }
 
+  getRenderList(list){
+    var items = [];
+    for (var index in list) {
+      var item = list[index];
+      items.push( this.getItem(item.name, item.link) );
+    }
+    return items;
+  }
 
   render() {
-
-    var btnGroup = ClassNames( this.props.className, {
+    var btnGroup = ClassNames(this.props.className, {
       'btn-group' : true,
       'open': ( this.state.open == true ),
-    } );
+    });
+
+    console.log(this.props.list)
+
     return (
       <div className={btnGroup}>
           <button 
@@ -82,11 +100,7 @@ export default class Dropdown extends React.Component {
             onMouseEnter={this.mouseEnterMenu}
             onMouseLeave={this.mouseLeaveMenu}
             onClick={this.toogleDropDown}>
-              <li>
-                  <a href="#">
-                      Danielle Fontaine
-                  </a>
-              </li>
+              {this.getRenderList( this.props.list )}
               <li>
                   <a href="#">
                       Sandra Duval
