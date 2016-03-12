@@ -13,8 +13,11 @@ export default class Dropdown extends React.Component {
     this.state = {
       open: false
     };
-    // bind the toogleDropDown
+    // bind the function to this that is not Autobinding with class
     this.toogleDropDown = this.toogleDropDown.bind(this);
+    this.blurDropDown = this.blurDropDown.bind(this);
+    this.mouseEnterMenu = this.mouseEnterMenu.bind(this);
+    this.mouseLeaveMenu = this.mouseLeaveMenu.bind(this);
   }
 
 
@@ -27,9 +30,32 @@ export default class Dropdown extends React.Component {
 
   }
 
-  toogleDropDown(){
+  toogleDropDown(e){
+    e.preventDefault();
     this.setState({ open: !this.state.open });
   }
+
+  blurDropDown(e){
+    e.preventDefault();
+    if(this.state.mouseEnterMenu){
+      console.log('Not close');
+    }else {
+      this.setState({ open: false });
+    }
+  }
+
+  mouseEnterMenu(e){
+    e.preventDefault();
+    this.setState({ mouseEnterMenu: true });
+    console.log('mouseEnterMenu');
+  }
+
+  mouseLeaveMenu(e){
+    e.preventDefault();
+    this.setState({ mouseEnterMenu: false });
+    console.log('mouseLeaveMenu');
+  }
+
 
 
   render() {
@@ -43,20 +69,26 @@ export default class Dropdown extends React.Component {
           <button 
             type="button"
             className="btn dropdown-toggle btn-info"
-            onClick={this.toogleDropDown}>
+            onClick={this.toogleDropDown}
+            onBlur={this.blurDropDown}>
               <span>
                   Enseignants...
               </span>
               <span className="caret"></span>
           </button>
-          <ul className="dropdown-menu" role="menu">
+          <ul 
+            className="dropdown-menu"
+            role="menu"
+            onMouseEnter={this.mouseEnterMenu}
+            onMouseLeave={this.mouseLeaveMenu}
+            onClick={this.toogleDropDown}>
               <li>
-                  <a href="" ng-click="selectTeacher(teacherOpt)" className="ng-binding">
+                  <a href="#">
                       Danielle Fontaine
                   </a>
               </li>
               <li>
-                  <a href="" ng-click="selectTeacher(teacherOpt)" className="ng-binding">
+                  <a href="#">
                       Sandra Duval
                   </a>
               </li>
