@@ -21,7 +21,6 @@ export default class Layout extends React.Component {
   }
 
   render() {
-    alert('toto bibi')
     return (
       <div>
         <div className="hello-form">
