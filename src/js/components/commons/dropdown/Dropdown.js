@@ -9,7 +9,8 @@ export default class Dropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      dirty: false
     };
     // bind the functions to this because is not Autobinding with class es6
     this.toogleDropDown = this.toogleDropDown.bind(this);
@@ -19,11 +20,6 @@ export default class Dropdown extends React.Component {
     this.getRenderList = this.getRenderList.bind(this);
   }
 
-
-
-  select(item) {
-      this.props.selected = item;
-  }
 
   componentWillMount() {
 
@@ -55,10 +51,14 @@ export default class Dropdown extends React.Component {
     console.log('mouseLeaveMenu');
   }
 
+  clickedItem(link, e){
+    console.log('go to link', link);
+  }
+
   getItem(name, link){
     return(
       <li>
-          <a href={link}>
+          <a href={link} onClick={this.clickedItem.bind(this, link)}>
               {name}
           </a>
       </li>
@@ -80,8 +80,6 @@ export default class Dropdown extends React.Component {
       'open': ( this.state.open == true ),
     });
 
-    console.log(this.props.list)
-
     return (
       <div className={btnGroup}>
           <button 
@@ -101,11 +99,6 @@ export default class Dropdown extends React.Component {
             onMouseLeave={this.mouseLeaveMenu}
             onClick={this.toogleDropDown}>
               {this.getRenderList( this.props.list )}
-              <li>
-                  <a href="#">
-                      Sandra Duval
-                  </a>
-              </li>
           </ul>
       </div>
     );
