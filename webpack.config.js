@@ -20,7 +20,16 @@ module.exports = {
       {
           test: /\.scss$/,
           loaders: ['style', 'css', 'sass']
-      }
+      },
+
+      // https://github.com/theodybrothers/webpack-bootstrap
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      // the url-loader uses DataUrls. 
+      // the file-loader emits files. 
+      { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf$/,    loader: "file-loader" },
+      { test: /\.eot$/,    loader: "file-loader" },
+      { test: /\.svg$/,    loader: "file-loader" }
     ]
   },
   output: {
