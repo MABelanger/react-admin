@@ -3,6 +3,10 @@ import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 
+
+require('../../sass/HelloForm.scss');
+
+
 export default class Layout extends React.Component {
   constructor() {
     super();
@@ -16,8 +20,15 @@ export default class Layout extends React.Component {
   }
 
   render() {
+    alert('toto bibi')
     return (
       <div>
+        <div className="hello-form">
+          <p>
+            toto 3
+          </p>
+        </div>
+
         <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title} />
         <Footer />
       </div>
