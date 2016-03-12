@@ -25,6 +25,7 @@
     "react-dom": "^0.14.6",
     "react-router": "^1.0.3",
     "style-loader": "^0.13.0",
+    "superagent": "^1.8.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.1"
