@@ -42,15 +42,11 @@ export default class Form extends React.Component {
 
   }
 
-  changeName(name, value) {
-    this.state.course.name = value;
-    this.setState({ course:  this.state.course });
-  }
 
   render() {
     return (
       <div>
-        <CourseNameSection list={this.state.courses} />
+        <CourseNameSection courses={this.state.courses} />
       </div>
     );
   }

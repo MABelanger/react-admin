@@ -1,6 +1,7 @@
 import React                      from "react";
 import TextInput                  from "../commons/TextInput";
-import SectionTop                   from "../commons/sectionTop/SectionTop";
+import SectionTop                 from "../commons/sectionTop/SectionTop";
+import courseApi                  from "../../api/coursesApi";
 
 export default class Form extends React.Component {
   constructor(props) {
@@ -15,10 +16,14 @@ export default class Form extends React.Component {
     this.setState({ course:  this.state.course });
   }
 
+  currentSelection(course){
+    this.state.course = course;
+  }
+
   render() {
     return (
       <div className="container">
-        <SectionTop list={this.props.list} />
+        <SectionTop list={this.props.courses} title="Noms de cours" currentSelection=""/>
         <TextInput
           name="name"
           label="Nom"

@@ -20,11 +20,6 @@ export default class Dropdown extends React.Component {
     this.getRenderList = this.getRenderList.bind(this);
   }
 
-
-  componentWillMount() {
-
-  }
-
   toogleDropDown(e){
     e.preventDefault();
     this.setState({ open: !this.state.open });
@@ -88,7 +83,7 @@ export default class Dropdown extends React.Component {
             onClick={this.toogleDropDown}
             onBlur={this.blurDropDown}>
               <span>
-                  Enseignants...
+                  {this.props.label}...
               </span>
               <span className="caret"></span>
           </button>
