@@ -1,59 +1,29 @@
 import React                      from "react";
-import TextInput                  from "./TextInput";
-import Dropdown                   from "../dropdown/Dropdown";
-import Request                    from "superagent";
+import Dropdown                   from "./dropdown/Dropdown";
 
-
-var list = [
-  {
-    name : "yoga",
-    link : "#yoga"
-  },
-  {
-    name : "meditation",
-    link : "#meditation"
-  }
-];
-
-
-export default class Form extends React.Component {
+export default class SectionTop extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      courses: [],
-      course: {},
-      list:[
-        {
-          name : "yoga",
-          link : "#yoga"
-        },
-        {
-          name : "meditation",
-          link : "#meditation"
-        }
-      ]
-    };
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
-    var URL = 'http://localhost:3000/api/courses';
-    //var URL = 'http://www.omdbapi.com/?s=toto';
-    Request
-    .get(URL, function(err, res){
-      console.log(res.body[0])
-      this.setState({
-        courses: res.body,
-        course: res.body[0]
-      });
-    }.bind(this));
   }
 
   render() {
     return (
-      <div>
-        <Dropdown list={this.state.list} />
+      <div className="row">
+        <div className="col-xs-offset-2 col-xs-10">
+          <div className="btn-toolbar">
+            <Dropdown list={this.props.list} />
+            <button className="btn btn-info" type="button">
+              Modifier
+            </button>
+            <button className="btn btn-info" ng-click="newDaySchedule()">
+              Nouveau
+            </button>
+          </div>
+        </div>
+      </div>
     );
   }
 }
-

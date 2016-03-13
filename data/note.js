@@ -1,3 +1,6 @@
+http://derpturkey.com/react-pass-value-with-onclick/
+https://toddmotto.com/react-create-class-versus-component/
+
 var testingDaysSchema = new Schema({
   "slug" : String,
   "day": Date,

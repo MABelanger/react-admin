@@ -1,6 +1,6 @@
 import React                      from "react";
 import TextInput                  from "./components/commons/TextInput";
-import Dropdown                   from "./components/commons/sectionTop/dropdown/Dropdown";
+import SectionTop                   from "./components/commons/sectionTop/SectionTop";
 import Request                    from "superagent";
 
 
@@ -57,8 +57,8 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <div>
-        <Dropdown list={this.state.list} />
+      <div className="container">
+        <SectionTop list={this.state.list} />
         <TextInput
           name="name"
           label="Nom"
