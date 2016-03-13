@@ -1,6 +1,7 @@
 import React                      from "react";
 import TextInput                  from "./components/commons/TextInput";
-import SectionTop                   from "./components/commons/sectionTop/SectionTop";
+import SectionTop                 from "./components/commons/sectionTop/SectionTop";
+import CourseNameSection          from "./components/sections/CourseNameSection";
 import Request                    from "superagent";
 
 
@@ -22,16 +23,7 @@ export default class Form extends React.Component {
     this.state = {
       courses: [],
       course: {},
-      list:[
-        {
-          name : "yoga",
-          link : "#yoga"
-        },
-        {
-          name : "meditation",
-          link : "#meditation"
-        }
-      ]
+      list:list
     };
   }
 
@@ -57,14 +49,8 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <SectionTop list={this.state.list} />
-        <TextInput
-          name="name"
-          label="Nom"
-          value={this.state.course.name}
-          changeValue={this.changeName.bind(this)}
-          />
+      <div>
+        <CourseNameSection list={this.state.courses} />
       </div>
     );
   }
