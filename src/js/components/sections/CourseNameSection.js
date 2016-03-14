@@ -1,7 +1,6 @@
 import React                      from "react";
 import TextInput                  from "../commons/TextInput";
 import SectionTop                 from "../commons/sectionTop/SectionTop";
-import courseApi                  from "../../api/coursesApi";
 
 export default class Form extends React.Component {
   constructor(props) {

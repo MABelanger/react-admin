@@ -1,9 +1,11 @@
 import React                      from "react";
+import Request                    from "superagent";
+
+
 import TextInput                  from "./components/commons/TextInput";
 import SectionTop                 from "./components/commons/sectionTop/SectionTop";
 import CourseNameSection          from "./components/sections/CourseNameSection";
-import Request                    from "superagent";
-
+var coursesApi =                  require("./api/coursesApi");
 
 var list = [
   {
@@ -28,20 +30,10 @@ export default class Form extends React.Component {
   }
 
   componentWillMount() {
-    console.log('componentWillMount');
-    var URL = 'http://localhost:3000/api/courses';
-    //var URL = 'http://www.omdbapi.com/?s=toto';
-    Request
-    .get(URL, function(err, res){
-      console.log(res.body[0])
-      this.setState({
-        courses: res.body,
-        course: res.body[0]
-      });
-    }.bind(this));
-
+    coursesApi.getAllCourses(courses => {
+      this.setState({'courses' : courses});
+    });
   }
-
 
   render() {
     return (

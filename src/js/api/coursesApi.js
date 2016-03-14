@@ -10,15 +10,11 @@ var _generateId = function(course) {
 };
 
 var CourseApi = {
-  getAllCourses: function() {
+  getAllCourses: function(callback) {
     Request
     .get(URL, function(err, res){
-      console.log(res.body[0])
-      this.setState({
-        courses: res.body,
-        course: res.body[0]
-      });
-    }.bind(this));
+      callback(res.body);
+    });
   },
 
   getCourseById: function(id) {
