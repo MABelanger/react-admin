@@ -9,12 +9,20 @@ var _generateId = function(course) {
   return course.name.toLowerCase();
 };
 
+
+
 var CourseApi = {
   getAllCourses: function(callback) {
     Request
     .get(URL, function(err, res){
       callback(res.body);
     });
+  },
+
+  getMenuCourseNames(courses){
+    for (var value of courses) {
+      console.log(value);
+    }
   },
 
   getCourseById: function(id) {

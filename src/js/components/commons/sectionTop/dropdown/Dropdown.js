@@ -64,7 +64,7 @@ export default class Dropdown extends React.Component {
     var items = [];
     for (var index in list) {
       var item = list[index];
-      items.push( this.getItem(item.name, item.link) );
+      items.push( this.getItem(item.name, item.slug) );
     }
     return items;
   }
