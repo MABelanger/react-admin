@@ -25,7 +25,7 @@ export default class Form extends React.Component {
     this.state = {
       courses: [],
       course: {},
-      list:list
+      list: list
     };
   }
 

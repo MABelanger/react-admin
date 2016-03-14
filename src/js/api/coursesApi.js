@@ -4,12 +4,13 @@ import Request                    from "superagent";
 
 const URL = 'http://localhost:3000/api/courses';
 
-//This would be performed on the server in a real app. Just stubbing in.
-var _generateId = function(course) {
-  return course.name.toLowerCase();
-};
+// TODO : change this module to object and constructor... es6.
 
+var _courses = [];
 
+var setCourses = function(courses){
+  _courses = courses;
+}
 
 var CourseApi = {
   getAllCourses: function(callback) {
@@ -25,8 +26,12 @@ var CourseApi = {
     }
   },
 
+  getCourseBySlug(slug){
+    return _.find(_courses, {slug: slug});
+  },
+
   getCourseById: function(id) {
-    return _.find(courses, {id: id});
+    return _.find(_courses, {id: id});
   },
   
   saveCourse: function(course) {

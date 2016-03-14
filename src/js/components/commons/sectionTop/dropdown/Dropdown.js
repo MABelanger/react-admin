@@ -13,11 +13,6 @@ export default class Dropdown extends React.Component {
       dirty: false
     };
     // bind the functions to this because is not Autobinding with class es6
-    this.toogleDropDown = this.toogleDropDown.bind(this);
-    this.blurDropDown = this.blurDropDown.bind(this);
-    this.mouseEnterMenu = this.mouseEnterMenu.bind(this);
-    this.mouseLeaveMenu = this.mouseLeaveMenu.bind(this);
-    this.getRenderList = this.getRenderList.bind(this);
   }
 
   toogleDropDown(e){
@@ -46,14 +41,14 @@ export default class Dropdown extends React.Component {
     console.log('mouseLeaveMenu');
   }
 
-  clickedItem(link, e){
+  clickedItem(link){
     console.log('go to link', link);
   }
 
   getItem(name, link){
     return(
       <li>
-          <a href={link} onClick={this.clickedItem.bind(this, link)}>
+          <a href={link} onClick={ (e) => { this.clickedItem(link); } }>
               {name}
           </a>
       </li>
@@ -80,8 +75,8 @@ export default class Dropdown extends React.Component {
           <button 
             type="button"
             className="btn dropdown-toggle btn-info"
-            onClick={this.toogleDropDown}
-            onBlur={this.blurDropDown}>
+            onClick={ (e) => { this.toogleDropDown(e); } }
+            onBlur={ (e) => { this.blurDropDown(e); } }>
               <span>
                   {this.props.label}...
               </span>
@@ -90,9 +85,9 @@ export default class Dropdown extends React.Component {
           <ul 
             className="dropdown-menu"
             role="menu"
-            onMouseEnter={this.mouseEnterMenu}
-            onMouseLeave={this.mouseLeaveMenu}
-            onClick={this.toogleDropDown}>
+            onMouseEnter={ (e) => { this.mouseEnterMenu(e); } }
+            onMouseLeave={ (e) => { this.mouseLeaveMenu(e); } }
+            onClick={ (e) => { this.toogleDropDown(e); } }>
               {this.getRenderList( this.props.list )}
           </ul>
       </div>

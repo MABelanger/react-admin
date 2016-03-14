@@ -22,7 +22,7 @@ export default class Form extends React.Component {
   render() {
     return (
       <div className="container">
-        <SectionTop list={this.props.courses} title="Noms de cours" currentSelection=""/>
+        <SectionTop list={this.props.courses} title="Noms de cours" currentSelection={this.currentSelection}/>
         <TextInput
           name="name"
           label="Nom"
