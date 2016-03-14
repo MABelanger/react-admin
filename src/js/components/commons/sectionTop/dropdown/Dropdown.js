@@ -41,15 +41,16 @@ export default class Dropdown extends React.Component {
     console.log('mouseLeaveMenu');
   }
 
-  clickedItem(link){
-    console.log('go to link', link);
+  clickedItem(item){
+    console.log('go to slug', item.slug);
+    this.props.currentSelection(item);
   }
 
-  getItem(name, link){
+  getItem(item){
     return(
       <li>
-          <a href={link} onClick={ (e) => { this.clickedItem(link); } }>
-              {name}
+          <a href="#" onClick={ (e) => { this.clickedItem(item); } }>
+              {item.name}
           </a>
       </li>
     );
@@ -59,7 +60,7 @@ export default class Dropdown extends React.Component {
     var items = [];
     for (var index in list) {
       var item = list[index];
-      items.push( this.getItem(item.name, item.slug) );
+      items.push( this.getItem(item) );
     }
     return items;
   }
