@@ -20,11 +20,13 @@ var CourseApi = {
     });
   },
 
+  /*
   getMenuCourseNames(courses){
     for (var value of courses) {
       console.log(value);
     }
   },
+  */
 
   getCourseBySlug(slug){
     return _.find(_courses, {slug: slug});
@@ -34,18 +36,12 @@ var CourseApi = {
     return _.find(_courses, {id: id});
   },
   
-  saveCourse: function(course) {
-    //pretend an ajax call to web api is made here
-    console.log('Pretend this just saved the course to the DB via AJAX call...');
-    
-    //Just simulating creation here.
-    //The server would generate ids for new courses in a real app.
-    if (!course.id) {
-      course.id = _generateId(course);
-      courses.push(course);
-    }
-
-    return course;
+  saveCourse: function(course, callback) {
+    request
+      .post(URL + '/' + course._id)
+      .send(course)
+      .set('Accept', 'application/json')
+      .end(callback(err, res));
   },
 
   deleteCourse: function(id) {

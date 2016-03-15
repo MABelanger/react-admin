@@ -1,8 +1,9 @@
 import React                      from "react";
-import Dropdown                   from "./dropdown/Dropdown";
-import BtnInfo                    from "../BtnInfo";
+import Dropdown                   from "../../commons/dropdown/Dropdown";
+import BtnInfo                    from "../../commons/BtnInfo";
 
-export default class SectionTop extends React.Component {
+export default class CtrlSelect extends React.Component {
+
   render() {
     return (
       <div className="row">

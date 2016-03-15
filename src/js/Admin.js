@@ -1,9 +1,4 @@
 import React                      from "react";
-import Request                    from "superagent";
-
-
-import TextInput                  from "./components/commons/TextInput";
-import SectionTop                 from "./components/commons/sectionTop/SectionTop";
 import CourseNameSection          from "./components/sections/CourseNameSection";
 var coursesApi =                  require("./api/coursesApi");
 
@@ -35,10 +30,14 @@ export default class Form extends React.Component {
     });
   }
 
+  saveCourse(err, res){
+    console.log('saveCourse', err, res);
+  }
+
   render() {
     return (
       <div>
-        <CourseNameSection courses={this.state.courses} />
+        <CourseNameSection courses={this.state.courses} save={this.saveCourse}/>
       </div>
     );
   }
