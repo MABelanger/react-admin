@@ -1,10 +1,8 @@
 import React                      from "react";
 import BtnInfo                    from "../../commons/BtnInfo";
-import BtnDanger                    from "../../commons/BtnDanger";
+import BtnDanger                  from "../../commons/BtnDanger";
 
 export default class CtrlSaveDel extends React.Component {
-
-
   render() {
     return (
       <div className="container">

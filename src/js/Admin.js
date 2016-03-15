@@ -30,14 +30,18 @@ export default class Form extends React.Component {
     });
   }
 
-  saveCourse(err, res){
-    console.log('saveCourse', err, res);
+  saveCourseNameSection(course){
+    console.log('saveCourse', course);
+
   }
 
   render() {
     return (
       <div>
-        <CourseNameSection courses={this.state.courses} save={this.saveCourse}/>
+        <CourseNameSection
+          courses={this.state.courses}
+          save={this.saveCourseNameSection}
+        />
       </div>
     );
   }
