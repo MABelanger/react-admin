@@ -45,9 +45,10 @@ export default class Form extends React.Component {
     };
   } 
 
-  setCurrentCourse(course){
+  setCourse(course){
     this.setState({ course: course });
     console.log(course);
+
   }
 
   onSave(){
@@ -69,7 +70,8 @@ export default class Form extends React.Component {
         <CtrlSelect
           list={this.props.courses}
           title="Noms de cours"
-          currentSelection={ this.setCurrentCourse.bind(this) }
+          onSelect={ this.setCourse.bind(this) }
+          value = { this.state.course.name }
         />
 
         <CtrlInput ref="ctrlInput" />

@@ -41,15 +41,14 @@ export default class Dropdown extends React.Component {
     console.log('mouseLeaveMenu');
   }
 
-  clickedItem(item){
-    console.log('go to slug', item.slug);
-    this.props.currentSelection(item);
+  onSelect(item){
+    this.props.onSelect(item);
   }
 
   getItem(item){
     return(
       <li>
-          <a href="#" onClick={ (e) => { this.clickedItem(item); } }>
+          <a href="#" onClick={ (e) => { this.onSelect(item); } }>
               {item.name}
           </a>
       </li>
@@ -63,6 +62,14 @@ export default class Dropdown extends React.Component {
       items.push( this.getItem(item) );
     }
     return items;
+  }
+
+  getValue(){
+    if(this.props.value){
+      return this.props.value;
+    }else {
+      return this.props.label + "...";
+    }
   }
 
   render() {
@@ -79,8 +86,9 @@ export default class Dropdown extends React.Component {
             onClick={ (e) => { this.toogleDropDown(e); } }
             onBlur={ (e) => { this.blurDropDown(e); } }>
               <span>
-                  {this.props.label}...
+                  {this.getValue()}
               </span>
+              &nbsp;
               <span className="caret"></span>
           </button>
           <ul 
