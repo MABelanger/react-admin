@@ -37,11 +37,12 @@ var CourseApi = {
   },
   
   saveCourse: function(course, callback) {
-    request
-      .post(URL + '/' + course._id)
+    Request
+      .put(URL + '/' + course._id)
+      .accept('application/json')
+      .type('application/json')
       .send(course)
-      .set('Accept', 'application/json')
-      .end(callback(err, res));
+      .end(callback);
   },
 
   deleteCourse: function(id) {

@@ -30,9 +30,13 @@ export default class Form extends React.Component {
     });
   }
 
+
+
   saveCourseNameSection(course){
     console.log('saveCourse', course);
-
+    coursesApi.saveCourse(course, function(err, res) {
+      console.log('err, res', err, res)
+    });
   }
 
   render() {
