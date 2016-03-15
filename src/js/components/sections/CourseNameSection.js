@@ -10,11 +10,13 @@ export default class Form extends React.Component {
     };
   }
 
-  changeName(e) {
-    var value = this.refs.name.value;
-    course = this.state.course;
+  changeName(name, value) {
+
+    var course = this.state.course;
     course.name = value;
     this.setState({ course: course });
+    console.log(course);
+    debugger;
   }
 
   setCurrentCourse(course){
@@ -32,9 +34,9 @@ export default class Form extends React.Component {
         <TextInput
           name="name"
           label="Nom"
+          ref="txtInput"
           value={this.state.course.name}
-          ref="name"
-          changeValue={ (e) => { this.changeName(e); } }
+          changeValue={ (name, value) => { this.changeName(name, value); } }
           />
       </div>
     );
