@@ -15,7 +15,9 @@ class CtrlInput extends React.Component {
 
   changeName(name, value) {
     this.state.courseName = value;
-    this.setState({ courseName: this.state.courseName });
+    this.setState({ 
+      courseName: this.state.courseName
+    });
   }
 
   getCourseName(){
@@ -24,7 +26,6 @@ class CtrlInput extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps');
     this.setState({
       courseName: nextProps.course.name
     });
@@ -55,18 +56,27 @@ export default class Form extends React.Component {
 
   onSelect(course){
     this.setState({ course: course });
-    console.log(course);
-
-
   }
 
-  onSave(){
+  onSave(e){
     console.log('onSave');
     //console.log('this.refs', this.refs.ctrlInput.refs.courseName.refs.courseName.value);
     let courseName = this.refs.ctrlInput.getCourseName();
     this.state.course.name = courseName;
     this.setState({course: this.state.course })
-    this.props.save(this.state.course);
+
+    if(this.state.course._id) {
+      this.props.onSave(this.state.course);
+    }
+    else{
+      this.props.onCreate(this.state.course);
+    }
+  }
+
+  onCreate(){
+    console.log('onCreate')
+    let course = {};
+    this.setState({course: course });
   }
 
   onDelete(){
@@ -80,14 +90,15 @@ export default class Form extends React.Component {
           list={this.props.courses}
           title="Noms de cours"
           onSelect={ this.onSelect.bind(this) }
+          onCreate={ this.onCreate.bind(this) }
           value = { this.state.course.name }
         />
 
         <CtrlInput ref="ctrlInput" course={this.state.course} />
 
         <CtrlSaveDel
-          save={this.onSave.bind(this)}
-          delete={this.onDelete.bind(this)}
+          onSave={ (e)=>{ this.onSave(e); } }
+          onDelete={this.onDelete.bind(this)}
         />
       </div>
     );

@@ -30,11 +30,16 @@ export default class Form extends React.Component {
     });
   }
 
-
-
-  saveCourseNameSection(course){
+  onSave(course){
     console.log('saveCourse', course);
     coursesApi.saveCourse(course, function(err, res) {
+      console.log('err, res', err, res)
+    });
+  }
+
+  onCreate(course){
+    console.log('createCourse', course);
+    coursesApi.createCourse(course, function(err, res) {
       console.log('err, res', err, res)
     });
   }
@@ -44,7 +49,8 @@ export default class Form extends React.Component {
       <div>
         <CourseNameSection
           courses={this.state.courses}
-          save={this.saveCourseNameSection}
+          onSave={this.onSave}
+          onCreate={this.onCreate}
         />
       </div>
     );
