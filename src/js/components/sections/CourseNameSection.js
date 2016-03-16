@@ -22,6 +22,14 @@ class CtrlInput extends React.Component {
     return this.state.courseName;
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps');
+    this.setState({
+      courseName: nextProps.course.name
+    });
+  }
+
   render() {
     return (
         <TextInput
@@ -45,9 +53,10 @@ export default class Form extends React.Component {
     };
   } 
 
-  setCourse(course){
+  onSelect(course){
     this.setState({ course: course });
     console.log(course);
+
 
   }
 
@@ -70,11 +79,11 @@ export default class Form extends React.Component {
         <CtrlSelect
           list={this.props.courses}
           title="Noms de cours"
-          onSelect={ this.setCourse.bind(this) }
+          onSelect={ this.onSelect.bind(this) }
           value = { this.state.course.name }
         />
 
-        <CtrlInput ref="ctrlInput" />
+        <CtrlInput ref="ctrlInput" course={this.state.course} />
 
         <CtrlSaveDel
           save={this.onSave.bind(this)}

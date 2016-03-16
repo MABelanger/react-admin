@@ -14,7 +14,7 @@ export default class CtrlSelect extends React.Component {
               list={this.props.list}
               label={this.props.title}
               onSelect={this.props.onSelect}
-              value={this.props.value }/>
+              value={this.props.value}/>
             <BtnInfo label="Modifier" />
             <BtnInfo label="Nouveau" />
           </div>
