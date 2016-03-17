@@ -16,7 +16,10 @@ export default class CtrlSaveDel extends React.Component {
                 label="Sauvegarder"
                 onClick={(e)=>{this.props.onSave(e);} }
               />
-              <BtnDanger label="X" onClick={this.props.onDelete} />
+              <BtnDanger
+                label="X"
+                onClick={(e)=>{this.props.onDelete(e);} }
+              />
             </div>
           </div>
         </div>

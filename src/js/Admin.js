@@ -32,16 +32,41 @@ export default class Form extends React.Component {
 
   onSave(course){
     console.log('saveCourse', course);
-    coursesApi.saveCourse(course, function(err, res) {
-      console.log('err, res', err, res)
+    coursesApi.saveCourse(course, (err, res) => {
+      console.log('err, res', err, res);
+      this.setState({'course': course});
     });
   }
 
   onCreate(course){
     console.log('createCourse', course);
-    coursesApi.createCourse(course, function(err, res) {
-      console.log('err, res', err, res)
+    coursesApi.createCourse(course, (err, res) => {
+      let course = res.body;
+      if(course._id){
+        this.setState({'course': course});
+        this.state.courses.push(course);
+        this.setState({'courses' : this.state.courses});
+      }
     });
+  }
+
+  onNew(){
+    this.setState({'course': {}});
+  }
+
+  onDelete(course){
+    console.log('deleteCourse', this.state.course);
+    coursesApi.deleteCourse(course, (err, res) => {
+      console.log('err, res', err, res)
+      this.setState({'course': {}});
+      coursesApi.getAllCourses(courses => {
+        this.setState({'courses' : courses});
+      });
+    });
+  }
+
+  onSelect(course){
+    this.setState({course: course});
   }
 
   render() {
@@ -49,8 +74,12 @@ export default class Form extends React.Component {
       <div>
         <CourseNameSection
           courses={this.state.courses}
-          onSave={this.onSave}
-          onCreate={this.onCreate}
+          course={this.state.course}
+          onSave={this.onSave.bind(this)}
+          onCreate={this.onCreate.bind(this)}
+          onDelete={this.onDelete.bind(this)}
+          onSelect={this.onSelect.bind(this)}
+          onNew={this.onNew.bind(this)}
         />
       </div>
     );

@@ -54,8 +54,13 @@ var CourseApi = {
       .end(callback);
   },
 
-  deleteCourse: function(id) {
-    console.log('Pretend this just deleted the course from the DB via an AJAX call...');
+  deleteCourse: function(course, callback){
+    Request
+      .del(URL + '/' + course._id)
+      .accept('application/json')
+      .type('application/json')
+      .send(course)
+      .end(callback);
   }
 };
 
