@@ -1,5 +1,7 @@
 import React                      from "react";
 import CourseNameSection          from "./components/sections/CourseNameSection";
+import toastr                     from 'toastr';
+import 'toastr/build/toastr.css';
 var coursesApi =                  require("./api/coursesApi");
 
 var list = [
@@ -35,6 +37,7 @@ export default class Form extends React.Component {
     coursesApi.saveCourse(course, (err, res) => {
       console.log('err, res', err, res);
       this.setState({'course': course});
+      toastr.success('Course saved.');
     });
   }
 
@@ -46,6 +49,7 @@ export default class Form extends React.Component {
         this.setState({'course': course});
         this.state.courses.push(course);
         this.setState({'courses' : this.state.courses});
+        toastr.success('Course Created.');
       }
     });
   }
