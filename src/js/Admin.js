@@ -4,16 +4,7 @@ import toastr                     from 'toastr';
 import 'toastr/build/toastr.css';
 var coursesApi =                  require("./api/coursesApi");
 
-var list = [
-  {
-    name : "yoga",
-    link : "#yoga"
-  },
-  {
-    name : "meditation",
-    link : "#meditation"
-  }
-];
+var list = [];
 
 
 export default class Form extends React.Component {
@@ -72,6 +63,7 @@ export default class Form extends React.Component {
   _onDeleteDone(){
     this.setState({'course': {}});
     this._fetchAllCourses();
+    toastr.success('Delete Success.');
   }
 
   onDelete(course){
@@ -84,6 +76,7 @@ export default class Form extends React.Component {
   onSelect(course){
     this.setState({course: course});
   }
+
 
   render() {
     return (

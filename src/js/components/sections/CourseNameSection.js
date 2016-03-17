@@ -2,6 +2,9 @@ import React                      from "react";
 import TextInput                  from "../commons/TextInput";
 import CtrlSelect                 from "./ctrl/CtrlSelect";
 import CtrlSaveDel                from "./ctrl/CtrlSaveDel";
+import classNames                 from "classnames/bind";
+import sectionStyles              from "./section.css"
+
 
 
 class CtrlInput extends React.Component {
@@ -9,9 +12,10 @@ class CtrlInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseName: "",
+      courseName: ""
     };
-  } 
+  }
+
 
   changeName(name, value) {
     this.state.courseName = value;
@@ -48,6 +52,12 @@ class CtrlInput extends React.Component {
 
 export default class Form extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSection: true
+    };
+  }
 
   onSave(e){
     console.log('onSave');
@@ -67,24 +77,39 @@ export default class Form extends React.Component {
     this.props.onDelete(this.props.course);
   }
 
+  onModify(){
+    console.log('onModify');
+    this.setState({'showSection': !this.state.showSection});
+  }
+
 
   render() {
+    let cx = classNames.bind(sectionStyles);
+    let sectionClasses = cx({
+      'section-transition' : true,
+        'section-show': ( this.state.showSection == true ),
+        'section-hide': ( this.state.showSection == false )
+    });
+
     return (
       <div className="container">
         <CtrlSelect
           list={this.props.courses}
           title="Noms de cours"
           onSelect={ this.props.onSelect }
+          onModify={this.onModify.bind(this)}
           onNew={ this.props.onNew }
           value={ this.props.course.name }
         />
 
-        <CtrlInput ref="ctrlInput" course={this.props.course} />
+        <div className={sectionClasses}>
+          <CtrlInput ref="ctrlInput" course={this.props.course} />
+          <CtrlSaveDel
+            onSave={ (e)=>{ this.onSave(e); } }
+            onDelete={ (e)=>{ this.onDelete(e); } }
+          />
+        </div>
 
-        <CtrlSaveDel
-          onSave={ (e)=>{ this.onSave(e); } }
-          onDelete={ (e)=>{ this.onDelete(e); } }
-        />
       </div>
     );
   }
