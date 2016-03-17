@@ -26,31 +26,42 @@ export default class Form extends React.Component {
     };
   }
 
-  componentWillMount() {
+  _fetchAllCourses(){
     coursesApi.getAllCourses(courses => {
       this.setState({'courses' : courses});
     });
   }
 
+  componentWillMount() {
+    this._fetchAllCourses();
+  }
+
+  _onSaveDone(course){
+    this.setState({'course': course});
+    toastr.success('Course saved.');
+  }
+
   onSave(course){
-    console.log('saveCourse', course);
     coursesApi.saveCourse(course, (err, res) => {
-      console.log('err, res', err, res);
-      this.setState({'course': course});
-      toastr.success('Course saved.');
+      let course = res.body;
+      this._onSaveDone(course);
     });
   }
 
+
+  _onCreateDone(course){
+    if(course._id){
+      this.setState({'course': course});
+      this.state.courses.push(course);
+      this.setState({'courses' : this.state.courses});
+      toastr.success('Course Created.');
+    }
+  }
+
   onCreate(course){
-    console.log('createCourse', course);
     coursesApi.createCourse(course, (err, res) => {
       let course = res.body;
-      if(course._id){
-        this.setState({'course': course});
-        this.state.courses.push(course);
-        this.setState({'courses' : this.state.courses});
-        toastr.success('Course Created.');
-      }
+      this._onCreateDone(course);
     });
   }
 
@@ -58,14 +69,15 @@ export default class Form extends React.Component {
     this.setState({'course': {}});
   }
 
+  _onDeleteDone(){
+    this.setState({'course': {}});
+    this._fetchAllCourses();
+  }
+
   onDelete(course){
     console.log('deleteCourse', this.state.course);
     coursesApi.deleteCourse(course, (err, res) => {
-      console.log('err, res', err, res)
-      this.setState({'course': {}});
-      coursesApi.getAllCourses(courses => {
-        this.setState({'courses' : courses});
-      });
+      this._onDeleteDone();
     });
   }
 
