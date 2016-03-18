@@ -28,7 +28,6 @@ export default class ModalBootstrap extends React.Component {
 
   onNo(){
     this.close();
-    this.props.onNo();
   }
 
   render() {

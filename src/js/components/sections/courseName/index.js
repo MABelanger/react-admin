@@ -29,18 +29,8 @@ export default class CourseName extends React.Component {
   }
 
   /**
-   * Calls from API
+   * Create
    **/
-  save(course){
-    coursesApi.save(course)
-      .then( (course) => {
-        this.setState({'course': course});
-        toastr.success('Le cour à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.');
-      });
-  }
-
   create(course){
     coursesApi.create(course)
       .then( (course) => {
@@ -52,35 +42,21 @@ export default class CourseName extends React.Component {
       });
   }
 
-
-
-
-
-
-  // New button click
-  onNew(){
-    this.setState({'course': {}});
-    this.showSection();
-  }
-
-  // A course has been selected
-  onSelect(course){
-    this.setState({course: course});
-    console.log('onSelect', course);
-  }
-
-
-  clone(obj) {
-    if (null == obj || "object" != typeof obj) return obj;
-    var copy = obj.constructor();
-    for (var attr in obj) {
-        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-    }
-    return copy;
+  /**
+   * Update
+   **/
+  save(course){
+    coursesApi.save(course)
+      .then( (course) => {
+        this.setState({'course': course});
+        toastr.success('Le cour à été sauvegardé.');
+      }, (err) => {
+        toastr.error('Erreur de sauvegarde.');
+      });
   }
 
   // Save button click
-  onSave(e){
+  onCtrlSave(e){
 
     // Get the new values fields
     let courseInput = this.refs.ctrlInput.getCourse();
@@ -92,7 +68,6 @@ export default class CourseName extends React.Component {
         course[attr] = courseInput[attr];
       }
     }
-
     // if course exist, save it, else create it
     if(course._id) {
       this.save(course);
@@ -102,46 +77,55 @@ export default class CourseName extends React.Component {
     }
   }
 
+  /**
+   * Delete
+   **/
 
+  delete(){
+    coursesApi.delete(this.state.course)
+      .then( (course) => {
+        this.setState({'course': {}});
+        this.props.onFetchAllCourses();
+        toastr.success('Le cour à été supprimé.');
+        this.hideSection();
+      }, (err) => {
+        toastr.error('Erreur Supression', err);
+      });
+  }
+
+  onCtrlDelete(course){
+    this.refs.modalBootstrap.open();
+  } 
+
+
+
+
+  // Show all property section fields
   showSection(){
     this.setState({'showSection': true});
   }
 
+   // Hide all property section fields
   hideSection(){
     console.log('hide Section')
     this.setState({'showSection': false});
   }
 
-  onModify(){
-    console.log('onModify');
+  // New button click
+  new(){
+    this.setState({'course': {}});
+    this.showSection();
+  }
+
+  // A course has been selected
+  select(course){
+    this.setState({course: course});
+  }
+
+  // Modify button click
+  modify(){
     this.setState({'showSection': !this.state.showSection});
   }
-
-
-  _onDeleteDone(){
-    this.setState({'course': {}});
-    this.props.onFetchAllCourses();
-    toastr.success('Le cour à été supprimé.');
-    this.hideSection();
-  }
-
-  onDeleteYes(){
-    coursesApi.deleteCourse(this.state.course, (err, res) => {
-      if(err){
-        toastr.error('Erreur Supression', err);
-      }else {
-        this._onDeleteDone();
-      }
-    });
-  }
-
-  onDeleteNo(){
-    this.refs.modalBootstrap.close();
-  }
-
-  onDelete(course){
-    this.refs.modalBootstrap.open();
-  } 
 
   render() {
     let cx = classNames.bind(sectionStyles);
@@ -157,20 +141,19 @@ export default class CourseName extends React.Component {
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer ce cour"
-            + '(' + this.state.course.name + ') ?'
+            "Voulez-vous vraiment supprimer ce cour "
+            + '( ' + this.state.course.name + ' ) ?'
             + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
-          onYes={::this.onDeleteYes}
-          onNo={::this.onDeleteNo}
+          onYes={::this.delete}
         />
 
         <CtrlSelect
           list={this.props.courses}
           title="Noms de cours"
-          onSelect={ this.onSelect.bind(this) }
-          onModify={this.onModify.bind(this)}
-          onNew={ this.onNew.bind(this) }
+          onSelect={ this.select.bind(this) }
+          onModify={this.modify.bind(this)}
+          onNew={ this.new.bind(this) }
           value={ this.state.course.name }
         />
 
@@ -178,8 +161,8 @@ export default class CourseName extends React.Component {
           <div className={sectionClasses}>
             <CtrlInput ref="ctrlInput" course={this.state.course} />
             <CtrlSaveDel
-              onSave={ (e)=>{ this.onSave(e); } }
-              onDelete={ (e)=>{ this.onDelete(e); } }
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
             />
           </div>
         </div>

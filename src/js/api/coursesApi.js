@@ -13,49 +13,10 @@ var setCourses = function(courses){
 }
 
 var CourseApi = {
-  getAllCourses: function(callback) {
-    Request
-    .get(URL, function(err, res){
-      callback(res.body);
-    });
-  },
 
-  /*
-  getMenuCourseNames(courses){
-    for (var value of courses) {
-      console.log(value);
-    }
-  },
-  */
-
-  getCourseBySlug(slug){
-    return _.find(_courses, {slug: slug});
-  },
-
-  getCourseById: function(id) {
-    return _.find(_courses, {id: id});
-  },
-
-  save: function(course) {
-    var promise = new Promise(function(resolve, reject) {
-      Request
-        .put(URL + '/' + course._id)
-        .accept('application/json')
-        .type('application/json')
-        .send(course)
-        .end((err, res) => {
-          if (! err ) {
-            resolve(res.body);
-          }
-          else {
-            reject(err);
-          }
-        });
-    });
-    return promise;
-  },
-
-
+  /**
+   * Create
+   **/
   create: function(course) {
     var promise = new Promise(function(resolve, reject) {
       Request
@@ -75,13 +36,67 @@ var CourseApi = {
     return promise;
   },
 
-  deleteCourse: function(course, callback){
+  /**
+   * Read
+   **/
+  getAllCourses: function(callback) {
     Request
-      .del(URL + '/' + course._id)
-      .accept('application/json')
-      .type('application/json')
-      .send(course)
-      .end(callback);
+    .get(URL, function(err, res){
+      callback(res.body);
+    });
+  },
+
+  getCourseBySlug(slug){
+    return _.find(_courses, {slug: slug});
+  },
+
+  getCourseById: function(id) {
+    return _.find(_courses, {id: id});
+  },
+
+  /**
+   * Update
+   **/
+  save: function(course) {
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .put(URL + '/' + course._id)
+        .accept('application/json')
+        .type('application/json')
+        .send(course)
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
+  },
+
+  /**
+   * Delete
+   **/
+
+  delete: function(course) {
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .del(URL + '/' + course._id)
+        .accept('application/json')
+        .type('application/json')
+        .send(course)
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
   }
 };
 
