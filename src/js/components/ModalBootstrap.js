@@ -1,5 +1,7 @@
 import React                      from "react";
 import Modal                      from "react-bootstrap/lib/Modal";
+import BtnInfo                    from "./commons/BtnInfo";
+import BtnDanger                  from "./commons/BtnDanger";
 
 export default class ModalBootstrap extends React.Component {
 
@@ -40,8 +42,14 @@ export default class ModalBootstrap extends React.Component {
             {this.props.msg}
           </Modal.Body>
           <Modal.Footer>
-            <button onClick={this.onYes.bind(this)}>Oui</button>
-            <button onClick={this.onNo.bind(this)}>Non</button>
+              <BtnInfo
+                label="Non"
+                onClick={(e)=>{this.onNo(e);} }
+              />
+              <BtnDanger
+                label="Supprimer"
+                onClick={(e)=>{this.onYes(e);} }
+              />
           </Modal.Footer>
         </Modal>
       </div>
