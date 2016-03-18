@@ -18,25 +18,23 @@ import sectionStyles              from "../styles/section.scss"
 
 
 
-export default class CourseName extends React.Component {
+export default class Teacher extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       showSection: false,
-      course: {}
+      teacher: {}
     };
   }
 
 
+
   save(course){
-    coursesApi.saveCourse(course)
-      .then( (course) => {
-        this.setState({'course': course});
-        toastr.success('Le cour à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.');
-      });
+    coursesApi.saveCourse(course, (course) => {
+      this.setState({'course': course});
+      console.log('course', course)
+    });
   }
 
 

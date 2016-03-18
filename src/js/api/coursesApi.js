@@ -35,14 +35,24 @@ var CourseApi = {
   getCourseById: function(id) {
     return _.find(_courses, {id: id});
   },
-  
-  saveCourse: function(course, callback) {
-    Request
-      .put(URL + '/' + course._id)
-      .accept('application/json')
-      .type('application/json')
-      .send(course)
-      .end(callback);
+
+  saveCourse: function(course) {
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .put(URL + '/' + course._id)
+        .accept('application/json')
+        .type('application/json')
+        .send(course)
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
   },
 
   createCourse: function(course, callback){
