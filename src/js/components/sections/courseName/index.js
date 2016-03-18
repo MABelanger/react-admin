@@ -1,17 +1,24 @@
+// vendors
 import React                      from "react";
-import CtrlSelect                 from "../ctrl/CtrlSelect";
-import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import classNames                 from "classnames/bind";
-import sectionStyles              from "../section.scss"
-import CtrlInput                  from "./CtrlInput";
-
 import ModalBootstrap             from "../../ModalBootstrap";
 import toastr                     from 'toastr';
 
+// modules
+import CtrlSelect                 from "../ctrl/CtrlSelect";
+import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
+import CtrlInput                  from "./CtrlInput";
+
+// API
 var coursesApi =                  require("../../../api/coursesApi");
 
+// Styles
+import 'toastr/build/toastr.css';
+import sectionStyles              from "../styles/section.scss"
 
-export default class CourseNameSection extends React.Component {
+
+
+export default class CourseName extends React.Component {
 
   constructor(props) {
     super(props);
