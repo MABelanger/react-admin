@@ -2,24 +2,21 @@ import React                      from "react";
 import CourseNameSection          from "./components/sections/CourseNameSection";
 import ToastrAlert                from "./components/ToastrAlert";
 import ModalBootstrap             from "./components/ModalBootstrap";
-
 import toastr                     from 'toastr';
-import 'toastr/build/toastr.css';
 
 var coursesApi =                  require("./api/coursesApi");
 
+// Styles
+import 'toastr/build/toastr.css';
 
 
-var list = [];
-
-
-export default class Form extends React.Component {
+export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       courses: [],
       course: {},
-      list: list
+      list: []
     };
   }
 
@@ -102,6 +99,7 @@ export default class Form extends React.Component {
 
   onSelect(course){
     this.setState({course: course});
+    console.log('onSelect', course);
   }
 
 
