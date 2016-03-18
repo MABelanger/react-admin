@@ -1,5 +1,5 @@
 import React                      from "react";
-import CourseNameSection          from "./components/sections/CourseNameSection";
+import CourseNameSection          from "./components/sections/courseName";
 //import ToastrAlert                from "./components/ToastrAlert";
 
 var coursesApi =                  require("./api/coursesApi");

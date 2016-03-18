@@ -1,59 +1,14 @@
 import React                      from "react";
-import TextInput                  from "../commons/TextInput";
-import CtrlSelect                 from "./ctrl/CtrlSelect";
-import CtrlSaveDel                from "./ctrl/CtrlSaveDel";
+import CtrlSelect                 from "../ctrl/CtrlSelect";
+import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import classNames                 from "classnames/bind";
-import sectionStyles              from "./section.scss"
+import sectionStyles              from "../section.scss"
+import CtrlInput                  from "./CtrlInput";
 
-
-import ModalBootstrap             from "../ModalBootstrap";
+import ModalBootstrap             from "../../ModalBootstrap";
 import toastr                     from 'toastr';
 
-var coursesApi =                  require("../../api/coursesApi");
-
-class CtrlInput extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      courseName: ""
-    };
-  }
-
-
-  changeName(name, value) {
-    this.state.courseName = value;
-    this.setState({ 
-      courseName: this.state.courseName
-    });
-  }
-
-  getCourseName(){
-    return this.state.courseName;
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      courseName: nextProps.course.name
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <TextInput
-          name="courseName"
-          label="Nom"
-          ref="courseName"
-          value={this.state.courseName}
-          changeValue={ (name, value) => { this.changeName(name, value); } }
-        />
-      </div>
-    );
-  }
-}
-
+var coursesApi =                  require("../../../api/coursesApi");
 
 
 export default class CourseNameSection extends React.Component {
