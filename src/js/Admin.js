@@ -35,7 +35,7 @@ export default class Form extends React.Component {
 
   _onSaveDone(course){
     this.setState({'course': course});
-    toastr.success('Course saved.');
+    toastr.success('Le cours à été sauvegardé');
   }
 
   onSave(course){
@@ -55,7 +55,7 @@ export default class Form extends React.Component {
       this.setState({'course': course});
       this.state.courses.push(course);
       this.setState({'courses' : this.state.courses});
-      toastr.success('Course Created.');
+      toastr.success('Le cours à été crée.');
     }
   }
 
@@ -78,7 +78,7 @@ export default class Form extends React.Component {
   _onDeleteDone(){
     this.setState({'course': {}});
     this._fetchAllCourses();
-    toastr.success('Delete Success.');
+    toastr.success('Le cour à été supprimé.');
     this.refs.courseNameSection.hideSection();
   }
 
@@ -113,11 +113,10 @@ export default class Form extends React.Component {
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous supprimer le cour"
-            + '"' + this.state.course.name + '"'
-            + " et tout les professeurs ainsi que ses horaires ?"
+            "Voulez-vous vraiment supprimer ce cour"
+            + '(' + this.state.course.name + ') ?'
+            + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
-
           onYes={::this.onDeleteYes}
           onNo={::this.onDeleteNo}
         />

@@ -1,6 +1,6 @@
 import React                      from "react";
 import Modal                      from "react-bootstrap/lib/Modal";
-import BtnInfo                    from "./commons/BtnInfo";
+import BtnSuccess                    from "./commons/BtnSuccess";
 import BtnDanger                  from "./commons/BtnDanger";
 
 export default class ModalBootstrap extends React.Component {
@@ -36,7 +36,7 @@ export default class ModalBootstrap extends React.Component {
       <div>
         <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
           <Modal.Header closeButton>
-            <Modal.Title>Attention</Modal.Title>
+            <Modal.Title>Attention !</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {this.props.msg}
@@ -46,7 +46,7 @@ export default class ModalBootstrap extends React.Component {
                 label="Supprimer"
                 onClick={(e)=>{this.onYes(e);} }
               />
-              <BtnInfo
+              <BtnSuccess
                 label="Non"
                 onClick={(e)=>{this.onNo(e);} }
               />
