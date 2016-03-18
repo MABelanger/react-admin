@@ -36,7 +36,7 @@ var CourseApi = {
     return _.find(_courses, {id: id});
   },
 
-  saveCourse: function(course) {
+  save: function(course) {
     var promise = new Promise(function(resolve, reject) {
       Request
         .put(URL + '/' + course._id)
@@ -55,13 +55,24 @@ var CourseApi = {
     return promise;
   },
 
-  createCourse: function(course, callback){
-    Request
-      .post(URL)
-      .accept('application/json')
-      .type('application/json')
-      .send(course)
-      .end(callback);
+
+  create: function(course) {
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .post(URL)
+        .accept('application/json')
+        .type('application/json')
+        .send(course)
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
   },
 
   deleteCourse: function(course, callback){

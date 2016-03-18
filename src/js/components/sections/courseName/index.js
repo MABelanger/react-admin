@@ -28,9 +28,11 @@ export default class CourseName extends React.Component {
     };
   }
 
-
+  /**
+   * Calls from API
+   **/
   save(course){
-    coursesApi.saveCourse(course)
+    coursesApi.save(course)
       .then( (course) => {
         this.setState({'course': course});
         toastr.success('Le cour à été sauvegardé.');
@@ -39,44 +41,57 @@ export default class CourseName extends React.Component {
       });
   }
 
-
-  _onCreateDone(course){
-    if(course._id){
-      this.setState({'course': course});
-      this.props.onFetchAllCourses();
-      this.setState({'courses' : this.state.courses});
-      toastr.success('Le cours à été crée.');
-    }
-  }
-
   create(course){
-    coursesApi.createCourse(course, (err, res) => {
-      if(err){
-        toastr.error('Erreur Creation', err);
-      }else {
-        let course = res.body;
-        this._onCreateDone(course);
-      }
-    });
+    coursesApi.create(course)
+      .then( (course) => {
+        this.setState({'course': course});
+        this.props.onFetchAllCourses();
+        toastr.success('Le cours à été crée.');
+      }, (err) => {
+        toastr.error('Erreur de création.');
+      });
   }
 
+
+
+
+
+
+  // New button click
   onNew(){
     this.setState({'course': {}});
     this.showSection();
   }
 
-
+  // A course has been selected
   onSelect(course){
     this.setState({course: course});
     console.log('onSelect', course);
   }
 
+
+  clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+  }
+
+  // Save button click
   onSave(e){
-    console.log('onSave');
-    //console.log('this.refs', this.refs.ctrlInput.refs.courseName.refs.courseName.value);
-    let courseName = this.refs.ctrlInput.getCourseName();
+
+    // Get the new values fields
+    let courseInput = this.refs.ctrlInput.getCourse();
     let course= this.state.course;
-    course.name = courseName;
+
+    // Merge the new value into the existing object.
+    for(var attr in courseInput) {
+      if( courseInput.hasOwnProperty(attr) ){
+        course[attr] = courseInput[attr];
+      }
+    }
 
     // if course exist, save it, else create it
     if(course._id) {
@@ -87,9 +102,6 @@ export default class CourseName extends React.Component {
     }
   }
 
-  onDelete(e){
-    this.onDelete(this.state.course);
-  }
 
   showSection(){
     this.setState({'showSection': true});

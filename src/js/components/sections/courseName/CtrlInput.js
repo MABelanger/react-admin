@@ -6,25 +6,29 @@ export default class CtrlInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseName: ""
+        name : "",
+        svg : ""
     };
   }
 
 
   changeName(name, value) {
-    this.state.courseName = value;
     this.setState({ 
-      courseName: this.state.courseName
+      name: value
     });
   }
 
-  getCourseName(){
-    return this.state.courseName;
+  getCourse(){
+    return {
+      name : this.state.name,
+      svg : this.state.name,
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      courseName: nextProps.course.name
+      name : nextProps.course.name,
+      svg : nextProps.course.svg,
     });
   }
 
@@ -32,10 +36,10 @@ export default class CtrlInput extends React.Component {
     return (
       <div>
         <TextInput
-          name="courseName"
+          name="name"
           label="Nom"
-          ref="courseName"
-          value={this.state.courseName}
+          ref="name"
+          value={this.state.name}
           changeValue={ (name, value) => { this.changeName(name, value); } }
         />
       </div>
