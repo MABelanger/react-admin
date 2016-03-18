@@ -112,7 +112,12 @@ export default class Form extends React.Component {
       <div>
         <ModalBootstrap
           ref="modalBootstrap"
-          msg="Voulez-vous supprimer le cours ?"
+          msg={
+            "Voulez-vous supprimer le cour"
+            + '"' + this.state.course.name + '"'
+            + " et tout les professeurs ainsi que ses horaires ?"
+          }
+
           onYes={::this.onDeleteYes}
           onNo={::this.onDeleteNo}
         />

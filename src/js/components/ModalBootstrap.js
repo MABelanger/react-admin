@@ -42,13 +42,13 @@ export default class ModalBootstrap extends React.Component {
             {this.props.msg}
           </Modal.Body>
           <Modal.Footer>
-              <BtnInfo
-                label="Non"
-                onClick={(e)=>{this.onNo(e);} }
-              />
               <BtnDanger
                 label="Supprimer"
                 onClick={(e)=>{this.onYes(e);} }
+              />
+              <BtnInfo
+                label="Non"
+                onClick={(e)=>{this.onNo(e);} }
               />
           </Modal.Footer>
         </Modal>
