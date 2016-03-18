@@ -3,7 +3,7 @@ import TextInput                  from "../commons/TextInput";
 import CtrlSelect                 from "./ctrl/CtrlSelect";
 import CtrlSaveDel                from "./ctrl/CtrlSaveDel";
 import classNames                 from "classnames/bind";
-import sectionStyles              from "./section.css"
+import sectionStyles              from "./section.scss"
 
 
 
@@ -55,7 +55,7 @@ export default class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSection: true
+      showSection: false
     };
   }
 
@@ -65,6 +65,8 @@ export default class Form extends React.Component {
     let courseName = this.refs.ctrlInput.getCourseName();
     let course= this.props.course;
     course.name = courseName;
+
+    // if course exist, save it, else create it
     if(course._id) {
       this.props.onSave(course);
     }
@@ -75,6 +77,15 @@ export default class Form extends React.Component {
 
   onDelete(e){
     this.props.onDelete(this.props.course);
+  }
+
+  showSection(){
+    this.setState({'showSection': true});
+  }
+
+  hideSection(){
+    console.log('hide Section')
+    this.setState({'showSection': false});
   }
 
   onModify(){
@@ -102,12 +113,14 @@ export default class Form extends React.Component {
           value={ this.props.course.name }
         />
 
-        <div className={sectionClasses}>
-          <CtrlInput ref="ctrlInput" course={this.props.course} />
-          <CtrlSaveDel
-            onSave={ (e)=>{ this.onSave(e); } }
-            onDelete={ (e)=>{ this.onDelete(e); } }
-          />
+        <div className="section-animation">
+          <div className={sectionClasses}>
+            <CtrlInput ref="ctrlInput" course={this.props.course} />
+            <CtrlSaveDel
+              onSave={ (e)=>{ this.onSave(e); } }
+              onDelete={ (e)=>{ this.onDelete(e); } }
+            />
+          </div>
         </div>
 
       </div>
