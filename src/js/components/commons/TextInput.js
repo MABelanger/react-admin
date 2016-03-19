@@ -20,7 +20,7 @@ export default class TextInput extends React.Component {
         <div className={wrapperClass}>
           <label htmlFor={this.props.name} className="control-label col-xs-2">
             <br />
-            Titre:
+            {this.props.label} :
           </label>
           <div className="col-sm-3">
             &nbsp;

@@ -48,9 +48,42 @@ export default class CtrlInput extends React.Component {
       <div>
         <TextInput
           name="firstName"
-          label="Nom"
+          label="Prénom"
           ref="firstName"
           value={this.state.firstName}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+        <TextInput
+          name="lastName"
+          label="Nom"
+          ref="lastName"
+          value={this.state.lastName}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+        <TextInput
+          name="schoolName"
+          label="Lien Nom"
+          ref="schoolName"
+          value={this.state.schoolName}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+
+        <TextInput
+          name="schoolUrl"
+          label="Lien URL"
+          ref="schoolUrl"
+          value={this.state.schoolUrl}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+        <TextInput
+          name="tel"
+          label="Tel"
+          ref="tel"
+          value={this.state.tel}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
       </div>

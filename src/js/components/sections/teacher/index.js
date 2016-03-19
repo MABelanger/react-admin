@@ -121,7 +121,7 @@ export default class Teacher extends React.Component {
 
         <div className="section-animation">
           <div className={sectionClasses}>
-            <CtrlInput ref="ctrlInput" course={this.state.course} />
+            <CtrlInput ref="ctrlInput" teacher={this.state.teacher} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }
