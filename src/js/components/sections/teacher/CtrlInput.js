@@ -1,14 +1,6 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 
-/*
-id
-firstName
-lastName
-schoolName
-schoolUrl
-tel
-*/
 export default class CtrlInput extends React.Component {
 
   constructor(props) {
@@ -23,16 +15,32 @@ export default class CtrlInput extends React.Component {
   }
 
 
-  changeFirstName(name, value) {
-    this.setState({ 
-      firstName: value
-    });
+  changeValue(name, value) {
+    let newState = {};
+    newState[name] = value;
+    this.setState(newState);
+  }
+
+  getCourse(){
+    return {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      schoolName: this.state.schoolName,
+      schoolUrl: this.state.schoolUrl,
+      tel: this.state.tel
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      courseName: nextProps.course.name
-    });
+    if(nextProps.teacher) {
+      this.setState({
+        firstName: nextProps.teacher.firstName,
+        lastName: nextProps.teacher.lastName,
+        schoolName: nextProps.teacher.schoolName,
+        schoolUrl: nextProps.teacher.schoolUrl,
+        tel: nextProps.teacher.tel
+      });
+    }
   }
 
   render() {
@@ -43,7 +51,7 @@ export default class CtrlInput extends React.Component {
           label="Nom"
           ref="firstName"
           value={this.state.firstName}
-          changeValue={ (name, value) => { this.changeFirstName(name, value); } }
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
       </div>
     );

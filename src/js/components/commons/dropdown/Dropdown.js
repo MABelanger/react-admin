@@ -45,11 +45,17 @@ export default class Dropdown extends React.Component {
     this.props.onSelect(item);
   }
 
+  // if item has name return only the name
+  // else return the firstName + lastName
+  getName(item) {
+    return item.name || (item.firstName + " " + item.lastName);
+  }
+
   getItem(item){
     return(
       <li>
           <a href="#" onClick={ (e) => { this.onSelect(item); } }>
-              {item.name}
+              { this.getName(item) }
           </a>
       </li>
     );

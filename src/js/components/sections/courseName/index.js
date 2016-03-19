@@ -80,7 +80,6 @@ export default class CourseName extends React.Component {
   /**
    * Delete
    **/
-
   delete(){
     coursesApi.delete(this.state.course)
       .then( (course) => {
@@ -93,11 +92,12 @@ export default class CourseName extends React.Component {
       });
   }
 
+  /**
+   * Btn Control
+   **/
   onCtrlDelete(course){
     this.refs.modalBootstrap.open();
   } 
-
-
 
 
   // Show all property section fields
@@ -120,6 +120,8 @@ export default class CourseName extends React.Component {
   // A course has been selected
   select(course){
     this.setState({course: course});
+    // update the Admin state
+    this.props.onSelect(course);
   }
 
   // Modify button click
@@ -127,6 +129,7 @@ export default class CourseName extends React.Component {
     this.setState({'showSection': !this.state.showSection});
   }
 
+  // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
     let sectionClasses = cx({

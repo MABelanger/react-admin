@@ -1,18 +1,23 @@
 import React                      from "react";
 import CourseNameSection          from "./components/sections/courseName";
+import TeacherSection             from "./components/sections/teacher";
+
+
+import * as sectionHelper         from "./components/sections/helper";
 
 var coursesApi =                  require("./api/coursesApi");
-
-
 
 export default class Admin extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      courses: []
+      courses: [],
+      course: {}
     };
+    //sectionHelper.fetchAllCourses(this);
   }
+
 
   fetchAllCourses(){
     coursesApi.getAllCourses(courses => {
@@ -20,8 +25,13 @@ export default class Admin extends React.Component {
     });
   }
 
+
   componentWillMount() {
     this.fetchAllCourses();
+  }
+
+  select(course){
+    this.setState({course: course});
   }
 
   render() {
@@ -30,7 +40,9 @@ export default class Admin extends React.Component {
         <CourseNameSection
           courses={this.state.courses}
           onFetchAllCourses={this.fetchAllCourses.bind(this)}
+          onSelect={this.select.bind(this)}
         />
+        <TeacherSection teachers={this.state.course.teachers}/>
       </div>
     );
   }

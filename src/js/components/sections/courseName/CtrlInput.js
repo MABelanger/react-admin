@@ -12,10 +12,10 @@ export default class CtrlInput extends React.Component {
   }
 
 
-  changeName(name, value) {
-    this.setState({ 
-      name: value
-    });
+  changeValue(name, value) {
+    let newState = {};
+    newState[name] = value;
+    this.setState(newState);
   }
 
   getCourse(){
@@ -40,7 +40,7 @@ export default class CtrlInput extends React.Component {
           label="Nom"
           ref="name"
           value={this.state.name}
-          changeValue={ (name, value) => { this.changeName(name, value); } }
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
       </div>
     );

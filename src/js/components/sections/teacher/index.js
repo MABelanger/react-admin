@@ -28,107 +28,67 @@ export default class Teacher extends React.Component {
     };
   }
 
+  /**
+   * Create
+   **/
+  create(teacher){
 
-
-  save(course){
-    coursesApi.saveCourse(course, (course) => {
-      this.setState({'course': course});
-      console.log('course', course)
-    });
   }
 
-
-  _onCreateDone(course){
-    if(course._id){
-      this.setState({'course': course});
-      this.props.onFetchAllCourses();
-      this.setState({'courses' : this.state.courses});
-      toastr.success('Le cours à été crée.');
-    }
+  /**
+   * Update
+   **/
+  save(teacher){
   }
 
-  create(course){
-    coursesApi.createCourse(course, (err, res) => {
-      if(err){
-        toastr.error('Erreur Creation', err);
-      }else {
-        let course = res.body;
-        this._onCreateDone(course);
-      }
-    });
+  // Save button click
+  onCtrlSave(e){
+
   }
 
-  onNew(){
-    this.setState({'course': {}});
-    this.showSection();
+  /**
+   * Delete
+   **/
+  delete(){
+
   }
 
+  /**
+   * Btn Control
+   **/
+  onCtrlDelete(course){
+    this.refs.modalBootstrap.open();
+  } 
 
-  onSelect(course){
-    this.setState({course: course});
-    console.log('onSelect', course);
-  }
 
-  onSave(e){
-    console.log('onSave');
-    //console.log('this.refs', this.refs.ctrlInput.refs.courseName.refs.courseName.value);
-    let courseName = this.refs.ctrlInput.getCourseName();
-    let course= this.state.course;
-    course.name = courseName;
-
-    // if course exist, save it, else create it
-    if(course._id) {
-      this.save(course);
-    }
-    else{
-      this.create(course);
-    }
-  }
-
-  onDelete(e){
-    this.onDelete(this.state.course);
-  }
-
+  // Show all property section fields
   showSection(){
     this.setState({'showSection': true});
   }
 
+   // Hide all property section fields
   hideSection(){
     console.log('hide Section')
     this.setState({'showSection': false});
   }
 
-  onModify(){
-    console.log('onModify');
+  // New button click
+  new(){
+    this.setState({'teacher': {}});
+    this.showSection();
+  }
+
+  // A teacher has been selected
+  select(teacher){
+    this.setState({teacher: teacher});
+  }
+
+  // Modify button click
+  modify(){
     this.setState({'showSection': !this.state.showSection});
   }
 
-
-  _onDeleteDone(){
-    this.setState({'course': {}});
-    this.props.onFetchAllCourses();
-    toastr.success('Le cour à été supprimé.');
-    this.hideSection();
-  }
-
-  onDeleteYes(){
-    coursesApi.deleteCourse(this.state.course, (err, res) => {
-      if(err){
-        toastr.error('Erreur Supression', err);
-      }else {
-        this._onDeleteDone();
-      }
-    });
-  }
-
-  onDeleteNo(){
-    this.refs.modalBootstrap.close();
-  }
-
-  onDelete(course){
-    this.refs.modalBootstrap.open();
-  } 
-
+  // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
     let sectionClasses = cx({
@@ -143,29 +103,28 @@ export default class Teacher extends React.Component {
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer ce cour"
-            + '(' + this.state.course.name + ') ?'
+            "Voulez-vous vraiment supprimer ce cour "
+            + '( ' + this.state.teacher.firstName + ' ) ?'
             + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
-          onYes={::this.onDeleteYes}
-          onNo={::this.onDeleteNo}
+          onYes={::this.delete}
         />
 
         <CtrlSelect
-          list={this.props.courses}
-          title="Noms de cours"
-          onSelect={ this.onSelect.bind(this) }
-          onModify={this.onModify.bind(this)}
-          onNew={ this.onNew.bind(this) }
-          value={ this.state.course.name }
+          list={this.props.teachers}
+          title="Professeurs"
+          onSelect={ this.select.bind(this) }
+          onModify={this.modify.bind(this)}
+          onNew={ this.new.bind(this) }
+          value={ this.state.teacher.firstName}
         />
 
         <div className="section-animation">
           <div className={sectionClasses}>
             <CtrlInput ref="ctrlInput" course={this.state.course} />
             <CtrlSaveDel
-              onSave={ (e)=>{ this.onSave(e); } }
-              onDelete={ (e)=>{ this.onDelete(e); } }
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
             />
           </div>
         </div>
