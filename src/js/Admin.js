@@ -100,9 +100,30 @@ export default class Admin extends React.Component {
       }
     }
 
-    //this.save(course);
-    console.log(course);
+    this.save(course);
   }
+
+  createTeacher(teacher){
+    let course = this.state.course;
+    course.teachers.push(teacher);
+    this.save(course);
+  }
+
+  // TODO: remove object that have no id.
+  deleteTeacher(teacher){
+    let index = coursesApi.getIndexById(this.state.course.teachers, this.state.teacher._id);
+    let course = this.state.course;
+    console.log('before', course.teachers)
+    debugger;
+    if (index > -1) {
+      course.teachers.splice(index, 1);
+      console.log('after', course.teachers)
+    }
+    this.save(course);
+    this.setState({teacher: {}})
+  }
+
+
 
   render() {
     return (
@@ -122,6 +143,8 @@ export default class Admin extends React.Component {
           onSelect={this.selectTeacher.bind(this)}
           onNew={this.newTeacher.bind(this)}
           onSave={this.saveTeacher.bind(this)}
+          onCreate={this.createTeacher.bind(this)}
+          onDelete={this.deleteTeacher.bind(this)}
         />
       </div>
     );

@@ -32,6 +32,7 @@ export default class Teacher extends React.Component {
    **/
   create(teacher){
      // call admin to create the teacher
+     this.props.onCreate(teacher);
 
   }
 
@@ -68,13 +69,14 @@ export default class Teacher extends React.Component {
    * Delete
    **/
   delete(){
-
+    this.props.onDelete(this.props.teacher);
+    this.hideSection()
   }
 
   /**
    * Btn Control
    **/
-  onCtrlDelete(course){
+  onCtrlDelete(e){
     this.refs.modalBootstrap.open();
   } 
 

@@ -58,7 +58,6 @@ var CourseApi = {
     let index;
     for (let i=0; i < objs.length; i++) {
       if(_id == objs[i]._id){
-        console.log(objs[i]._id);
         index = i; 
       }
     }
