@@ -54,6 +54,17 @@ var CourseApi = {
     return _.find(_courses, {id: id});
   },
 
+  getIndexById: function(objs, _id) {
+    let index;
+    for (let i=0; i < objs.length; i++) {
+      if(_id == objs[i]._id){
+        console.log(objs[i]._id);
+        index = i; 
+      }
+    }
+    return index;
+  },
+
   /**
    * Update
    **/

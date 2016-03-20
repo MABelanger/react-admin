@@ -24,7 +24,6 @@ export default class Teacher extends React.Component {
     super(props);
     this.state = {
       showSection: false,
-      teacher: {}
     };
   }
 
@@ -41,6 +40,7 @@ export default class Teacher extends React.Component {
    **/
   save(teacher){
     // call admin to save the teacher
+    this.props.onSave(teacher);
   }
 
   // Save button click
@@ -48,7 +48,7 @@ export default class Teacher extends React.Component {
 
     // Get the new values fields
     let fields = this.refs.ctrlInput.getFields();
-    let objDocument= this.state.teacher;
+    let objDocument= this.props.teacher;
 
     // Merge the new value into the existing object.
     for(var attr in fields) {
@@ -92,14 +92,12 @@ export default class Teacher extends React.Component {
 
   // New button click
   new(){
-    this.setState({'teacher': {}});
+    this.props.onNew();
     this.showSection();
   }
 
   // A teacher has been selected
   select(teacher){
-    this.setState({teacher: teacher});
-    // Call onSelect for admin
     this.props.onSelect(teacher);
   }
 
@@ -124,7 +122,7 @@ export default class Teacher extends React.Component {
           ref="modalBootstrap"
           msg={
             "Voulez-vous vraiment supprimer ce cour "
-            + '( ' + this.state.teacher.firstName + ' ) ?'
+            + '( ' + this.props.teacher.firstName + ' ) ?'
             + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
           onYes={::this.delete}
@@ -136,12 +134,12 @@ export default class Teacher extends React.Component {
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
-          value={ this.state.teacher.firstName}
+          value={ this.props.teacher.firstName}
         />
 
         <div className="section-animation">
           <div className={sectionClasses}>
-            <CtrlInput ref="ctrlInput" teacher={this.state.teacher} />
+            <CtrlInput ref="ctrlInput" teacher={this.props.teacher} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }

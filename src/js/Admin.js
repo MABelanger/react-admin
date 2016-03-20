@@ -84,6 +84,26 @@ export default class Admin extends React.Component {
     console.log('selectTeacher', teacher);
   }
 
+  newTeacher(){
+    this.setState({teacher: {}});
+  }
+
+  saveTeacher(teacherInput){
+    let index = coursesApi.getIndexById(this.state.course.teachers, this.state.teacher._id);
+    let course = this.state.course;
+
+    let teacher = course.teachers[index];
+    // Merge the new value into the existing object.
+    for(var attr in teacherInput) {
+      if( teacherInput.hasOwnProperty(attr) ){
+        teacher[attr] = teacherInput[attr];
+      }
+    }
+
+    //this.save(course);
+    console.log(course);
+  }
+
   render() {
     return (
       <div>
@@ -98,7 +118,10 @@ export default class Admin extends React.Component {
         />
         <TeacherSection
           teachers={this.state.course.teachers}
+          teacher={this.state.teacher}
           onSelect={this.selectTeacher.bind(this)}
+          onNew={this.newTeacher.bind(this)}
+          onSave={this.saveTeacher.bind(this)}
         />
       </div>
     );
