@@ -32,6 +32,7 @@ export default class Teacher extends React.Component {
    * Create
    **/
   create(teacher){
+     // call admin to create the teacher
 
   }
 
@@ -39,13 +40,30 @@ export default class Teacher extends React.Component {
    * Update
    **/
   save(teacher){
+    // call admin to save the teacher
   }
 
   // Save button click
   onCtrlSave(e){
 
-  }
+    // Get the new values fields
+    let fields = this.refs.ctrlInput.getFields();
+    let objDocument= this.state.teacher;
 
+    // Merge the new value into the existing object.
+    for(var attr in fields) {
+      if( fields.hasOwnProperty(attr) ){
+        objDocument[attr] = fields[attr];
+      }
+    }
+    // if objDocument exist, save it, else create it
+    if(objDocument._id) {
+      this.save(objDocument);
+    }
+    else{
+      this.create(objDocument);
+    }
+  }
   /**
    * Delete
    **/
@@ -81,6 +99,8 @@ export default class Teacher extends React.Component {
   // A teacher has been selected
   select(teacher){
     this.setState({teacher: teacher});
+    // Call onSelect for admin
+    this.props.onSelect(teacher);
   }
 
   // Modify button click

@@ -21,7 +21,7 @@ export default class CtrlInput extends React.Component {
     this.setState(newState);
   }
 
-  getCourse(){
+  getFields(){
     return {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -69,7 +69,6 @@ export default class CtrlInput extends React.Component {
           value={this.state.schoolName}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
-
 
         <TextInput
           name="schoolUrl"
