@@ -52,7 +52,7 @@ export default class Admin extends React.Component {
     teachersApi.create(teacher, courseId)
       .then( (teacher) => {
         this.props.setTeacher(teacher);
-        toastr.success('Le cours à été crée.');
+        toastr.success('Le professeur à été crée.');
       }, (err) => {
         throw err;
         toastr.error('Erreur de création.', err);
@@ -73,17 +73,21 @@ export default class Admin extends React.Component {
 
   // Update
   save(teacherInput){
-    let index = coursesApi.getIndexById(this.props.course.teachers, this.props.teacher._id);
-    let course = this.props.course;
-
-    let teacher = course.teachers[index];
+    let courseId = this.props.courseId;
+    let teacher = this.props.teacher;
     // Merge the new value into the existing object.
     for(var attr in teacherInput) {
       if( teacherInput.hasOwnProperty(attr) ){
         teacher[attr] = teacherInput[attr];
       }
     }
-    this.save(course);
+    teachersApi.save(teacher, courseId)
+      .then( (teachers) => {
+        this.props.setTeacher(teacher);
+        toastr.success('Le professeur à été sauvegardé.');
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   // Delete

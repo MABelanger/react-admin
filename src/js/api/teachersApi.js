@@ -67,10 +67,10 @@ var TeacherApi = {
   /**
    * Update
    **/
-  save: function(teacher) {
+  save: function(teacher, courseId) {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .put(URL + '/' + teacher._id)
+        .put(URL + 'courses/' + courseId + '/teachers/' + teacher._id)
         .accept('application/json')
         .type('application/json')
         .send(teacher)
