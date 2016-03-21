@@ -35,13 +35,24 @@ var TeacherApi = {
   /**
    * Read
    **/
-  getTeachers: function(callback) {
-    Request
-    .get(URL, function(err, res){
-      callback(res.body);
-    });
-  },
 
+  getTeachers: function(courseId) {
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .get(URL + 'courses/' + courseId + '/teachers/')
+        .accept('application/json')
+        .type('application/json')
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
+  },
 
   getIndexById: function(objs, _id) {
     let index;

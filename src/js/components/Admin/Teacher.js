@@ -11,9 +11,28 @@ var teachersApi =                  require("../../api/teachersApi");
 
 export default class Admin extends React.Component {
 
+  /*
   componentWillMount(){
     this.list();
   }
+  */
+
+  // render only if course change
+
+  /*
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    if (nextProps.courseId != this.props.courseId){
+      this.list();
+    }
+  }
+  */
+
+  /*
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.courseId !== this.props.courseId;
+  }
+  */
 
   select(teacher){
     this.props.setTeacher(teacher);
@@ -33,8 +52,6 @@ export default class Admin extends React.Component {
     teachersApi.create(teacher, courseId)
       .then( (teacher) => {
         this.props.setTeacher(teacher);
-        console.log(teacher);
-
         toastr.success('Le cours à été crée.');
       }, (err) => {
         throw err;
@@ -43,10 +60,15 @@ export default class Admin extends React.Component {
   }
 
   // Read
-  list(){
-    coursesApi.getCourses(courses => {
-      this.setState({'courses' : courses});
-    });
+  list(courseId){
+    //let courseId = this.props.courseId;
+    console.log('list: courseId', courseId)
+    teachersApi.getTeachers(courseId)
+      .then( (teachers) => {
+        this.props.setTeachers(teachers);
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   // Update

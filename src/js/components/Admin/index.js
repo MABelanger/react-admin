@@ -25,7 +25,10 @@ export default class Admin extends React.Component {
   }
 
   setCourse(course){
+    console.log('setCourse', course)
     this.setState({'course': course});
+    // update the teacher list
+    this.refs.teacher.list(course._id)
   }
 
 
@@ -40,7 +43,12 @@ export default class Admin extends React.Component {
     this.setState({'teacher': teacher});
   }
 
+
   render() {
+    if (this.state.course._id) {
+      var teacher = "";
+    }
+
     return (
       <div>
         <CourseName
@@ -51,12 +59,14 @@ export default class Admin extends React.Component {
         />
 
         <Teacher
+          ref="teacher"
           courseId={this.state.course._id}
           teacher={this.state.teacher}
           teachers={this.state.teachers}
           setTeachers={this.setTeachers.bind(this)}
           setTeacher={this.setTeacher.bind(this)}
         />
+
       </div>
     );
   }
