@@ -32,13 +32,11 @@ export default class Dropdown extends React.Component {
   mouseEnterMenu(e){
     e.preventDefault();
     this.setState({ mouseEnterMenu: true });
-    console.log('mouseEnterMenu');
   }
 
   mouseLeaveMenu(e){
     e.preventDefault();
     this.setState({ mouseEnterMenu: false });
-    console.log('mouseLeaveMenu');
   }
 
   onSelect(item){

@@ -25,7 +25,6 @@ export default class Admin extends React.Component {
   }
 
   setCourse(course){
-    console.log('setCourse', course)
     this.setState({'course': course});
     // update the teachers list
     this.refs.teacher.list(course._id)

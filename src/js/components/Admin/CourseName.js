@@ -4,6 +4,7 @@ import toastr                     from 'toastr';
 
 import CourseNameSection          from "../sections/courseName";
 
+
 // CSS
 import 'toastr/build/toastr.css';
 
@@ -53,7 +54,7 @@ export default class CourseName extends React.Component {
         this.list();
         toastr.success('Le cour à été sauvegardé.');
       }, (err) => {
-        toastr.error('Erreur de sauvegarde.');
+        toastr.error('Erreur de sauvegarde.', err);
       });
   }
 

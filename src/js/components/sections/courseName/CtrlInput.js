@@ -18,7 +18,7 @@ export default class CtrlInput extends React.Component {
     this.setState(newState);
   }
 
-  getCourse(){
+  getFields(){
     return {
       name : this.state.name,
       svg : this.state.name,

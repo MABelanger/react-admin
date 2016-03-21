@@ -8,6 +8,7 @@ import toastr                     from 'toastr';
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
+import * as adminHelper           from "../helper";
 
 
 
@@ -47,22 +48,18 @@ export default class Teacher extends React.Component {
   onCtrlSave(e){
 
     // Get the new values fields
-    let fields = this.refs.ctrlInput.getFields();
-    let objDocument= this.props.teacher;
+    let teacherInput = this.refs.ctrlInput.getFields();
+    let teacher = this.props.teacher;
 
-    // Merge the new value into the existing object.
-    for(var attr in fields) {
-      if( fields.hasOwnProperty(attr) ){
-        objDocument[attr] = fields[attr];
-      }
-    }
-    // if objDocument exist, save it, else create it
-    if(objDocument._id) {
-      this.save(objDocument);
+    teacher = adminHelper.overwriteAttrs(teacherInput, teacher);
+    // if teacher exist, save it, else create it
+    if(teacher._id) {
+      this.props.onSave(teacher);
     }
     else{
-      this.create(objDocument);
+      this.props.onCreate(teacher);
     }
+    this.hideSection();
   }
   /**
    * Delete
@@ -87,7 +84,6 @@ export default class Teacher extends React.Component {
 
    // Hide all property section fields
   hideSection(){
-    console.log('hide Section')
     this.setState({'showSection': false});
   }
 

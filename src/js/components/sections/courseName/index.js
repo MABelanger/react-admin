@@ -7,6 +7,7 @@ import ModalBootstrap             from "../../ModalBootstrap";
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
+import * as adminHelper           from "../helper";
 
 // API
 var coursesApi =                  require("../../../api/coursesApi");
@@ -32,15 +33,10 @@ export default class CourseName extends React.Component {
   onCtrlSave(e){
 
     // Get the new values fields
-    let courseInput = this.refs.ctrlInput.getCourse();
-    let course= this.props.course;
+    let courseInput = this.refs.ctrlInput.getFields();
+    let course = this.props.course;
 
-    // Merge the new value into the existing object.
-    for(var attr in courseInput) {
-      if( courseInput.hasOwnProperty(attr) ){
-        course[attr] = courseInput[attr];
-      }
-    }
+    course = adminHelper.overwriteAttrs(courseInput, course);
     // if course exist, save it, else create it
     if(course._id) {
       this.props.onSave(course);
@@ -48,6 +44,7 @@ export default class CourseName extends React.Component {
     else{
       this.props.onCreate(course);
     }
+    this.hideSection();
   }
 
 
@@ -67,7 +64,6 @@ export default class CourseName extends React.Component {
 
    // Hide all property section fields
   hideSection(){
-    console.log('hide Section')
     this.setState({'showSection': false});
   }
 
@@ -75,6 +71,7 @@ export default class CourseName extends React.Component {
   new(){
     this.setState({'course': {}});
     this.showSection();
+    this.props.onNew();
   }
 
   // A course has been selected

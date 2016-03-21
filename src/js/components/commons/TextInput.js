@@ -14,7 +14,6 @@ export default class TextInput extends React.Component {
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
-    console.log("TextInput");
     return (
       <div className="form-horizontal">
         <div className={wrapperClass}>

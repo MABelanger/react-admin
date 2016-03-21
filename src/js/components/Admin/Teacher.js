@@ -4,35 +4,14 @@ import 'toastr/build/toastr.css';
 
 import CourseNameSection          from "../sections/courseName";
 import TeacherSection             from "../sections/teacher";
-import * as sectionHelper         from "../sections/helper";
+
 
 var coursesApi =                  require("../../api/coursesApi");
 var teachersApi =                  require("../../api/teachersApi");
 
 export default class Admin extends React.Component {
 
-  /*
-  componentWillMount(){
-    this.list();
-  }
-  */
 
-  // render only if course change
-
-  /*
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-    if (nextProps.courseId != this.props.courseId){
-      this.list();
-    }
-  }
-  */
-
-  /*
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.courseId !== this.props.courseId;
-  }
-  */
 
   select(teacher){
     this.props.setTeacher(teacher);
@@ -51,18 +30,17 @@ export default class Admin extends React.Component {
     let courseId = this.props.courseId;
     teachersApi.create(teacher, courseId)
       .then( (teacher) => {
+        // update teacher and teachers
         this.props.setTeacher(teacher);
+        this.list(courseId)
         toastr.success('Le professeur à été crée.');
       }, (err) => {
-        throw err;
         toastr.error('Erreur de création.', err);
       });
   }
 
   // Read
   list(courseId){
-    //let courseId = this.props.courseId;
-    console.log('list: courseId', courseId)
     teachersApi.getTeachers(courseId)
       .then( (teachers) => {
         this.props.setTeachers(teachers);
@@ -72,21 +50,15 @@ export default class Admin extends React.Component {
   }
 
   // Update
-  save(teacherInput){
+  save(teacher){
     let courseId = this.props.courseId;
-    let teacher = this.props.teacher;
-    // Merge the new value into the existing object.
-    for(var attr in teacherInput) {
-      if( teacherInput.hasOwnProperty(attr) ){
-        teacher[attr] = teacherInput[attr];
-      }
-    }
+
     teachersApi.save(teacher, courseId)
-      .then( (teachers) => {
+      .then( (teacher) => {
         this.props.setTeacher(teacher);
         toastr.success('Le professeur à été sauvegardé.');
       }, (err) => {
-        console.log(err);
+        toastr.error('Erreur de sauvegarde.', err);
       });
   }
 
