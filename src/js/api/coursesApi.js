@@ -1,16 +1,11 @@
 "use strict";
-import _                          from 'lodash';
+
 import Request                    from "superagent";
 
 const URL = 'http://localhost:3000/api/courses';
 
 // TODO : change this module to object and constructor... es6.
 
-var _courses = [];
-
-var setCourses = function(courses){
-  _courses = courses;
-}
 
 var CourseApi = {
 
@@ -39,20 +34,13 @@ var CourseApi = {
   /**
    * Read
    **/
-  getAllCourses: function(callback) {
+  getCourses: function(callback) {
     Request
     .get(URL, function(err, res){
       callback(res.body);
     });
   },
 
-  getCourseBySlug(slug){
-    return _.find(_courses, {slug: slug});
-  },
-
-  getCourseById: function(id) {
-    return _.find(_courses, {id: id});
-  },
 
   getIndexById: function(objs, _id) {
     let index;
