@@ -9,8 +9,7 @@ import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
 
-// API
-var coursesApi =                  require("../../../api/coursesApi");
+
 
 // Styles
 import 'toastr/build/toastr.css';

@@ -7,6 +7,7 @@ import TeacherSection             from "../sections/teacher";
 import * as sectionHelper         from "../sections/helper";
 
 var coursesApi =                  require("../../api/coursesApi");
+var teachersApi =                  require("../../api/teachersApi");
 
 export default class Admin extends React.Component {
 
@@ -28,9 +29,17 @@ export default class Admin extends React.Component {
 
   // Create
   create(teacher){
-    let course = this.state.course;
-    course.teachers.push(teacher);
-    this.save(course);
+    let courseId = this.props.courseId;
+    teachersApi.create(teacher, courseId)
+      .then( (teacher) => {
+        this.props.setTeacher(teacher);
+        console.log(teacher);
+
+        toastr.success('Le cours à été crée.');
+      }, (err) => {
+        throw err;
+        toastr.error('Erreur de création.', err);
+      });
   }
 
   // Read
@@ -42,8 +51,8 @@ export default class Admin extends React.Component {
 
   // Update
   save(teacherInput){
-    let index = coursesApi.getIndexById(this.state.course.teachers, this.state.teacher._id);
-    let course = this.state.course;
+    let index = coursesApi.getIndexById(this.props.course.teachers, this.props.teacher._id);
+    let course = this.props.course;
 
     let teacher = course.teachers[index];
     // Merge the new value into the existing object.
@@ -57,8 +66,8 @@ export default class Admin extends React.Component {
 
   // Delete
   delete(teacher){
-    let index = coursesApi.getIndexById(this.state.course.teachers, this.state.teacher._id);
-    let course = this.state.course;
+    let index = coursesApi.getIndexById(this.props.course.teachers, this.props.teacher._id);
+    let course = this.props.course;
     debugger;
     if (index > -1) {
       course.teachers.splice(index, 1);

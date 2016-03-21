@@ -33,7 +33,6 @@ export default class Admin extends React.Component {
    * Teacher
    */
   setTeachers(teachers){
-    console.log('teachers', teachers)
     this.setState({'teachers': teachers});
   }
 
@@ -52,6 +51,7 @@ export default class Admin extends React.Component {
         />
 
         <Teacher
+          courseId={this.state.course._id}
           teacher={this.state.teacher}
           teachers={this.state.teachers}
           setTeachers={this.setTeachers.bind(this)}
