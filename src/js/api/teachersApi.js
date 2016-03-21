@@ -90,10 +90,10 @@ var TeacherApi = {
    * Delete
    **/
 
-  delete: function(teacher) {
+  delete: function(teacher, courseId)  {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .del(URL + '/' + teacher._id)
+        .del(URL + 'courses/' + courseId + '/teachers/' + teacher._id)
         .accept('application/json')
         .type('application/json')
         .send(teacher)

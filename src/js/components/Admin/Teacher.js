@@ -64,14 +64,16 @@ export default class Admin extends React.Component {
 
   // Delete
   delete(teacher){
-    let index = coursesApi.getIndexById(this.props.course.teachers, this.props.teacher._id);
-    let course = this.props.course;
-    debugger;
-    if (index > -1) {
-      course.teachers.splice(index, 1);
-    }
-    this.save(course);
-    this.props.setTeacher({})
+    let courseId = this.props.courseId;
+
+    teachersApi.delete(teacher, courseId)
+      .then( (teacher) => {
+        this.props.setTeacher({});
+        this.list(courseId);
+        toastr.success('Le professeur à été supprimé.');
+      }, (err) => {
+        toastr.error('Erreur Supression', err);
+      });
   }
 
   render() {
