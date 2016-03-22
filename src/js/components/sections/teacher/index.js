@@ -22,6 +22,10 @@ export default class Teacher extends React.Component {
 
   constructor(props) {
     super(props);
+    // expose the method to the parent via props
+    this.showSection = this.showSection.bind(this);
+    this.hideSection = this.hideSection.bind(this);
+
     this.state = {
       showSection: false,
     };
@@ -84,6 +88,7 @@ export default class Teacher extends React.Component {
 
    // Hide all property section fields
   hideSection(){
+    console.log('hideSection');
     this.setState({'showSection': false});
   }
 

@@ -79,6 +79,7 @@ export default class Admin extends React.Component {
   render() {
     return (
       <TeacherSection
+        ref="teacherSection"
         teachers={this.props.teachers}
         teacher={this.props.teacher}
         onSelect={this.select.bind(this)}

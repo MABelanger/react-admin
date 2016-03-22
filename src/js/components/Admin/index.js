@@ -26,8 +26,12 @@ export default class Admin extends React.Component {
 
   setCourse(course){
     this.setState({'course': course});
-    // update the teachers list
-    this.refs.teacher.list(course._id)
+    this.setState({'teacher': {}});
+
+    // update the teachers list and hide sections
+    this.refs.teacherAdmin.list(course._id);
+    this.refs.teacherAdmin.refs.teacherSection.hideSection();
+
   }
 
 
@@ -58,7 +62,7 @@ export default class Admin extends React.Component {
         />
 
         <Teacher
-          ref="teacher"
+          ref="teacherAdmin"
           courseId={this.state.course._id}
           teacher={this.state.teacher}
           teachers={this.state.teachers}
