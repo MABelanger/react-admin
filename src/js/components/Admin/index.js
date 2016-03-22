@@ -24,14 +24,20 @@ export default class Admin extends React.Component {
     this.setState({'courses': courses});
   }
 
+  componentDidMount(){
+
+  }
+
   setCourse(course){
     this.setState({'course': course});
     this.setState({'teacher': {}});
 
     // update the teachers list and hide sections
-    this.refs.teacherAdmin.list(course._id);
-    this.refs.teacherAdmin.refs.teacherSection.hideSection();
-
+    // need an if because the component is not
+    if(this.refs.teacherAdmin){
+      this.refs.teacherAdmin.list(course._id);
+      this.refs.teacherAdmin.refs.teacherSection.hideSection();
+    }
   }
 
 
@@ -47,10 +53,23 @@ export default class Admin extends React.Component {
   }
 
 
+  getTeacher(){
+    return (
+      <Teacher
+        ref="teacherAdmin"
+        courseId={this.state.course._id}
+        teacher={this.state.teacher}
+        teachers={this.state.teachers}
+        setTeachers={this.setTeachers.bind(this)}
+        setTeacher={this.setTeacher.bind(this)}
+      />
+    );
+  }
+
   render() {
-    if (this.state.course._id) {
-      var teacher = "";
-    }
+
+    var teacher = this.state.course._id ? this.teacher : '';
+
 
     return (
       <div>
@@ -61,14 +80,7 @@ export default class Admin extends React.Component {
           setCourse={this.setCourse.bind(this)}
         />
 
-        <Teacher
-          ref="teacherAdmin"
-          courseId={this.state.course._id}
-          teacher={this.state.teacher}
-          teachers={this.state.teachers}
-          setTeachers={this.setTeachers.bind(this)}
-          setTeacher={this.setTeacher.bind(this)}
-        />
+        {this.state.course._id ? this.getTeacher() : ''}
 
       </div>
     );

@@ -12,6 +12,10 @@ var teachersApi =                  require("../../api/teachersApi");
 export default class Admin extends React.Component {
 
 
+  componentWillMount(){
+    let courseId = this.props.courseId;
+    this.list(courseId);
+  }
 
   select(teacher){
     this.props.setTeacher(teacher);
