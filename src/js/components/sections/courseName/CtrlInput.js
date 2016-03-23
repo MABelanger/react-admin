@@ -11,6 +11,19 @@ export default class CtrlInput extends React.Component {
     };
   }
 
+  componentWillMount(){
+    this.setState({
+      name : this.props.course.name,
+      svg : this.props.course.svg,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name : nextProps.course.name,
+      svg : nextProps.course.svg,
+    });
+  }
 
   changeValue(name, value) {
     let newState = {};
@@ -23,13 +36,6 @@ export default class CtrlInput extends React.Component {
       name : this.state.name,
       svg : this.state.name,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      name : nextProps.course.name,
-      svg : nextProps.course.svg,
-    });
   }
 
   render() {

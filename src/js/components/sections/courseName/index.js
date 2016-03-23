@@ -28,6 +28,10 @@ export default class CourseName extends React.Component {
   }
 
 
+  componentDidMount(){
+
+  }
+
 
   // Save button click
   onCtrlSave(e){
@@ -92,13 +96,18 @@ export default class CourseName extends React.Component {
     this.props.onDelete();
   }
 
+  getSectionInput(){
+
+  }
+
   // render the component
   render() {
+
     let cx = classNames.bind(sectionStyles);
-    let sectionClasses = cx({
+    this.sectionClasses = cx({
       'section-transition' : true,
-        'section-show': ( this.state.showSection == true ),
-        'section-hide': ( this.state.showSection == false )
+      'section-show': ( this.state.showSection == true ),
+      'section-hide': ( this.state.showSection == false )
     });
 
     return (
@@ -124,7 +133,7 @@ export default class CourseName extends React.Component {
         />
 
         <div className="section-animation">
-          <div className={sectionClasses}>
+          <div className={this.sectionClasses}>
             <CtrlInput ref="ctrlInput" course={this.props.course} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
@@ -132,6 +141,7 @@ export default class CourseName extends React.Component {
             />
           </div>
         </div>
+
 
       </div>
     );

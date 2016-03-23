@@ -20,3 +20,5 @@ sectionHelper.fetchAllCourses(this);
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.courseId !== this.props.courseId;
   }
+
+componentDidMount()
