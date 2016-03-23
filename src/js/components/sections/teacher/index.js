@@ -89,7 +89,6 @@ export default class Teacher extends React.Component {
 
    // Hide all property section fields
   hideSection(){
-    console.log('hideSection');
     this.setState({'showSection': false});
   }
 
