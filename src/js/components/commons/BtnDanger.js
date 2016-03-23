@@ -1,9 +1,14 @@
 import React                      from "react";
+import BtnCommon                  from "./BtnCommon";
 
 export default class BtnDanger extends React.Component {
+
   render() {
     return (
-      <button className="btn btn-danger" onClick={this.props.onClick}> {this.props.label} </button>
+      <BtnCommon
+        {...this.props}
+        btnType="btn-danger"
+      />
     );
   }
 }

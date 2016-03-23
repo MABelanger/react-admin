@@ -13,12 +13,12 @@ export default class CtrlSaveDel extends React.Component {
           <div className="col-xs-offset-2 col-xs-10">
             <div className="btn-toolbar">
               <BtnInfo
+                onClick={ (e)=>{ this.props.onSave(e); } }
                 label="Sauvegarder"
-                onClick={(e)=>{this.props.onSave(e);} }
               />
               <BtnDanger
+                onClick={ (e)=>{ this.props.onDelete(e); } }
                 label="X"
-                onClick={(e)=>{this.props.onDelete(e);} }
               />
             </div>
           </div>
