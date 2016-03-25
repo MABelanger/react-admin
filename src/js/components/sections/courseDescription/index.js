@@ -36,42 +36,42 @@ export default class Teacher extends React.Component {
   /**
    * Create
    **/
-  create(teacher){
-     // call admin to create the teacher
-     this.props.onCreate(teacher);
+  create(courseDescription){
+     // call admin to create the courseDescription
+     this.props.onCreate(courseDescription);
 
   }
 
   /**
    * Update
    **/
-  save(teacher){
-    // call admin to save the teacher
-    this.props.onSave(teacher);
+  save(courseDescription){
+    // call admin to save the courseDescription
+    this.props.onSave(courseDescription);
   }
 
   // Save button click
   onCtrlSave(e){
 
     // Get the new values fields
-    let teacherInput = this.refs.ctrlInput.getFields();
-    let teacher = this.props.course;
+    let courseDescriptionInput = this.refs.ctrlInput.getFields();
+    let courseDescription = this.props.courseDescription;
 
-    teacher = adminHelper.overwriteAttrs(teacherInput, teacher);
-    // if teacher exist, save it, else create it
-    if(teacher._id) {
-      this.props.onSave(teacher);
+    courseDescription = adminHelper.overwriteAttrs(courseDescriptionInput, courseDescription);
+    // if courseDescription exist, save it, else create it
+    if(courseDescription) {
+      this.props.onSave(courseDescription);
     }
     else{
-      this.props.onCreate(teacher);
+      this.props.onCreate(courseDescription);
     }
-    this.hideSection();
+    //this.hideSection();
   }
   /**
    * Delete
    **/
   delete(){
-    this.props.onDelete(this.props.course);
+    this.props.onDelete();
     this.hideSection()
   }
 
@@ -99,10 +99,6 @@ export default class Teacher extends React.Component {
     this.showSection();
   }
 
-  // A teacher has been selected
-  select(teacher){
-    this.props.onSelect(teacher);
-  }
 
   // Modify button click
   modify(){

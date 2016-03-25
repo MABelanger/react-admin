@@ -15,17 +15,11 @@ export default class Admin extends React.Component {
   }
 
   componentWillMount(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    this.read(courseId, teacherId);
-  }
-
-  select(teacher){
-    this.props.setTeacher(teacher);
+    this.read();
   }
 
   new(){
-    this.props.setTeacher({});
+    this.props.setCourseDescription({});
   }
 
   /**
@@ -33,13 +27,14 @@ export default class Admin extends React.Component {
    **/
 
   // Create
-  create(teacher){
+  create(courseDescription){
     let courseId = this.props.courseId;
-    courseDescriptionApi.create(teacher, courseId)
-      .then( (teacher) => {
-        // update teacher and teachers
-        this.props.setTeacher(teacher);
-        this.list(courseId)
+    let teacherId = this.props.teacherId;
+
+    courseDescriptionApi.create(courseId, teacherId)
+      .then( (courseDescription) => {
+        // update courseDescription and courseDescriptions
+        this.props.setCourseDescription(courseDescription);
         toastr.success('Le professeur à été crée.');
       }, (err) => {
         toastr.error('Erreur de création.', err);
@@ -47,7 +42,10 @@ export default class Admin extends React.Component {
   }
 
   // Read
-  read(courseId, teacherId){
+  read(){
+    let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
+
     courseDescriptionApi.read(courseId, teacherId)
       .then( (courseDescription) => {
         this.props.setCourseDescription(courseDescription);
@@ -57,26 +55,28 @@ export default class Admin extends React.Component {
   }
 
   // Update
-  save(teacher){
+  save(courseDescription){
     let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
 
-    courseDescriptionApi.save(teacher, courseId)
-      .then( (teacher) => {
-        this.props.setTeacher(teacher);
-        toastr.success('Le professeur à été sauvegardé.');
+    console.log('save: courseDescription', courseDescription)
+    courseDescriptionApi.save(courseId, teacherId, courseDescription)
+      .then( (courseDescription) => {
+        this.props.setCourseDescription(courseDescription);
+        toastr.success('La description du cours à été sauvegardé.');
       }, (err) => {
         toastr.error('Erreur de sauvegarde.', err);
       });
   }
 
   // Delete
-  delete(teacher){
+  delete(){
     let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
 
-    courseDescriptionApi.delete(teacher, courseId)
-      .then( (teacher) => {
-        this.props.setTeacher({});
-        this.list(courseId);
+    courseDescriptionApi.delete(courseId, teacherId)
+      .then( (msg) => {
+        this.props.setCourseDescription({});
         toastr.success('Le professeur à été supprimé.');
       }, (err) => {
         toastr.error('Erreur Supression', err);
@@ -88,6 +88,11 @@ export default class Admin extends React.Component {
       <div>
         <CourseDescriptionSection
           courseDescription={ this.props.courseDescription }
+          onNew={this.new.bind(this)}
+
+          onCreate={this.create.bind(this)}
+          onSave={this.save.bind(this)}
+          onDelete={this.delete.bind(this)}
         />
       </div>
     );

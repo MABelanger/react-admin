@@ -59,6 +59,7 @@ export default class CtrlInput extends React.Component {
           value={this.state.courseType}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
+
         <ReactQuill
           name="note"
           label="Note"

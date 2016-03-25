@@ -74,6 +74,7 @@ var TeacherApi = {
         .send(courseDescription)
         .end((err, res) => {
           if (! err ) {
+            console.log('res.body', res.body)
             resolve(res.body);
           }
           else {
@@ -88,7 +89,7 @@ var TeacherApi = {
    * Delete
    **/
 
-  delete: function(teacher, courseId) {
+  delete: function(courseId, teacherId) {
     let url = getUrl(courseId, teacherId);
     var promise = new Promise(function(resolve, reject) {
       Request
