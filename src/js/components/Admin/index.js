@@ -81,7 +81,6 @@ export default class Admin extends React.Component {
    * CourseDescription
    */
   setCourseDescription(courseDescription){
-    console.log('setCourseDescription', courseDescription)
     this.setState({'courseDescription': courseDescription});
   }
 

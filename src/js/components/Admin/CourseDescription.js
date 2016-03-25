@@ -14,10 +14,6 @@ export default class Admin extends React.Component {
     this.read = this.read.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('Insite CourseDescriptionAdmin', nextProps)
-  }
-
   componentWillMount(){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;

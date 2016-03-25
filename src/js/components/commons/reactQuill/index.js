@@ -14,6 +14,11 @@ export default class Admin extends React.Component {
     };
   }
 
+  handleChange(e) {
+    const value = e;
+    this.props.changeValue(this.props.name, value);
+  }
+
   initToolbars(){
     this.menuColors = [
       'rgb(  0,   0,   0)',
@@ -41,10 +46,6 @@ export default class Admin extends React.Component {
     ];
   }
 
-  onTextChange(e){
-    console.log(e);
-  }
-
   render() {
     this.initToolbars();
 
@@ -52,8 +53,9 @@ export default class Admin extends React.Component {
       <div>
         <ReactQuill
           theme="snow"
-          value={this.state.description}
-          onChange={this.onTextChange}
+          ref={this.props.name}
+          value={this.props.value}
+          onChange={this.handleChange.bind(this)}
           >
           <ReactQuill.Toolbar key="toolbar"
                               ref="toolbar"

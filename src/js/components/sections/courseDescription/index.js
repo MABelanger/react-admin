@@ -32,9 +32,6 @@ export default class Teacher extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('Insite CourseDescriptionSection', nextProps)
-  }
 
   /**
    * Create
