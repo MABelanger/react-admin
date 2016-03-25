@@ -2,20 +2,26 @@ import React                      from "react";
 import toastr                     from 'toastr';
 import 'toastr/build/toastr.css';
 
-import CourseNameSection          from "../sections/courseName";
-import TeacherSection             from "../sections/teacher";
 import CourseDescriptionSection   from "../sections/courseDescription";
 
-
-var coursesApi =                  require("../../api/coursesApi");
-var teachersApi =                  require("../../api/teachersApi");
+var courseDescriptionApi =         require("../../api/courseDescriptionApi");
 
 export default class Admin extends React.Component {
 
+  constructor(props) {
+    super(props);
+    // expose the method to the parent via props
+    this.read = this.read.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('Insite CourseDescriptionAdmin', nextProps)
+  }
 
   componentWillMount(){
     let courseId = this.props.courseId;
-    this.list(courseId);
+    let teacherId = this.props.teacherId;
+    this.read(courseId, teacherId);
   }
 
   select(teacher){
@@ -33,7 +39,7 @@ export default class Admin extends React.Component {
   // Create
   create(teacher){
     let courseId = this.props.courseId;
-    teachersApi.create(teacher, courseId)
+    courseDescriptionApi.create(teacher, courseId)
       .then( (teacher) => {
         // update teacher and teachers
         this.props.setTeacher(teacher);
@@ -45,10 +51,10 @@ export default class Admin extends React.Component {
   }
 
   // Read
-  list(courseId){
-    teachersApi.getTeachers(courseId)
-      .then( (teachers) => {
-        this.props.setTeachers(teachers);
+  read(courseId, teacherId){
+    courseDescriptionApi.read(courseId, teacherId)
+      .then( (courseDescription) => {
+        this.props.setCourseDescription(courseDescription);
       }, (err) => {
         console.log(err);
       });
@@ -58,7 +64,7 @@ export default class Admin extends React.Component {
   save(teacher){
     let courseId = this.props.courseId;
 
-    teachersApi.save(teacher, courseId)
+    courseDescriptionApi.save(teacher, courseId)
       .then( (teacher) => {
         this.props.setTeacher(teacher);
         toastr.success('Le professeur à été sauvegardé.');
@@ -71,7 +77,7 @@ export default class Admin extends React.Component {
   delete(teacher){
     let courseId = this.props.courseId;
 
-    teachersApi.delete(teacher, courseId)
+    courseDescriptionApi.delete(teacher, courseId)
       .then( (teacher) => {
         this.props.setTeacher({});
         this.list(courseId);
@@ -84,16 +90,8 @@ export default class Admin extends React.Component {
   render() {
     return (
       <div>
-        <TeacherSection
-          ref="teacherSection"
-          teachers={this.props.teachers}
-          teacher={this.props.teacher}
-          onSelect={this.select.bind(this)}
-          onNew={this.new.bind(this)}
-
-          onCreate={this.create.bind(this)}
-          onSave={this.save.bind(this)}
-          onDelete={this.delete.bind(this)}
+        <CourseDescriptionSection
+          courseDescription={ this.props.courseDescription }
         />
       </div>
     );

@@ -32,6 +32,9 @@ export default class Teacher extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('Insite CourseDescriptionSection', nextProps)
+  }
 
   /**
    * Create
@@ -133,7 +136,10 @@ export default class Teacher extends React.Component {
 
         <div className="section-animation">
           <div className={sectionClasses}>
-            <CtrlInput ref="ctrlInput" course={this.props.course} />
+            <CtrlInput
+              ref="ctrlInput"
+              courseDescription={ this.props.courseDescription} 
+            />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }

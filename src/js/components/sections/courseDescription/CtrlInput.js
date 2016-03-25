@@ -35,20 +35,21 @@ export default class CtrlInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.course) {
+    console.log('nextProps', nextProps)
+    if(nextProps.courseDescription) {
+      console.log('nextProps.courseDescription', nextProps.courseDescription)
       this.setState({
-        courseType: nextProps.course.courseType,
-        note: nextProps.course.note,
-        image: nextProps.course.image,
-        description: nextProps.course.description,
-        price: nextProps.course.price,
-        isVisible: nextProps.course.isVisible
+        courseType: nextProps.courseDescription.courseType,
+        note: nextProps.courseDescription.note,
+        image: nextProps.courseDescription.image,
+        description: nextProps.courseDescription.description,
+        price: nextProps.courseDescription.price,
+        isVisible: nextProps.courseDescription.isVisible
       });
     }
   }
 
   render() {
-    console.log('this.props', this.props)
     return (
       <div>
         <TextInput

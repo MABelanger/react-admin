@@ -2,6 +2,7 @@ var coursesApi =                  require("../../api/coursesApi");
 import React                      from "react";
 import CourseName                 from "./CourseName";
 import Teacher                    from "./Teacher";
+import CourseDescription          from "./CourseDescription";
 
 
 export default class Admin extends React.Component {
@@ -13,7 +14,9 @@ export default class Admin extends React.Component {
       course : {},
 
       teachers: [],
-      teacher : {}
+      teacher : {},
+
+      courseDescription: {},
     };
   }
 
@@ -51,8 +54,15 @@ export default class Admin extends React.Component {
 
   setTeacher(teacher){
     this.setState({'teacher': teacher});
+    // update the course description and hide sections
+    // need an if because the component is not
+    console.log('this.refs.courseDescriptionAdmin', this.refs.courseDescriptionAdmin)
+    if(this.refs.courseDescriptionAdmin){
+      console.log('this.refs.courseDescriptionAdmin.read', this.refs.courseDescriptionAdmin.read)
+      this.refs.courseDescriptionAdmin.read(this.state.course._id, teacher._id);
+      //this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
+    }
   }
-
 
   getTeacher(){
     return (
@@ -63,6 +73,26 @@ export default class Admin extends React.Component {
         teachers={this.state.teachers}
         setTeachers={this.setTeachers.bind(this)}
         setTeacher={this.setTeacher.bind(this)}
+      />
+    );
+  }
+
+  /*
+   * CourseDescription
+   */
+  setCourseDescription(courseDescription){
+    console.log('setCourseDescription', courseDescription)
+    this.setState({'courseDescription': courseDescription});
+  }
+
+  getCourseDescription(){
+    return (
+      <CourseDescription
+        ref="courseDescriptionAdmin"
+        courseDescription={ this.state.courseDescription }
+        setCourseDescription={this.setCourseDescription.bind(this)}
+        courseId={this.state.course._id}
+        teacherId={this.state.teacher._id}
       />
     );
   }
@@ -82,6 +112,8 @@ export default class Admin extends React.Component {
         />
 
         {this.state.course._id ? this.getTeacher() : ''}
+
+        {this.state.teacher._id ? this.getCourseDescription() : ''}
 
       </div>
     );
