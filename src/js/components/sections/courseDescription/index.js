@@ -28,7 +28,7 @@ export default class Teacher extends React.Component {
     this.hideSection = this.hideSection.bind(this);
 
     this.state = {
-      showSection: false,
+      showSection: true,
     };
   }
 
@@ -55,7 +55,7 @@ export default class Teacher extends React.Component {
 
     // Get the new values fields
     let teacherInput = this.refs.ctrlInput.getFields();
-    let teacher = this.props.teacher;
+    let teacher = this.props.course;
 
     teacher = adminHelper.overwriteAttrs(teacherInput, teacher);
     // if teacher exist, save it, else create it
@@ -71,7 +71,7 @@ export default class Teacher extends React.Component {
    * Delete
    **/
   delete(){
-    this.props.onDelete(this.props.teacher);
+    this.props.onDelete(this.props.course);
     this.hideSection()
   }
 
@@ -124,25 +124,16 @@ export default class Teacher extends React.Component {
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer ce cour "
-            + '( ' + this.props.teacher.firstName + ' ) ?'
-            + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
+            "Voulez-vous vraiment supprimer cette description de cours "
+            + '( ' + ' ) ?'
+            + " tout la description ainsi que l'horaire seront aussi supprimé !"
           }
           onYes={::this.delete}
         />
 
-        <CtrlSelect
-          list={this.props.teachers}
-          title="Professeurs"
-          onSelect={ this.select.bind(this) }
-          onModify={this.modify.bind(this)}
-          onNew={ this.new.bind(this) }
-          value={ this.props.teacher.firstName}
-        />
-
         <div className="section-animation">
           <div className={sectionClasses}>
-            <CtrlInput ref="ctrlInput" teacher={this.props.teacher} />
+            <CtrlInput ref="ctrlInput" course={this.props.course} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }

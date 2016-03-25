@@ -1,0 +1,9 @@
+.quill {
+    border: 1px solid #d5d5d5;
+}
+.ql-toolbar {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+}
+.quill-contents {
+    height: 150px!important;
+} 

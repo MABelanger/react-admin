@@ -4,6 +4,7 @@ import 'toastr/build/toastr.css';
 
 import CourseNameSection          from "../sections/courseName";
 import TeacherSection             from "../sections/teacher";
+import CourseDescriptionSection   from "../sections/courseDescription";
 
 
 var coursesApi =                  require("../../api/coursesApi");
@@ -81,18 +82,23 @@ export default class Admin extends React.Component {
   }
 
   render() {
+    console.log('this.props.teacher.course', this.props.teacher.course)
     return (
-      <TeacherSection
-        ref="teacherSection"
-        teachers={this.props.teachers}
-        teacher={this.props.teacher}
-        onSelect={this.select.bind(this)}
-        onNew={this.new.bind(this)}
+      <div>
+        <TeacherSection
+          ref="teacherSection"
+          teachers={this.props.teachers}
+          teacher={this.props.teacher}
+          onSelect={this.select.bind(this)}
+          onNew={this.new.bind(this)}
 
-        onCreate={this.create.bind(this)}
-        onSave={this.save.bind(this)}
-        onDelete={this.delete.bind(this)}
-      />
+          onCreate={this.create.bind(this)}
+          onSave={this.save.bind(this)}
+          onDelete={this.delete.bind(this)}
+        />
+
+        <CourseDescriptionSection course={ this.props.teacher.course }/>
+      </div>
     );
   }
 }
