@@ -74,7 +74,6 @@ var TeacherApi = {
         .send(courseDescription)
         .end((err, res) => {
           if (! err ) {
-            console.log('res.body', res.body)
             resolve(res.body);
           }
           else {

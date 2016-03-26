@@ -8,6 +8,8 @@ import toastr                     from 'toastr';
 // modules
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
+import CtrlModNew                from "../ctrl/CtrlModNew";
+
 import CtrlInput                  from "./CtrlInput";
 import * as adminHelper           from "../helper";
 
@@ -28,7 +30,7 @@ export default class Teacher extends React.Component {
     this.hideSection = this.hideSection.bind(this);
 
     this.state = {
-      showSection: true,
+      showSection: false,
     };
   }
 
@@ -65,7 +67,7 @@ export default class Teacher extends React.Component {
     else{
       this.props.onCreate(courseDescription);
     }
-    //this.hideSection();
+    this.hideSection();
   }
   /**
    * Delete
@@ -121,14 +123,22 @@ export default class Teacher extends React.Component {
           ref="modalBootstrap"
           msg={
             "Voulez-vous vraiment supprimer cette description de cours "
-            + '( ' + ' ) ?'
+            + '( ' + this.props.courseDescription.courseType + ' ) ?'
             + " tout la description ainsi que l'horaire seront aussi supprimé !"
           }
           onYes={::this.delete}
         />
 
+        <CtrlModNew
+          title="Course Type"
+          onModify={this.modify.bind(this)}
+          onNew={ this.new.bind(this) }
+          value={ this.props.courseDescription.courseType}
+        />
+
         <div className="section-animation">
           <div className={sectionClasses}>
+
             <CtrlInput
               ref="ctrlInput"
               courseDescription={ this.props.courseDescription} 

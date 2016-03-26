@@ -36,7 +36,6 @@ export default class CtrlInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps)
     if(nextProps.courseDescription) {
       this.setState({
         courseType: nextProps.courseDescription.courseType,
@@ -65,6 +64,22 @@ export default class CtrlInput extends React.Component {
           label="Note"
           ref="note"
           value={this.state.note}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+        <ReactQuill
+          name="description"
+          label="Description"
+          ref="description"
+          value={this.state.description}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+
+        <ReactQuill
+          name="price"
+          label="Prix"
+          ref="price"
+          value={this.state.price}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
       </div>
