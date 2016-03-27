@@ -149,7 +149,6 @@ export default class Teacher extends React.Component {
             />
           </div>
         </div>
-
       </div>
     );
   }

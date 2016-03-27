@@ -11,9 +11,22 @@ export default class ImageUpload extends React.Component {
     this.state = {
       file: '',
       dataUri: '',
+      url: this.props.value.url
     };
     this._inputFileChange = this._inputFileChange.bind(this);
   }
+
+/*
+  componentWillReceiveProps(nextProps) {
+    // reset dataUri if an url is received to use the link url instead.
+    console.log('nextProps', nextProps)
+    if(nextProps.value){
+      this.setState({
+        dataUri: null
+      });
+    }
+  }
+*/
 
   _inputFileChange(e) {
     e.preventDefault();
@@ -30,19 +43,23 @@ export default class ImageUpload extends React.Component {
         dataUri: dataUri
       });
 
-      this.props.changeValue(name, dataUri);
+      let image = {
+        dataUri: dataUri,
+        fileName: file.name,
+        url: null
+      }
+      this.props.changeValue(name, image);
     }
 
     reader.readAsDataURL(file)
   }
 
-  _getFileNameUrl(){
-    let url = this.props.value;
+  _getFileNameUrl(url){
     return url.substring(url.lastIndexOf('/')+1);
   }
 
-  _getFileNameFReader(){
-    return this.state.file.name;
+  _getFileNameFReader(file){
+    return file.name;
   }
 
   _click(){
@@ -52,39 +69,52 @@ export default class ImageUpload extends React.Component {
   }
 
   render() {
-    let {dataUri} = this.state;
-    let url = this.props.value;
+
     let $imagePreview = null;
     let fileName = null;
 
     // build the right imagePreview
-    if (dataUri) {
-      $imagePreview = (<img src={dataUri} />);
-      fileName = this._getFileNameFReader();
 
-    }else if(url) {
-      $imagePreview = (<img src={url} />);
-      fileName = this._getFileNameUrl();
+    console.log('this.props.value',this.props.value);
+    if(this.props.value.url) {
+      $imagePreview = (<img src={this.props.value.url} />);
+      fileName = this._getFileNameUrl(this.props.value.url);
 
-    } else {
-      $imagePreview = '';
+    } else if (this.props.value.dataUri) {
+      $imagePreview = (<img src={this.props.value.dataUri} />);
+      fileName = this._getFileNameFReader(this.state.file);
     }
 
+    var wrapperClass = 'form-group';
+    if (this.props.error && this.props.error.length > 0) {
+      wrapperClass += " " + 'has-error';
+    }
     return (
-      <div className="imgPreview">
-        <BtnInfo 
-          label="Rechercher"
-          onClick={(e) => {this._click();} }
-        />
-        <input 
-          type="file"
-          ref="inputFile"
-          onChange={this._inputFileChange}
-        />
+      <div className="form-horizontal">
+        <div className={wrapperClass}>
+          <label htmlFor={this.props.name} className="control-label col-xs-2">
+            <br />
+            {this.props.label} :
+          </label>
+          <div className="col-sm-10">
+            &nbsp;
+            <div className="imgPreview">
+              <BtnInfo 
+                label="Rechercher"
+                onClick={(e) => {this._click();} }
+              />
+              <input 
+                type="file"
+                ref="inputFile"
+                onChange={this._inputFileChange}
+              />
 
-        {$imagePreview}
+              {$imagePreview}
 
-        <div>{fileName}</div>
+              <div>{fileName}</div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

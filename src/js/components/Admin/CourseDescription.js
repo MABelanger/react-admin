@@ -62,6 +62,7 @@ export default class Admin extends React.Component {
     courseDescriptionApi.save(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
         this.props.setCourseDescription(courseDescription);
+        console.log('courseDescriptionApi.save.courseDescription', courseDescription)
         toastr.success('La description du cours à été sauvegardé.');
       }, (err) => {
         toastr.error('Erreur de sauvegarde.', err);
@@ -84,7 +85,6 @@ export default class Admin extends React.Component {
 
   render() {
     return (
-      <div>
         <CourseDescriptionSection
           ref="courseDescriptionSection"
           courseDescription={ this.props.courseDescription }
@@ -94,7 +94,6 @@ export default class Admin extends React.Component {
           onSave={this.save.bind(this)}
           onDelete={this.delete.bind(this)}
         />
-      </div>
     );
   }
 }
