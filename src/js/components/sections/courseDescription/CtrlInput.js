@@ -1,7 +1,7 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 import ReactQuill                 from "../../commons/reactQuill";
-import ImageUpload                from "../../ImageUpload";
+import Image                from "../../Image";
 
 export default class CtrlInput extends React.Component {
 
@@ -60,11 +60,11 @@ export default class CtrlInput extends React.Component {
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
 
-        <ImageUpload
+        <Image
           name="image"
           label="Image"
           ref="courseDescriptionImg"
-          url={this.state.image}
+          value={this.state.image}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
 

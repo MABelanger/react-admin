@@ -12,7 +12,6 @@ export default class ImageUpload extends React.Component {
       file: '',
       dataUri: '',
     };
-    this.getDataUri = this.getDataUri.bind(this);
     this._inputFileChange = this._inputFileChange.bind(this);
   }
 
@@ -37,12 +36,8 @@ export default class ImageUpload extends React.Component {
     reader.readAsDataURL(file)
   }
 
-  getDataUri(){
-    return this.state.dataUri;
-  }
-
   _getFileNameUrl(){
-    let {url} = this.props;
+    let url = this.props.value;
     return url.substring(url.lastIndexOf('/')+1);
   }
 
@@ -58,7 +53,7 @@ export default class ImageUpload extends React.Component {
 
   render() {
     let {dataUri} = this.state;
-    let {url} = this.props;
+    let url = this.props.value;
     let $imagePreview = null;
     let fileName = null;
 
