@@ -1,6 +1,10 @@
 http://derpturkey.com/react-pass-value-with-onclick/
 https://toddmotto.com/react-create-class-versus-component/
 
+
+// data:image/jpeg;base64,/9j/4AA
+
+
 var testingDaysSchema = new Schema({
   "slug" : String,
   "day": Date,

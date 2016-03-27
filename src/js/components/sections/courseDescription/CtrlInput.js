@@ -60,7 +60,13 @@ export default class CtrlInput extends React.Component {
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
 
-        <ImageUpload/>
+        <ImageUpload
+          name="image"
+          label="Image"
+          ref="courseDescriptionImg"
+          url={this.state.image}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
 
         <ReactQuill
           name="note"

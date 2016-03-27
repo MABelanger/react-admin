@@ -11,37 +11,46 @@ export default class ImageUpload extends React.Component {
     this.state = {
       file: '',
       dataUri: '',
-      url: 'https://pixabay.com/static/uploads/photo/2015/10/01/21/39/background-image-967820_960_720.jpg'
     };
-    this._handleImageChange = this._handleImageChange.bind(this);
+    this.getDataUri = this.getDataUri.bind(this);
+    this._inputFileChange = this._inputFileChange.bind(this);
   }
 
-  _handleImageChange(e) {
+  _inputFileChange(e) {
     e.preventDefault();
 
     let reader = new FileReader();
     let file = e.target.files[0];
 
     reader.onloadend = () => {
+      let dataUri = reader.result;
+      let name = this.props.name;
+
       this.setState({
         file: file,
-        dataUri: reader.result
+        dataUri: dataUri
       });
+
+      this.props.changeValue(name, dataUri);
     }
 
     reader.readAsDataURL(file)
   }
 
-  getFileNameUrl(){
-    let url = this.state.url;
+  getDataUri(){
+    return this.state.dataUri;
+  }
+
+  _getFileNameUrl(){
+    let {url} = this.props;
     return url.substring(url.lastIndexOf('/')+1);
   }
 
-  getFileNameFReader(){
+  _getFileNameFReader(){
     return this.state.file.name;
   }
 
-  click(){
+  _click(){
     //document.getElementById('fileCourseID').click();
     this.refs.inputFile.click();
     return false;
@@ -49,34 +58,37 @@ export default class ImageUpload extends React.Component {
 
   render() {
     let {dataUri} = this.state;
-    let {url} = this.state;
+    let {url} = this.props;
     let $imagePreview = null;
     let fileName = null;
 
     // build the right imagePreview
     if (dataUri) {
       $imagePreview = (<img src={dataUri} />);
-      fileName = this.getFileNameFReader();
+      fileName = this._getFileNameFReader();
 
-    }else {
+    }else if(url) {
       $imagePreview = (<img src={url} />);
-      fileName = this.getFileNameUrl();
+      fileName = this._getFileNameUrl();
+
+    } else {
+      $imagePreview = '';
     }
 
     return (
       <div className="imgPreview">
-
-      <BtnInfo 
-        label="Rechercher"
-        onClick={(e) => {this.click();} }
-      />
-
+        <BtnInfo 
+          label="Rechercher"
+          onClick={(e) => {this._click();} }
+        />
         <input 
           type="file"
           ref="inputFile"
-          onChange={this._handleImageChange}
+          onChange={this._inputFileChange}
         />
+
         {$imagePreview}
+
         <div>{fileName}</div>
       </div>
     )
