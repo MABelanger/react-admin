@@ -1,6 +1,7 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 import ReactQuill                 from "../../commons/reactQuill";
+import ImageUpload                from "../../ImageUpload";
 
 export default class CtrlInput extends React.Component {
 
@@ -58,6 +59,8 @@ export default class CtrlInput extends React.Component {
           value={this.state.courseType}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
+
+        <ImageUpload/>
 
         <ReactQuill
           name="note"
