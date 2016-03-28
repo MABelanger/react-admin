@@ -55,7 +55,7 @@ export default class ImageUpload extends React.Component {
   }
 
 
-  renderImagePreview(){
+  _renderImagePreview(){
     let fileName = null;
     let imgSrc = null;
 
@@ -78,7 +78,7 @@ export default class ImageUpload extends React.Component {
     );
   }
 
-  renderInputFile(){
+  _renderInputFile(){
     return (
       <div>
         <BtnInfo 
@@ -110,8 +110,8 @@ export default class ImageUpload extends React.Component {
           <div className="col-sm-10">
             &nbsp;
             <div className="imgPreview">
-              { this.renderInputFile() }
-              { this.renderImagePreview() }
+              { this._renderInputFile() }
+              { this._renderImagePreview() }
             </div>
           </div>
         </div>
