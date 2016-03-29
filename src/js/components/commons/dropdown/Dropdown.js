@@ -51,7 +51,7 @@ export default class Dropdown extends React.Component {
 
   getItem(item){
     return(
-      <li>
+      <li key={item._id}>
           <a href="#" onClick={ (e) => { this.onSelect(item); } }>
               { this.getName(item) }
           </a>

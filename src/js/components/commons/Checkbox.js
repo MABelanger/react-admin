@@ -1,7 +1,7 @@
 import React                      from "react";
 
 
-export default class CheckboxInput extends React.Component {
+export default class Checkbox extends React.Component {
 
   constructor(props) {
     super(props);
@@ -10,7 +10,7 @@ export default class CheckboxInput extends React.Component {
     };
   }
 
-  handleClick(e) {
+  handleChange(e) {
     const value = e.target.checked;
     this.props.changeValue(this.props.name, value);
   }
@@ -37,7 +37,7 @@ export default class CheckboxInput extends React.Component {
                 checked={this.props.checked}
                 ref={this.props.name}
                 value={this.props.value} 
-                onClick={this.handleClick.bind(this)}
+                onChange={this.handleChange.bind(this)}
               />
           </div>
         </div>
