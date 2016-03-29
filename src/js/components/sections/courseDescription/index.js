@@ -52,20 +52,27 @@ export default class Teacher extends React.Component {
     this.props.onSave(courseDescription);
   }
 
+  _isExist(courseDescription){
+    
+    if ( courseDescription && courseDescription.courseType ){
+      console.log('_isExist', true)
+      return true;
+    }
+    console.log('_isExist', false)
+    return false;
+  }
+
   // Save button click
   onCtrlSave(e){
-
     // Get the new values fields
     let courseDescriptionInput = this.refs.ctrlInput.getFields();
-    let courseDescription = this.props.courseDescription;
-
-    courseDescription = adminHelper.overwriteAttrs(courseDescriptionInput, courseDescription);
-    // if courseDescription exist, save it, else create it
-    if(courseDescription) {
+    if ( this._isExist(courseDescriptionInput) ) {
+      let courseDescription = adminHelper.overwriteAttrs(courseDescriptionInput, this.props.courseDescription);
+      // if courseDescription exist, save it, else create it
       this.props.onSave(courseDescription);
     }
     else{
-      this.props.onCreate(courseDescription);
+      this.props.onCreate(courseDescriptionInput);
     }
     this.hideSection();
   }
@@ -116,6 +123,9 @@ export default class Teacher extends React.Component {
         'section-hide': ( this.state.showSection == false )
     });
 
+    let isExist = this._isExist(this.props.courseDescription);
+
+    // TODO : add ( txt ... ) ?
     return (
       <div className="container">
 
@@ -123,7 +133,7 @@ export default class Teacher extends React.Component {
           ref="modalBootstrap"
           msg={
             "Voulez-vous vraiment supprimer cette description de cours "
-            + '( ' + this.props.courseDescription.courseType + ' ) ?'
+            + '( ' + ' ) ?'
             + " tout la description ainsi que l'horaire seront aussi supprimé !"
           }
           onYes={::this.delete}
@@ -133,7 +143,7 @@ export default class Teacher extends React.Component {
           title="Course Type"
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
-          value={ this.props.courseDescription.courseType}
+          value={ isExist }
         />
 
         <div className="section-animation">

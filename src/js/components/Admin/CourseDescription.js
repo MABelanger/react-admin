@@ -11,12 +11,21 @@ export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     // expose the method to the parent via props
-    this.read = this.read.bind(this);
+    this.update = this.update.bind(this);
   }
 
   componentWillMount(){
+    console.log('componentWillMount')
     this.read();
   }
+
+  /*
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      likesIncreasing: nextProps.likeCount > this.props.likeCount
+    });
+  }
+  */
 
   new(){
     this.props.setCourseDescription({});
@@ -31,9 +40,14 @@ export default class Admin extends React.Component {
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
 
-    courseDescriptionApi.create(courseId, teacherId)
+    console.log('create.courseId', courseId);
+    console.log('create.teacherId', teacherId);
+    console.log('create.courseDescription', courseDescription)
+
+    courseDescriptionApi.create(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
         // update courseDescription and courseDescriptions
+        console.log('courseDescription', courseDescription)
         this.props.setCourseDescription(courseDescription);
         toastr.success('La description du cours à été crée.');
       }, (err) => {
@@ -41,11 +55,8 @@ export default class Admin extends React.Component {
       });
   }
 
-  // Read
-  read(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
+  // tmp
+  update(courseId, teacherId){
     courseDescriptionApi.read(courseId, teacherId)
       .then( (courseDescription) => {
         this.props.setCourseDescription(courseDescription);
@@ -54,10 +65,19 @@ export default class Admin extends React.Component {
       });
   }
 
+  // Read
+  read(){
+    let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
+    this.update(courseId, teacherId);
+  }
+
   // Update
   save(courseDescription){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
+    console.log('save.courseId', courseId);
+    console.log('save.teacherId', teacherId);
 
     courseDescriptionApi.save(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {

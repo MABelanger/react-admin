@@ -1,7 +1,8 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 import ReactQuill                 from "../../commons/reactQuill";
-import Image                from "../../Image";
+import Checkbox                   from "../../commons/Checkbox";
+import Image                      from "../../Image";
 
 export default class CtrlInput extends React.Component {
 
@@ -52,6 +53,14 @@ export default class CtrlInput extends React.Component {
   render() {
     return (
       <div>
+        <Checkbox
+          name="isVisible"
+          label="Visible"
+          ref="isVisible"
+          checked={this.state.isVisible}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+          
+        />
         <TextInput
           name="courseType"
           label="Type"

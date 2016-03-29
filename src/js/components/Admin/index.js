@@ -57,7 +57,9 @@ export default class Admin extends React.Component {
     // update the course description and hide sections
     // need an if because the component is not
     if(this.refs.courseDescriptionAdmin){
-      this.refs.courseDescriptionAdmin.read(this.state.course._id, teacher._id);
+      console.log('this.state.course._id', this.state.course._id)
+      console.log('teacher._id', teacher._id)
+      this.refs.courseDescriptionAdmin.update(this.state.course._id, teacher._id);
       this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
     }
   }

@@ -61,13 +61,17 @@ export default class ImageUpload extends React.Component {
 
     // build the right imagePreview
 
-    if(this.props.value.url) {
-      imgSrc = this.props.value.url;
-      fileName = this._getFileNameUrl(this.props.value.url);
+    if (this.props.value) {
+      if (this.props.value.url) {
+        imgSrc = 'http://localhost:3000/' + this.props.value.url;
+        fileName = this._getFileNameUrl(this.props.value.url);
 
-    } else if (this.props.value.dataUri) {
-      imgSrc = this.props.value.dataUri;
-      fileName = this._getFileNameFReader(this.state.file);
+      } else if (this.props.value.dataUri) {
+        imgSrc = this.props.value.dataUri;
+        fileName = this._getFileNameFReader(this.state.file);
+      }
+    }else {
+      return '';
     }
 
     return (
