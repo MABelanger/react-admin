@@ -15,7 +15,6 @@ export default class Admin extends React.Component {
   }
 
   componentWillMount(){
-    console.log('componentWillMount')
     this.read();
   }
 
@@ -40,14 +39,9 @@ export default class Admin extends React.Component {
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
 
-    console.log('create.courseId', courseId);
-    console.log('create.teacherId', teacherId);
-    console.log('create.courseDescription', courseDescription)
-
     courseDescriptionApi.create(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
         // update courseDescription and courseDescriptions
-        console.log('courseDescription', courseDescription)
         this.props.setCourseDescription(courseDescription);
         toastr.success('La description du cours à été crée.');
       }, (err) => {
@@ -76,13 +70,10 @@ export default class Admin extends React.Component {
   save(courseDescription){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
-    console.log('save.courseId', courseId);
-    console.log('save.teacherId', teacherId);
 
     courseDescriptionApi.save(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
         this.props.setCourseDescription(courseDescription);
-        console.log('courseDescriptionApi.save.courseDescription', courseDescription)
         toastr.success('La description du cours à été sauvegardé.');
       }, (err) => {
         toastr.error('Erreur de sauvegarde.', err);

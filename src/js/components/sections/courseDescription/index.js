@@ -53,12 +53,9 @@ export default class Teacher extends React.Component {
   }
 
   _isExist(courseDescription){
-    
     if ( courseDescription && courseDescription.courseType ){
-      console.log('_isExist', true)
       return true;
     }
-    console.log('_isExist', false)
     return false;
   }
 
