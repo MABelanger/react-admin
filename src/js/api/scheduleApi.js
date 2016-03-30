@@ -63,26 +63,6 @@ var CourseTypeApi = {
     return promise;
   },
 
-  read: function(courseId, teacherId) {
-    // let url = getUrl(courseId, teacherId);
-    // var promise = new Promise(function(resolve, reject) {
-    //   Request
-    //     .get(url)
-    //     .accept('application/json')
-    //     .type('application/json')
-    //     .end((err, res) => {
-    //       if (! err ) {
-    //         resolve(res.body);
-    //       }
-    //       else {
-    //         reject(err);
-    //       }
-    //     });
-    // });
-    // return promise;
-  },
-
-
   /**
    * Update
    **/
