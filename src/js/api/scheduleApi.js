@@ -27,7 +27,7 @@ var CourseTypeApi = {
         .post(url)
         .accept('application/json')
         .type('application/json')
-        .send(courseType)
+        .send(schedule)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -66,47 +66,47 @@ var CourseTypeApi = {
   /**
    * Update
    **/
-  save: function(courseId, teacherId, courseType) {
-    // let url = getUrl(courseId, teacherId) + '/' + courseType._id;
-    // var promise = new Promise(function(resolve, reject) {
-    //   Request
-    //     .put(url)
-    //     .accept('application/json')
-    //     .type('application/json')
-    //     .send(courseType)
-    //     .end((err, res) => {
-    //       if (! err ) {
-    //         resolve(res.body);
-    //       }
-    //       else {
-    //         reject(err);
-    //       }
-    //     });
-    // });
-    // return promise;
+  save: function(courseId, teacherId, courseTypeId, schedule) {
+    let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .put(url)
+        .accept('application/json')
+        .type('application/json')
+        .send(schedule)
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
   },
 
   /**
    * Delete
    **/
 
-  delete: function(courseId, teacherId, courseType) {
-    // let url = getUrl(courseId, teacherId) + '/' + courseType._id;
-    // var promise = new Promise(function(resolve, reject) {
-    //   Request
-    //     .del(url)
-    //     .accept('application/json')
-    //     .type('application/json')
-    //     .end((err, res) => {
-    //       if (! err ) {
-    //         resolve(res.body);
-    //       }
-    //       else {
-    //         reject(err);
-    //       }
-    //     });
-    // });
-    // return promise;
+  delete: function(courseId, teacherId, courseTypeId, schedule) {
+    let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+    var promise = new Promise(function(resolve, reject) {
+      Request
+        .del(url)
+        .accept('application/json')
+        .type('application/json')
+        .end((err, res) => {
+          if (! err ) {
+            resolve(res.body);
+          }
+          else {
+            reject(err);
+          }
+        });
+    });
+    return promise;
   }
 };
 

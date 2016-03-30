@@ -48,7 +48,6 @@ export default class CtrlInput extends React.Component {
           ref="isFull"
           checked={this.state.isFull}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
-          
         />
       </div>
     );

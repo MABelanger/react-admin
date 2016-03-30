@@ -17,7 +17,7 @@ export default class CtrlSelect extends React.Component {
               value={this.props.value}/>
             <BtnInfo
               label="Modifier"
-              disabled={this.props.value ==  undefined}
+              disabled={!this.props.id}
               onClick={(e) => {this.props.onModify();} }
             />
             <BtnInfo 

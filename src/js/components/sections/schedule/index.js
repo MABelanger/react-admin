@@ -138,6 +138,7 @@ export default class ScheduleSection extends React.Component {
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
           value={ this.props.schedule.dayName}
+          id={ this.props.schedule._id }
         />
 
         <div className="section-animation">

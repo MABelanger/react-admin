@@ -30,19 +30,19 @@ export default class Schedule extends React.Component {
 
   // Create
   create(schedule){
-    // let courseId = this.props.courseId;
-    // let teacherId = this.props.teacherId;
+    let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
+    let courseTypeId = this.props.courseTypeId;
 
-
-    // scheduleApi.create(courseId, teacherId, schedule)
-    //   .then( (schedule) => {
-    //     // update teacher and teachers
-    //     this.props.setSchedule(schedule);
-    //     //this.list(courseId, teacherId)
-    //     toastr.success('La schedule à été crée.');
-    //   }, (err) => {
-    //     toastr.error('Erreur de création.', err);
-    //   });
+    scheduleApi.create(courseId, teacherId, courseTypeId, schedule)
+      .then( (schedule) => {
+        // update teacher and teachers
+        this.props.setSchedule(schedule);
+        this.list(courseId, teacherId, courseTypeId);
+        toastr.success('La schedule à été crée.');
+      }, (err) => {
+        toastr.error('Erreur de création.', err);
+      });
   }
 
 
@@ -59,32 +59,34 @@ export default class Schedule extends React.Component {
 
   // Update
   save(schedule){
-    // let courseId = this.props.courseId;
-    // let teacherId = this.props.teacherId;
+    let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
+    let courseTypeId = this.props.courseTypeId;
 
-    // scheduleApi.save(courseId, teacherId, schedule)
-    //   .then( (schedule) => {
-    //     this.props.setSchedule(schedule);
-    //     this.list(courseId, teacherId);
-    //     toastr.success('La schedule à été sauvegardé.');
-    //   }, (err) => {
-    //     toastr.error('Erreur de sauvegarde.', err);
-    //   });
+    scheduleApi.save(courseId, teacherId, courseTypeId, schedule)
+      .then( (schedule) => {
+        this.props.setSchedule(schedule);
+        this.list(courseId, teacherId, courseTypeId);
+        toastr.success('La schedule à été sauvegardé.');
+      }, (err) => {
+        toastr.error('Erreur de sauvegarde.', err);
+      });
   }
 
   // Delete
   delete(schedule){
-    // let courseId = this.props.courseId;
-    // let teacherId = this.props.teacherId;
+    let courseId = this.props.courseId;
+    let teacherId = this.props.teacherId;
+    let courseTypeId = this.props.courseTypeId;
 
-    // scheduleApi.delete(courseId, teacherId, schedule)
-    //   .then( (msg) => {
-    //     this.props.setSchedule({});
-    //     this.list(courseId, teacherId);
-    //     toastr.success('La schedule à été supprimé.');
-    //   }, (err) => {
-    //     toastr.error('Erreur Supression', err);
-    //   });
+    scheduleApi.delete(courseId, teacherId, courseTypeId, schedule)
+      .then( (msg) => {
+        this.props.setSchedule({});
+        this.list(courseId, teacherId, courseTypeId);
+        toastr.success('La schedule à été supprimé.');
+      }, (err) => {
+        toastr.error('Erreur Supression', err);
+      });
   }
 
   render() {

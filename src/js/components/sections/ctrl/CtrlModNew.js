@@ -3,6 +3,7 @@ import BtnInfo                    from "../../commons/BtnInfo";
 
 export default class CtrlModNew extends React.Component {
 
+ // TODO : change CtrlModNew value by isExist
   render() {
     return (
       <div className="row">

@@ -130,6 +130,7 @@ export default class CourseName extends React.Component {
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
           value={ this.props.course.name }
+          id={ this.props.course._id }
         />
 
         <div className="section-animation">
