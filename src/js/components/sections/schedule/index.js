@@ -8,8 +8,6 @@ import toastr                     from 'toastr';
 // modules
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
-import CtrlModNew                from "../ctrl/CtrlModNew";
-
 import CtrlInput                  from "./CtrlInput";
 import * as adminHelper           from "../helper";
 
@@ -21,7 +19,7 @@ import sectionStyles              from "../styles/section.scss"
 
 
 
-export default class Teacher extends React.Component {
+export default class ScheduleSection extends React.Component {
 
   constructor(props) {
     super(props);
@@ -38,38 +36,34 @@ export default class Teacher extends React.Component {
   /**
    * Create
    **/
-  create(courseDescription){
-     // call admin to create the courseDescription
-     this.props.onCreate(courseDescription);
+  create(schedule){
+     // call admin to create the schedule
+     this.props.onCreate(schedule);
 
   }
 
   /**
    * Update
    **/
-  save(courseDescription){
-    // call admin to save the courseDescription
-    this.props.onSave(courseDescription);
-  }
-
-  _isExist(courseDescription){
-    if ( courseDescription && courseDescription.courseType ){
-      return true;
-    }
-    return false;
+  save(schedule){
+    // call admin to save the schedule
+    this.props.onSave(schedule);
   }
 
   // Save button click
   onCtrlSave(e){
+
     // Get the new values fields
-    let courseDescriptionInput = this.refs.ctrlInput.getFields();
-    if ( this._isExist(courseDescriptionInput) ) {
-      let courseDescription = adminHelper.overwriteAttrs(courseDescriptionInput, this.props.courseDescription);
-      // if courseDescription exist, save it, else create it
-      this.props.onSave(courseDescription);
+    let scheduleInput = this.refs.ctrlInput.getFields();
+    let schedule = this.props.schedule;
+
+    schedule = adminHelper.overwriteAttrs(scheduleInput, schedule);
+    // if schedule exist, save it, else create it
+    if(schedule._id) {
+      this.props.onSave(schedule);
     }
     else{
-      this.props.onCreate(courseDescriptionInput);
+      this.props.onCreate(schedule);
     }
     this.hideSection();
   }
@@ -77,7 +71,7 @@ export default class Teacher extends React.Component {
    * Delete
    **/
   delete(){
-    this.props.onDelete();
+    this.props.onDelete(this.props.schedule);
     this.hideSection()
   }
 
@@ -105,6 +99,10 @@ export default class Teacher extends React.Component {
     this.showSection();
   }
 
+  // A schedule has been selected
+  select(schedule){
+    this.props.onSelect(schedule);
+  }
 
   // Modify button click
   modify(){
@@ -120,42 +118,38 @@ export default class Teacher extends React.Component {
         'section-hide': ( this.state.showSection == false )
     });
 
-    let isExist = this._isExist(this.props.courseDescription);
-
-    // TODO : add ( txt ... ) ?
     return (
       <div className="container">
 
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer cette description de cours "
-            + '( ' + ' ) ?'
-            + " tout la description ainsi que l'horaire seront aussi supprimé !"
+            "Voulez-vous vraiment supprimer ce cour "
+            + '( ' + this.props.schedule.dayName + ' ) ?'
+            + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
           onYes={::this.delete}
         />
 
-        <CtrlModNew
-          title="Course Description"
+        <CtrlSelect
+          list={this.props.schedules}
+          title="Schedule"
+          onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
-          value={ isExist }
+          value={ this.props.schedule.dayName}
         />
 
         <div className="section-animation">
           <div className={sectionClasses}>
-
-            <CtrlInput
-              ref="ctrlInput"
-              courseDescription={ this.props.courseDescription} 
-            />
+            <CtrlInput ref="ctrlInput" schedule={this.props.schedule} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }
             />
           </div>
         </div>
+
       </div>
     );
   }

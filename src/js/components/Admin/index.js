@@ -3,6 +3,9 @@ import React                      from "react";
 import CourseName                 from "./CourseName";
 import Teacher                    from "./Teacher";
 import CourseDescription          from "./CourseDescription";
+import CourseType                 from "./CourseType";
+import Schedule                   from "./Schedule";
+
 
 
 export default class Admin extends React.Component {
@@ -17,6 +20,13 @@ export default class Admin extends React.Component {
       teacher : {},
 
       courseDescription: {},
+
+      courseTypes: [],
+      courseType : {},
+
+      schedules: [],
+      schedule : {},
+
     };
   }
 
@@ -59,6 +69,10 @@ export default class Admin extends React.Component {
     if(this.refs.courseDescriptionAdmin){
       this.refs.courseDescriptionAdmin.update(this.state.course._id, teacher._id);
       this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
+
+      this.refs.courseTypeAdmin.list(this.state.course._id, teacher._id);
+      this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
+
     }
   }
 
@@ -94,6 +108,62 @@ export default class Admin extends React.Component {
     );
   }
 
+
+  /*
+   * CourseType
+   */
+  setCourseType(courseType){
+    this.setState({'courseType': courseType});
+    if (this.refs.scheduleAdmin) {
+      this.refs.ScheduleAdmin.list(this.state.course._id, this.state.teacher._id, courseType._id);
+      this.refs.ScheduleAdmin.refs.courseTypeSection.hideSection();
+    }
+  }
+
+  setCourseTypes(courseTypes){
+    this.setState({'courseTypes': courseTypes});
+  }
+
+  getCourseType(){
+    return (
+      <CourseType
+        ref="courseTypeAdmin"
+        setCourseType={this.setCourseType.bind(this)}
+        setCourseTypes={this.setCourseTypes.bind(this)}
+        courseType={ this.state.courseType }
+        courseTypes={ this.state.courseTypes }
+        courseId={this.state.course._id}
+        teacherId={this.state.teacher._id}
+      />
+    );
+  }
+
+
+  /*
+   * Schedule
+   */
+  setSchedule(schedule){
+    this.setState({'schedule': schedule});
+  }
+
+  setSchedules(schedules){
+    this.setState({'schedules': schedules});
+  }
+
+  getSchedule(){
+    return (
+      <Schedule
+        ref="scheduleAdmin"
+        setSchedule={this.setSchedule.bind(this)}
+        setSchedules={this.setSchedules.bind(this)}
+        schedule={ this.state.schedule }
+        schedules={ this.state.schedules }
+        courseId={this.state.course._id}
+        teacherId={this.state.teacher._id}
+        courseTypeId={this.state.courseType._id}
+      />
+    );
+  }
   render() {
 
     var teacher = this.state.course._id ? this.teacher : '';
@@ -111,6 +181,10 @@ export default class Admin extends React.Component {
         {this.state.course._id ? this.getTeacher() : ''}
 
         {this.state.teacher._id ? this.getCourseDescription() : ''}
+
+        {this.state.teacher._id ? this.getCourseType() : ''}
+
+        {this.state.courseType._id ? this.getSchedule() : ''}
 
       </div>
     );

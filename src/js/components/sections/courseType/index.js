@@ -8,8 +8,6 @@ import toastr                     from 'toastr';
 // modules
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
-import CtrlModNew                from "../ctrl/CtrlModNew";
-
 import CtrlInput                  from "./CtrlInput";
 import * as adminHelper           from "../helper";
 
@@ -21,7 +19,7 @@ import sectionStyles              from "../styles/section.scss"
 
 
 
-export default class Teacher extends React.Component {
+export default class CourseType extends React.Component {
 
   constructor(props) {
     super(props);
@@ -38,38 +36,34 @@ export default class Teacher extends React.Component {
   /**
    * Create
    **/
-  create(courseDescription){
-     // call admin to create the courseDescription
-     this.props.onCreate(courseDescription);
+  create(courseType){
+     // call admin to create the courseType
+     this.props.onCreate(courseType);
 
   }
 
   /**
    * Update
    **/
-  save(courseDescription){
-    // call admin to save the courseDescription
-    this.props.onSave(courseDescription);
-  }
-
-  _isExist(courseDescription){
-    if ( courseDescription && courseDescription.courseType ){
-      return true;
-    }
-    return false;
+  save(courseType){
+    // call admin to save the courseType
+    this.props.onSave(courseType);
   }
 
   // Save button click
   onCtrlSave(e){
+
     // Get the new values fields
-    let courseDescriptionInput = this.refs.ctrlInput.getFields();
-    if ( this._isExist(courseDescriptionInput) ) {
-      let courseDescription = adminHelper.overwriteAttrs(courseDescriptionInput, this.props.courseDescription);
-      // if courseDescription exist, save it, else create it
-      this.props.onSave(courseDescription);
+    let courseTypeInput = this.refs.ctrlInput.getFields();
+    let courseType = this.props.courseType;
+
+    courseType = adminHelper.overwriteAttrs(courseTypeInput, courseType);
+    // if courseType exist, save it, else create it
+    if(courseType._id) {
+      this.props.onSave(courseType);
     }
     else{
-      this.props.onCreate(courseDescriptionInput);
+      this.props.onCreate(courseType);
     }
     this.hideSection();
   }
@@ -77,7 +71,7 @@ export default class Teacher extends React.Component {
    * Delete
    **/
   delete(){
-    this.props.onDelete();
+    this.props.onDelete(this.props.courseType);
     this.hideSection()
   }
 
@@ -105,6 +99,10 @@ export default class Teacher extends React.Component {
     this.showSection();
   }
 
+  // A courseType has been selected
+  select(courseType){
+    this.props.onSelect(courseType);
+  }
 
   // Modify button click
   modify(){
@@ -120,42 +118,38 @@ export default class Teacher extends React.Component {
         'section-hide': ( this.state.showSection == false )
     });
 
-    let isExist = this._isExist(this.props.courseDescription);
-
-    // TODO : add ( txt ... ) ?
     return (
       <div className="container">
 
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer cette description de cours "
-            + '( ' + ' ) ?'
-            + " tout la description ainsi que l'horaire seront aussi supprimé !"
+            "Voulez-vous vraiment supprimer ce cour "
+            + '( ' + this.props.courseType.name + ' ) ?'
+            + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
           onYes={::this.delete}
         />
 
-        <CtrlModNew
-          title="Course Description"
+        <CtrlSelect
+          list={this.props.courseTypes}
+          title="Type de Cours"
+          onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
-          value={ isExist }
+          value={ this.props.courseType.name}
         />
 
         <div className="section-animation">
           <div className={sectionClasses}>
-
-            <CtrlInput
-              ref="ctrlInput"
-              courseDescription={ this.props.courseDescription} 
-            />
+            <CtrlInput ref="ctrlInput" courseType={this.props.courseType} />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
               onDelete={ (e)=>{ this.onCtrlDelete(e); } }
             />
           </div>
         </div>
+
       </div>
     );
   }

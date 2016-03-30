@@ -2,15 +2,11 @@ import React                      from "react";
 import toastr                     from 'toastr';
 import 'toastr/build/toastr.css';
 
-import CourseNameSection          from "../sections/courseName";
 import TeacherSection             from "../sections/teacher";
-import CourseDescriptionSection   from "../sections/courseDescription";
 
-
-var coursesApi =                  require("../../api/coursesApi");
 var teachersApi =                  require("../../api/teachersApi");
 
-export default class Admin extends React.Component {
+export default class Teacher extends React.Component {
 
 
   componentWillMount(){

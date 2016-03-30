@@ -22,7 +22,6 @@ export default class CtrlInput extends React.Component {
   changeValue(name, value) {
     let newState = {};
     newState[name] = value;
-    console.log(name, value);
     this.setState(newState);
   }
 
