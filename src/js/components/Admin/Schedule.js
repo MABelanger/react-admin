@@ -16,6 +16,14 @@ export default class Schedule extends React.Component {
     this.list(courseId, teacherId, courseTypeId);
   }
 
+/*
+  componentWillReceiveProps(nextProps) {
+    let courseId = nextProps.courseId;
+    let teacherId = nextProps.teacherId;
+    let courseTypeId = nextProps.courseTypeId;
+    this.list(courseId, teacherId, courseTypeId);
+  }
+*/
   select(schedule){
     this.props.setSchedule(schedule);
   }
@@ -48,6 +56,7 @@ export default class Schedule extends React.Component {
 
   // Read
   list(courseId, teacherId, courseTypeId){
+    console.log('call list')
     scheduleApi.list(courseId, teacherId, courseTypeId)
       .then( (schedules) => {
         console.log('admin.list', schedules)

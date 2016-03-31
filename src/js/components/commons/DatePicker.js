@@ -26,8 +26,27 @@ export default class DatePicker extends React.Component {
   }
 */
  
-  render() {
+  renderDateTimeField(){
     const {date, format, mode, inputFormat} = this.state;
+    let d = new Date();
+    d.setTime( d.getTime() - d.getTimezoneOffset()*60*1000 );
+    let dateTime = d.toISOString();
+    if(this.props.date){
+      dateTime = this.props.date
+    }
+    return (
+      <DateTimeField
+        dateTime={dateTime}
+        showToday={true}
+        format={format}
+        viewMode={mode}
+        inputFormat={inputFormat}
+        onChange={this.handleChange}
+      />
+    );
+  }
+  render() {
+    
     var wrapperClass = 'form-group';
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
@@ -42,13 +61,7 @@ export default class DatePicker extends React.Component {
           <div className="col-sm-3">
             &nbsp;
             <div className="input">{this.props.error}</div>
-              <DateTimeField
-                dateTime={this.props.date}
-                format={format}
-                viewMode={mode}
-                inputFormat={inputFormat}
-                onChange={this.handleChange}
-              />
+            { this.renderDateTimeField() }
           </div>
         </div>
       </div>

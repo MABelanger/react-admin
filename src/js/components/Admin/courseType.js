@@ -23,6 +23,7 @@ export default class CourseType extends React.Component {
     this.props.setCourseType({});
   }
 
+
   /**
    * CRUD Operations
    **/

@@ -44,36 +44,33 @@ export default class Admin extends React.Component {
 
   setCourse(course){
     this.setState({'course': course});
-    this.setState({'teacher': {}});
-
-    // update the teachers list and hide sections
-    // need an if because the component is not
-    if(this.refs.teacherAdmin){
-      this.refs.teacherAdmin.list(course._id);
-      this.refs.teacherAdmin.refs.teacherSection.hideSection();
-    }
+    this._resetTeachers();
   }
 
 
   /*
    * Teacher
    */
+  _resetTeachers(){
+    this.setState({'teacher': {}});
+    // update the teachers list and hide sections
+    // need an if because the component is not
+    if(this.refs.teacherAdmin){
+      this.refs.teacherAdmin.list(this.state.course._id);
+      this.refs.teacherAdmin.refs.teacherSection.hideSection();
+    }
+  }
+
   setTeachers(teachers){
     this.setState({'teachers': teachers});
   }
 
+
+
   setTeacher(teacher){
     this.setState({'teacher': teacher});
-    // update the course description and hide sections
-    // need an if because the component is not
-    if(this.refs.courseDescriptionAdmin){
-      this.refs.courseDescriptionAdmin.update(this.state.course._id, teacher._id);
-      this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
-
-      this.refs.courseTypeAdmin.list(this.state.course._id, teacher._id);
-      this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
-
-    }
+    this._resetCourseDescription();
+    this._resetCourseType();
   }
 
   getTeacher(){
@@ -92,7 +89,15 @@ export default class Admin extends React.Component {
   /*
    * CourseDescription
    */
-  setCourseDescription(courseDescription){
+  _resetCourseDescription() {
+    // update the course description and hide sections
+    // need an if because the component is not
+    if ( this.refs.courseDescriptionAdmin ) {
+      this.refs.courseDescriptionAdmin.update( this.state.course._id, this.state.teacher._id );
+      this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
+    }
+  }
+  setCourseDescription(courseDescription) {
     this.setState({'courseDescription': courseDescription});
   }
 
@@ -112,12 +117,17 @@ export default class Admin extends React.Component {
   /*
    * CourseType
    */
+  _resetCourseType() {
+    this.setState({'courseType': {} });
+    if ( this.refs.courseTypeAdmin ) {
+      this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
+      this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
+    }
+  }
+
   setCourseType(courseType){
     this.setState({'courseType': courseType});
-    if (this.refs.scheduleAdmin) {
-      this.refs.ScheduleAdmin.list(this.state.course._id, this.state.teacher._id, courseType._id);
-      this.refs.ScheduleAdmin.refs.courseTypeSection.hideSection();
-    }
+    this._resetSchedule();
   }
 
   setCourseTypes(courseTypes){
@@ -142,6 +152,13 @@ export default class Admin extends React.Component {
   /*
    * Schedule
    */
+  _resetSchedule(){
+    this.setState({'schedule': {} });
+    if (this.refs.scheduleAdmin) {
+      this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+      this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
+    }
+  }
   setSchedule(schedule){
     this.setState({'schedule': schedule});
   }
