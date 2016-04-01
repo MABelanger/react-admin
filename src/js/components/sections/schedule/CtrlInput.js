@@ -1,6 +1,6 @@
 import React                      from "react";
 import Checkbox                   from "../../commons/Checkbox";
-import DatePicker                 from "../../commons/DatePicker";
+import DateTimePicker                 from "../../commons/DateTimePicker";
 import Dropdown                   from "../../commons/dropdown/Dropdown";
 import DateTimeField              from 'react-bootstrap-datetimepicker';
 
@@ -24,7 +24,7 @@ export default class CtrlInput extends React.Component {
 
   getFields(){
     return {
-      dayName: this.state.dayName,
+      dayName: this.state.dayName.name,
       isFull: this.state.isFull,
       dayStart: this.state.dayStart,
       dayEnd: this.state.dayEnd
@@ -42,17 +42,11 @@ export default class CtrlInput extends React.Component {
     }
   }
  
+ selectDayName(dayName){
+   this.changeValue(dayName.value);
+ }
 
   render() {
-    let days = [
-      {name:'lundi', _id:0},
-      {name:'mardi', _id:1},
-      {name:'mercredi', _id:2},
-      {name:'jeudi', _id:3},
-      {name:'vendredi', _id:4},
-      {name:'samedi', _id:5},
-      {name:'dimanche', _id:6}
-    ];
     return (
       <div>
         <Checkbox
@@ -63,14 +57,7 @@ export default class CtrlInput extends React.Component {
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
 
-        <Dropdown
-          list={days}
-          label="Jour"
-          onSelect={(value) => { this.changeValue("dayName", value.name); } }
-          value={this.props.dayName}/>
-
-
-        <DatePicker
+        <DateTimePicker
           name="dayStart"
           label="Début"
           ref="dayStart"
@@ -78,7 +65,7 @@ export default class CtrlInput extends React.Component {
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
 
-        <DatePicker
+        <DateTimePicker
           name="dayEnd"
           label="Fin"
           ref="dayEnd"
