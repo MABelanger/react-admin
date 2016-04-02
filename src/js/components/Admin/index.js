@@ -6,7 +6,7 @@ import CourseDescription          from "./CourseDescription";
 import CourseType                 from "./CourseType";
 import Schedule                   from "./Schedule";
 import moment                     from "moment";
-
+import BtnInfo                    from "../commons/BtnInfo";
 
 
 export default class Admin extends React.Component {
@@ -29,8 +29,13 @@ export default class Admin extends React.Component {
       schedule : {},
 
     };
+    //http://localhost:3000/api/courses/
+    // 56fd65bd884902915a0805ea/teachers/56fd65ce884902915a0805eb/course_description/course_types/56fd6659884902915a0805ec/schedules
+    // force schedule
 
-    console.log(moment().utcOffset());
+
+    /*
+    console.log(moment().startOf('day').utcOffset("-04:00").toISOString());
     console.log(moment("2016-03-18T20:28:00.000Z").toISOString());
     console.log(moment("2016-03-18T20:28:00.000Z").utcOffset( moment().utcOffset() ).toString());
     console.log(moment("2016-03-18T20:28:00.000Z").toString());
@@ -40,8 +45,33 @@ export default class Admin extends React.Component {
 
     let utcDate = moment("2016-03-18T20:28:00.000Z").utc().format();
     console.log('utcDate', utcDate);
+    */
   }
 
+
+  forceState(){
+    let course = {
+      _id : '56fd65bd884902915a0805ea'
+    };
+    let teacher = {
+      _id : '56fd65ce884902915a0805eb'
+    };
+
+    let courseType = {
+      _id : '56fd6659884902915a0805ec'
+    }
+
+    let schedule = {
+      _id : '56fd874bb8fbe2c25b6d2fe1'
+    }
+
+    this.setState({
+      course : course,
+      teacher : teacher,
+      courseType : courseType,
+      schedule: schedule
+    });
+  }
 
   /*
    * Course
@@ -200,6 +230,24 @@ export default class Admin extends React.Component {
 
     return (
       <div>
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-4 col-sm-3 col-md-2 col-md-offset-2 everything-checkbox"> 
+
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="row">
+            <BtnInfo
+              className="col-xs-4"
+              onClick={ (e)=>{ this.forceState(); } }
+              label="forceState"
+            />
+          </div>
+        </div>
+
         <CourseName
           course={this.state.course}
           courses={this.state.courses}

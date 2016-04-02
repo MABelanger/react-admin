@@ -1,21 +1,7 @@
 import React                      from "react";
-
+import CheckboxCommon             from "./CheckboxCommon";
 
 export default class Checkbox extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      checked: this.props.checked || false
-    };
-  }
-
-  handleChange(e) {
-    const value = e.target.checked;
-    this.props.changeValue(this.props.name, value);
-  }
-
-
   render() {
     var wrapperClass = 'form-group';
     if (this.props.error && this.props.error.length > 0) {
@@ -31,13 +17,8 @@ export default class Checkbox extends React.Component {
           <div className="col-sm-3">
             &nbsp;
             <div className="input">{this.props.error}</div>
-              <input type="checkbox"
-                name={this.props.name}
-                className="form-control"
-                checked={this.props.checked}
-                ref={this.props.name}
-                value={this.props.value} 
-                onChange={this.handleChange.bind(this)}
+              <CheckboxCommon
+                {...this.props}
               />
           </div>
         </div>

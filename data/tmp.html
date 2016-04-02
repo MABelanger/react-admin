@@ -1,0 +1,66 @@
+<div ng-show="isModDaySchedule" class="">
+
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="form-group">
+
+                <div class="col-sm-1"></div>
+                <div class="col-sm-1">
+                    <br>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="daySchedule.is_full" class="ng-pristine ng-valid"><strong>Complet</strong>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    DropDown
+                </div><!-- ./col-sm-offset-2 col-sm-2 -->
+                
+                <div class="col-sm-3">
+                    Début:<br>
+                    <div errormsg="" save-error="" class="ng-isolate-scope"><div style="color:red" class="ng-binding"></div></div>
+                    <input type="text" class="form-control ng-pristine ng-valid" id="day_schedule_hour_end" placeholder="00:00h" ng-model="daySchedule.hour_start">
+                </div><!-- ./col-sm-1 -->
+
+                <div class="col-sm-3">
+                    Fin:<br>
+                    <div errormsg="" save-error="" class="ng-isolate-scope"><div style="color:red" class="ng-binding"></div></div>
+                    <input type="text" class="form-control ng-pristine ng-valid" id="day_schedule_hour_end" placeholder="00:00h" ng-model="daySchedule.hour_end">
+                </div><!-- ./col-sm-2 -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="form-group">
+
+                <div class="col-sm-offset-3 col-sm-3">
+                    
+
+    
+                </div>
+
+                <div class="col-sm-3">
+                    
+
+                </div>
+
+                <div class="col-sm-3">
+                	<br>
+                    <div class="btn-group">
+                        <button class="btn btn-info" ng-disabled="!daySchedule" ng-click="saveDaySchedule()">
+                                Sauvegarder
+                        </button>
+                    </div><!-- ./btn-group -->
+                    <div class="btn-group">
+                        <button class="btn btn-danger ng-isolate-scope" ng-really-message="Voulez-vous vraiment supprimer cette journee (Jeudi)?" ng-really-click="delCancelDaySchedule(daySchedule)" item="daySchedule">
+                                X
+                        </button>
+                    </div><!-- ./btn-group -->
+                </div><!-- ./col-xs-offset-2 col-xs-10 -->
+            </div><!-- ./form-group -->
+        </div><!-- ./form-horizontal -->
+    </div><!-- ./row -->
+</div>

@@ -26,10 +26,10 @@ module.exports = {
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       // the url-loader uses DataUrls. 
       // the file-loader emits files. 
-      { test: /\.(woff|woff2)$/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf$/,    loader: "file-loader" },
-      { test: /\.eot$/,    loader: "file-loader" },
-      { test: /\.svg$/,    loader: "file-loader" }
+      { test: /\.(woff|woff2)($|\?)/,  loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf($|\?)/,    loader: "file-loader" },
+      { test: /\.eot($|\?)/,    loader: "file-loader" },
+      { test: /\.svg($|\?)/,    loader: "file-loader" }
     ],
 
     // Shut off warnings about using pre-built javascript files
