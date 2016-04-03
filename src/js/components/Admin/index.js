@@ -232,14 +232,6 @@ export default class Admin extends React.Component {
       <div>
         <div className="container">
           <div className="row">
-            <div className="col-xs-4 col-sm-3 col-md-2 col-md-offset-2 everything-checkbox"> 
-
-            </div>
-          </div>
-        </div>
-
-        <div className="container">
-          <div className="row">
             <BtnInfo
               className="col-xs-4"
               onClick={ (e)=>{ this.forceState(); } }

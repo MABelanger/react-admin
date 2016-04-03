@@ -6,24 +6,34 @@ export default class CtrlSaveDel extends React.Component {
   constructor(props) {
     super(props);
   }
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-offset-2 col-xs-10">
-            <div className="btn-toolbar">
-              <BtnInfo
-                onClick={ (e)=>{ this.props.onSave(e); } }
-                label="Sauvegarder"
-              />
-              <BtnDanger
-                onClick={ (e)=>{ this.props.onDelete(e); } }
-                label="X"
-              />
-            </div>
-          </div>
-        </div>
+
+
+  getBtns(){
+    return(
+      <div className="btn-toolbar">
+        <BtnInfo
+          onClick={ (e)=>{ this.props.onSave(e); } }
+          label="Sauvegarder"
+        />
+        <BtnDanger
+          onClick={ (e)=>{ this.props.onDelete(e); } }
+          label="X"
+        />
       </div>
     );
+  }
+
+  render() {
+    if(this.props.noRow == true) {
+      return this.getBtns();
+    } else {
+      return (
+        <div className="row">
+          <div className="col-xs-offset-2 col-xs-10">
+            {this.getBtns()}
+          </div>
+        </div>
+      );
+    }
   }
 }

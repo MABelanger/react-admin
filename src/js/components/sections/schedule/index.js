@@ -109,6 +109,16 @@ export default class ScheduleSection extends React.Component {
     this.setState({'showSection': !this.state.showSection});
   }
 
+  getCtrlSaveDel(){
+    return(
+      <CtrlSaveDel
+        noRow={true}
+        onSave={ (e)=>{ this.onCtrlSave(e); } }
+        onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+      />
+    );
+  }
+
   // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
@@ -143,10 +153,10 @@ export default class ScheduleSection extends React.Component {
 
         <div className="section-animation">
           <div className={sectionClasses}>
-            <CtrlInput ref="ctrlInput" schedule={this.props.schedule} />
-            <CtrlSaveDel
-              onSave={ (e)=>{ this.onCtrlSave(e); } }
-              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+            <CtrlInput
+              ref="ctrlInput"
+              schedule={this.props.schedule}
+              ctrlSaveDel={this.getCtrlSaveDel.bind(this)}
             />
           </div>
         </div>
