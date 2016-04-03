@@ -11,8 +11,8 @@ export default class CtrlInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      day: null,
-      isFull: false,
+      day: this.props.testingDay.day,
+      isFull: this.props.testingDay.isFull,
     };
   }
 
@@ -24,23 +24,19 @@ export default class CtrlInput extends React.Component {
 
   getFields(){
     return {
-      day: this.state.day.name,
+      day: this.state.day,
       isFull: this.state.isFull
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.schedule) {
+    if(nextProps.testingDay) {
       this.setState({
-        day: nextProps.schedule.day,
-        isFull: nextProps.schedule.isFull
+        day: nextProps.testingDay.day,
+        isFull: nextProps.testingDay.isFull
       });
     }
   }
- 
- selectDayName(day){
-   this.changeValue(day.value);
- }
 
   renderCheckBox(){
     return(
@@ -80,12 +76,12 @@ export default class CtrlInput extends React.Component {
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
           </div>
-          <div className="col-sm-3">
-            &nbsp;
-          </div>
           <div className="col-sm-4">
             <br/>
             {this.props.ctrlSaveDel()}
+          </div>
+          <div className="col-sm-3">
+            &nbsp;
           </div>
         </div>
     );

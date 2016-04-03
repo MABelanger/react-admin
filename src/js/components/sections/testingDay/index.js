@@ -143,7 +143,7 @@ export default class ScheduleSection extends React.Component {
 
         <CtrlSelect
           list={this.props.testingDays}
-          title="Schedule"
+          title="Jours D'essaie"
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }

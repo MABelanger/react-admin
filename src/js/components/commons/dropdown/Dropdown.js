@@ -47,7 +47,7 @@ export default class Dropdown extends React.Component {
   // else return the firstName + lastName
   // TODO: get another solution
   getName(item) {
-    return item.name || item.dayName || (item.firstName + " " + item.lastName);
+    return item.day || item.name || item.dayName || (item.firstName + " " + item.lastName);
   }
 
   getItem(item){
