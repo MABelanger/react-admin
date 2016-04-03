@@ -5,6 +5,7 @@ import Teacher                    from "./Teacher";
 import CourseDescription          from "./CourseDescription";
 import CourseType                 from "./CourseType";
 import Schedule                   from "./Schedule";
+import TestingDay                 from "./TestingDay";
 import moment                     from "moment";
 import BtnInfo                    from "../commons/BtnInfo";
 
@@ -28,6 +29,9 @@ export default class Admin extends React.Component {
       schedules: [],
       schedule : {},
 
+      testingDays: [],
+      testingDay : {},
+
     };
     //http://localhost:3000/api/courses/
     // 56fd65bd884902915a0805ea/teachers/56fd65ce884902915a0805eb/course_description/course_types/56fd6659884902915a0805ec/schedules
@@ -48,7 +52,7 @@ export default class Admin extends React.Component {
     */
   }
 
-
+//http://localhost:3000/api/courses/56fd65bd884902915a0805ea/teachers/56fd65ce884902915a0805eb/course_description/course_types/56fd6659884902915a0805ec/schedules/56fd8725b8fbe2c25b6d2fe0/testing_days
   forceState(){
     let course = {
       _id : '56fd65bd884902915a0805ea'
@@ -59,17 +63,22 @@ export default class Admin extends React.Component {
 
     let courseType = {
       _id : '56fd6659884902915a0805ec'
-    }
+    };
 
     let schedule = {
-      _id : '56fd874bb8fbe2c25b6d2fe1'
-    }
+      _id : '56fd8725b8fbe2c25b6d2fe0'
+    };
+
+    let testingDay = {
+      _id: '5700701f83456569686a374b'
+    };
 
     this.setState({
       course : course,
       teacher : teacher,
       courseType : courseType,
-      schedule: schedule
+      schedule: schedule,
+      testingDay: testingDay
     });
   }
 
@@ -203,6 +212,7 @@ export default class Admin extends React.Component {
   }
   setSchedule(schedule){
     this.setState({'schedule': schedule});
+    this._resetTestingDay();
   }
 
   setSchedules(schedules){
@@ -223,11 +233,49 @@ export default class Admin extends React.Component {
       />
     );
   }
+
+  /*
+   * Testing Day
+   */
+
+  _resetTestingDay(){
+    this.setState({'testingDay': {} });
+    if (this.refs.testingDayAdmin) {
+      this.refs.testingDayAdmin.list(
+          this.state.course._id,
+          this.state.teacher._id,
+          this.state.courseType._id,
+          this.state.schedule._id,
+      );
+      this.refs.testingDayAdmin.refs.testingDaySection.hideSection();
+    }
+  }
+  setTestingDay(testingDay){
+    this.setState({'testingDay': testingDay});
+  }
+
+  setTestingDays(testingDays){
+    this.setState({'testingDays': testingDays});
+  }
+
+  getTestingDay(){
+    return (
+      <TestingDay
+        ref="testingDayAdmin"
+        setTestingDay={this.setTestingDay.bind(this)}
+        setTestingDays={this.setTestingDays.bind(this)}
+        testingDay={ this.state.testingDay }
+        testingDays={ this.state.testingDays }
+        courseId={this.state.course._id}
+        teacherId={this.state.teacher._id}
+        courseTypeId={this.state.courseType._id}
+        scheduleId={this.state.schedule._id}
+      />
+    );
+  }
+
   render() {
-
     var teacher = this.state.course._id ? this.teacher : '';
-
-
     return (
       <div>
         <div className="container">
@@ -254,6 +302,8 @@ export default class Admin extends React.Component {
         {this.state.teacher._id ? this.getCourseType() : ''}
 
         {this.state.courseType._id ? this.getSchedule() : ''}
+
+        {this.state.testingDay._id ? this.getTestingDay() : ''}
 
       </div>
     );

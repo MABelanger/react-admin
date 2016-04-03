@@ -11,10 +11,8 @@ export default class CtrlInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dayName: null,
+      day: null,
       isFull: false,
-      dayStart: null,
-      dayEnd: null
     };
   }
 
@@ -26,26 +24,22 @@ export default class CtrlInput extends React.Component {
 
   getFields(){
     return {
-      dayName: this.state.dayName.name,
-      isFull: this.state.isFull,
-      dayStart: this.state.dayStart,
-      dayEnd: this.state.dayEnd
+      day: this.state.day.name,
+      isFull: this.state.isFull
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.schedule) {
       this.setState({
-        dayName: nextProps.schedule.dayName,
-        isFull: nextProps.schedule.isFull,
-        dayStart: nextProps.schedule.dayStart,
-        dayEnd: nextProps.schedule.dayEnd
+        day: nextProps.schedule.day,
+        isFull: nextProps.schedule.isFull
       });
     }
   }
  
- selectDayName(dayName){
-   this.changeValue(dayName.value);
+ selectDayName(day){
+   this.changeValue(day.value);
  }
 
   renderCheckBox(){
@@ -70,59 +64,24 @@ export default class CtrlInput extends React.Component {
     );
   }
 
-  renderHours(){
+  renderDate(){
     return(
         <div className="row">
           <div className="col-sm-offset-1 col-sm-1">
             {this.renderCheckBox()}
           </div>
           <div className="col-sm-3">
-            <b>Début:</b><br/>
-            <TimePicker
-              name="dayStart"
-              label="Début"
-              ref="dayStart"
-              date={this.state.dayStart}
+            <b>Jour:</b><br/>
+            <DatePicker
+              name="day"
+              label="Jour"
+              ref="day"
+              date={this.state.day}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
           </div>
           <div className="col-sm-3">
-            <b>Fin:</b><br/>
-            <TimePicker
-              name="dayEnd"
-              label="Fin"
-              ref="dayEnd"
-              date={this.state.dayEnd}
-              changeValue={ (name, value) => { this.changeValue(name, value); } }
-            />
-          </div>
-          <div className="col-sm-4">&nbsp;</div>
-        </div>
-    );
-  }
-
-  renderDates(){
-    return(
-        <div className="row">
-          <div className="col-sm-offset-2 col-sm-3">
-            <b>Du:</b><br/>
-            <DatePicker
-              name="dayStart"
-              label="Début"
-              ref="dayStart"
-              date={this.state.dayStart}
-              changeValue={ (name, value) => { this.changeValue(name, value); } }
-            />
-          </div>
-          <div className="col-sm-3">
-            <b>Au:</b><br/>
-            <DatePicker
-              name="dayEnd"
-              label="Fin"
-              ref="dayEnd"
-              date={this.state.dayEnd}
-              changeValue={ (name, value) => { this.changeValue(name, value); } }
-            />
+            &nbsp;
           </div>
           <div className="col-sm-4">
             <br/>
@@ -135,8 +94,7 @@ export default class CtrlInput extends React.Component {
   render() {
     return (
       <div>
-        {this.renderHours()}
-        {this.renderDates()}
+        {this.renderDate()}
       </div>
     );
   }
