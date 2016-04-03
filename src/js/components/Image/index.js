@@ -69,8 +69,12 @@ export default class ImageUpload extends React.Component {
       } else if (this.props.value.dataUri) {
         imgSrc = this.props.value.dataUri;
         fileName = this._getFileNameFReader(this.state.file);
+
+      } else {
+        return '';
       }
-    }else {
+  
+    } else {
       return '';
     }
 
