@@ -15,7 +15,7 @@ export default class Admin extends React.Component {
   }
 
   componentWillMount(){
-    this.read();
+    //this.read();
   }
 
   /*

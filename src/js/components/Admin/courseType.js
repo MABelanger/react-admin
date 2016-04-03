@@ -12,7 +12,7 @@ export default class CourseType extends React.Component {
   componentWillMount(){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
-    this.list(courseId, teacherId);
+    //this.list(courseId, teacherId);
   }
 
   select(courseType){

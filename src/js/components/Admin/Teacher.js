@@ -11,7 +11,7 @@ export default class Teacher extends React.Component {
 
   componentWillMount(){
     let courseId = this.props.courseId;
-    this.list(courseId);
+    //this.list(courseId);
   }
 
   select(teacher){

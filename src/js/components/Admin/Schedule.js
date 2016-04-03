@@ -13,7 +13,7 @@ export default class Schedule extends React.Component {
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
     let courseTypeId = this.props.courseTypeId;
-    this.list(courseId, teacherId, courseTypeId);
+    //this.list(courseId, teacherId, courseTypeId);
   }
 
 /*

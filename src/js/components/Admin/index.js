@@ -45,15 +45,22 @@ export default class Admin extends React.Component {
 
   }
 
+  componentWillMount(){
+    //this.list();
+    //this.refs.courseNameAdmin.list();
+  }
+
   setCourse(course){
-    this.setState({'course': course});
-    this._resetTeachers();
+    this.setState({'course': course}, function(){
+      this._resetTeachers();
+    });
   }
 
   renderCourseName(){
     return(
       <div>
         <CourseName
+          ref="courseNameAdmin"
           course={this.state.course}
           courses={this.state.courses}
           setCourses={this.setCourses.bind(this)}
@@ -69,14 +76,14 @@ export default class Admin extends React.Component {
    * Teacher
    */
   _resetTeachers(){
-    this.setState({'teacher': {}});
-    // update the teachers list and hide sections
-    // need an if because the component is not
-    if(this.refs.teacherAdmin) {
-      this.refs.teacherAdmin.list(this.state.course._id);
-      this.refs.teacherAdmin.refs.teacherSection.hideSection();
-    }
-    this._resetCourseType();
+    this.setState({'teacher': {}}, function(){
+      if(this.refs.teacherAdmin) {
+        this.refs.teacherAdmin.list(this.state.course._id);
+        this.refs.teacherAdmin.refs.teacherSection.hideSection();
+      }
+      this._resetCourseDescription();
+      this._resetCourseType();
+    });
   }
 
   setTeachers(teachers){
@@ -86,8 +93,10 @@ export default class Admin extends React.Component {
 
 
   setTeacher(teacher){
-    this.setState({'teacher': teacher});
-    this._resetCourseDescription();
+    this.setState({'teacher': teacher}, function(){
+      this._resetCourseDescription();
+      this._resetCourseType();
+    });
   }
 
   renderTeacher(){
@@ -116,10 +125,12 @@ export default class Admin extends React.Component {
       this.refs.courseDescriptionAdmin.update( this.state.course._id, this.state.teacher._id );
       this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
     }
-    this._resetCourseType();
   }
+
   setCourseDescription(courseDescription) {
-    this.setState({'courseDescription': courseDescription});
+    this.setState({'courseDescription': courseDescription}, function(){
+
+    });
   }
 
   renderCourseDescription(){
@@ -142,17 +153,19 @@ export default class Admin extends React.Component {
    * CourseType
    */
   _resetCourseType() {
-    this.setState({'courseType': {} });
-    if ( this.refs.courseTypeAdmin ) {
-      this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
-      this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
-    }
-    this._resetSchedule();
+    this.setState({'courseType': {} }, function(){
+      if ( this.refs.courseTypeAdmin ) {
+        this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
+        this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
+      }
+      this._resetSchedule();
+    });
   }
 
   setCourseType(courseType){
-    this.setState({'courseType': courseType});
-    this._resetSchedule();
+    this.setState({'courseType': courseType}, function(){
+      this._resetSchedule();
+    });
   }
 
   setCourseTypes(courseTypes){
@@ -181,16 +194,20 @@ export default class Admin extends React.Component {
    * Schedule
    */
   _resetSchedule(){
-    this.setState({'schedule': {} });
-    if (this.refs.scheduleAdmin) {
-      this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
-      this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
-    }
-    this._resetTestingDay();
+    this.setState({'schedule': {} }, function(){
+      if (this.refs.scheduleAdmin) {
+        this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
+      }
+      this._resetTestingDay();
+    });
   }
+
   setSchedule(schedule){
-    this.setState({'schedule': schedule});
-    this._resetTestingDay();
+    this.setState({'schedule': schedule}, function(){
+      this._resetTestingDay();
+    });
+    
   }
 
   setSchedules(schedules){
@@ -219,17 +236,19 @@ export default class Admin extends React.Component {
    * Testing Day
    */
   _resetTestingDay(){
-    this.setState({'testingDay': {} });
-    if (this.refs.testingDayAdmin) {
-      this.refs.testingDayAdmin.list(
-          this.state.course._id,
-          this.state.teacher._id,
-          this.state.courseType._id,
-          this.state.schedule._id,
-      );
-      this.refs.testingDayAdmin.refs.testingDaySection.hideSection();
-    }
+    this.setState({'testingDay': {} }, function(){
+      if (this.refs.testingDayAdmin) {
+        this.refs.testingDayAdmin.list(
+            this.state.course._id,
+            this.state.teacher._id,
+            this.state.courseType._id,
+            this.state.schedule._id,
+        );
+        this.refs.testingDayAdmin.refs.testingDaySection.hideSection();
+      }
+    });
   }
+
   setTestingDay(testingDay){
     this.setState({'testingDay': testingDay});
   }

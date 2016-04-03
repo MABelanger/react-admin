@@ -14,7 +14,7 @@ export default class Schedule extends React.Component {
     let teacherId = this.props.teacherId;
     let courseTypeId = this.props.courseTypeId;
     let scheduleId = this.props.scheduleId;
-    this.list(courseId, teacherId, courseTypeId, scheduleId);
+    //this.list(courseId, teacherId, courseTypeId, scheduleId);
   }
 
   select(testingDay){

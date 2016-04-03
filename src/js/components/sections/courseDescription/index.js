@@ -13,8 +13,6 @@ import CtrlModNew                from "../ctrl/CtrlModNew";
 import CtrlInput                  from "./CtrlInput";
 import * as adminHelper           from "../helper";
 
-
-
 // Styles
 import 'toastr/build/toastr.css';
 import sectionStyles              from "../styles/section.scss"
@@ -41,7 +39,6 @@ export default class Teacher extends React.Component {
   create(courseDescription){
      // call admin to create the courseDescription
      this.props.onCreate(courseDescription);
-
   }
 
   /**
