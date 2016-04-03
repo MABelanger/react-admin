@@ -40,15 +40,13 @@ export default class CtrlInput extends React.Component {
 
   render() {
     return (
-      <div>
-        <TextInput
-          name="name"
-          label="Nom"
-          ref="name"
-          value={this.state.name}
-          changeValue={ (name, value) => { this.changeValue(name, value); } }
-        />
-      </div>
+      <TextInput
+        name="name"
+        label="Nom"
+        ref="name"
+        value={this.state.name}
+        changeValue={ (name, value) => { this.changeValue(name, value); } }
+      />
     );
   }
 }

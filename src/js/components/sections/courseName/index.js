@@ -111,8 +111,7 @@ export default class CourseName extends React.Component {
     });
 
     return (
-      <div className="container">
-
+      <div className="row">
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
@@ -135,15 +134,13 @@ export default class CourseName extends React.Component {
 
         <div className="section-animation">
           <div className={this.sectionClasses}>
-            <CtrlInput ref="ctrlInput" course={this.props.course} />
-            <CtrlSaveDel
-              onSave={ (e)=>{ this.onCtrlSave(e); } }
-              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
-            />
+                <CtrlInput ref="ctrlInput" course={this.props.course} />
+                <CtrlSaveDel
+                  onSave={ (e)=>{ this.onCtrlSave(e); } }
+                  onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+                />
           </div>
         </div>
-
-
       </div>
     );
   }

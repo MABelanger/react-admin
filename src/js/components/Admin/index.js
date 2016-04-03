@@ -33,53 +33,6 @@ export default class Admin extends React.Component {
       testingDay : {},
 
     };
-    //http://localhost:3000/api/courses/
-    // 56fd65bd884902915a0805ea/teachers/56fd65ce884902915a0805eb/course_description/course_types/56fd6659884902915a0805ec/schedules
-    // force schedule
-
-
-    /*
-    console.log(moment().startOf('day').utcOffset("-04:00").toISOString());
-    console.log(moment("2016-03-18T20:28:00.000Z").toISOString());
-    console.log(moment("2016-03-18T20:28:00.000Z").utcOffset( moment().utcOffset() ).toString());
-    console.log(moment("2016-03-18T20:28:00.000Z").toString());
-
-    let isoDate = moment("2016-03-18T20:28:00.000Z").utcOffset("-04:00").toISOString();
-    console.log('isoDate', isoDate);
-
-    let utcDate = moment("2016-03-18T20:28:00.000Z").utc().format();
-    console.log('utcDate', utcDate);
-    */
-  }
-
-//http://localhost:3000/api/courses/56fd65bd884902915a0805ea/teachers/56fd65ce884902915a0805eb/course_description/course_types/56fd6659884902915a0805ec/schedules/56fd8725b8fbe2c25b6d2fe0/testing_days
-  forceState(){
-    let course = {
-      _id : '56fd65bd884902915a0805ea'
-    };
-    let teacher = {
-      _id : '56fd65ce884902915a0805eb'
-    };
-
-    let courseType = {
-      _id : '56fd6659884902915a0805ec'
-    };
-
-    let schedule = {
-      _id : '56fd8725b8fbe2c25b6d2fe0'
-    };
-
-    let testingDay = {
-      _id: '5700701f83456569686a374b'
-    };
-
-    this.setState({
-      course : course,
-      teacher : teacher,
-      courseType : courseType,
-      schedule: schedule,
-      testingDay: testingDay
-    });
   }
 
   /*
@@ -96,6 +49,20 @@ export default class Admin extends React.Component {
   setCourse(course){
     this.setState({'course': course});
     this._resetTeachers();
+  }
+
+  renderCourseName(){
+    return(
+      <div>
+        <CourseName
+          course={this.state.course}
+          courses={this.state.courses}
+          setCourses={this.setCourses.bind(this)}
+          setCourse={this.setCourse.bind(this)}
+        />
+        <hr/>
+      </div>
+    );
   }
 
 
@@ -124,16 +91,19 @@ export default class Admin extends React.Component {
     this._resetCourseType();
   }
 
-  getTeacher(){
+  renderTeacher(){
     return (
-      <Teacher
-        ref="teacherAdmin"
-        courseId={this.state.course._id}
-        teacher={this.state.teacher}
-        teachers={this.state.teachers}
-        setTeachers={this.setTeachers.bind(this)}
-        setTeacher={this.setTeacher.bind(this)}
-      />
+      <div>
+        <Teacher
+          ref="teacherAdmin"
+          courseId={this.state.course._id}
+          teacher={this.state.teacher}
+          teachers={this.state.teachers}
+          setTeachers={this.setTeachers.bind(this)}
+          setTeacher={this.setTeacher.bind(this)}
+          />
+        <hr/>
+      </div>
     );
   }
 
@@ -152,15 +122,18 @@ export default class Admin extends React.Component {
     this.setState({'courseDescription': courseDescription});
   }
 
-  getCourseDescription(){
+  renderCourseDescription(){
     return (
-      <CourseDescription
-        ref="courseDescriptionAdmin"
-        courseDescription={ this.state.courseDescription }
-        setCourseDescription={this.setCourseDescription.bind(this)}
-        courseId={this.state.course._id}
-        teacherId={this.state.teacher._id}
-      />
+      <div>
+        <CourseDescription
+          ref="courseDescriptionAdmin"
+          courseDescription={ this.state.courseDescription }
+          setCourseDescription={this.setCourseDescription.bind(this)}
+          courseId={this.state.course._id}
+          teacherId={this.state.teacher._id}
+        />
+        <hr/>
+      </div>
     );
   }
 
@@ -185,17 +158,20 @@ export default class Admin extends React.Component {
     this.setState({'courseTypes': courseTypes});
   }
 
-  getCourseType(){
+  renderCourseType(){
     return (
-      <CourseType
-        ref="courseTypeAdmin"
-        setCourseType={this.setCourseType.bind(this)}
-        setCourseTypes={this.setCourseTypes.bind(this)}
-        courseType={ this.state.courseType }
-        courseTypes={ this.state.courseTypes }
-        courseId={this.state.course._id}
-        teacherId={this.state.teacher._id}
-      />
+      <div>
+        <CourseType
+          ref="courseTypeAdmin"
+          setCourseType={this.setCourseType.bind(this)}
+          setCourseTypes={this.setCourseTypes.bind(this)}
+          courseType={ this.state.courseType }
+          courseTypes={ this.state.courseTypes }
+          courseId={this.state.course._id}
+          teacherId={this.state.teacher._id}
+        />
+        <hr/>
+      </div>
     );
   }
 
@@ -219,25 +195,27 @@ export default class Admin extends React.Component {
     this.setState({'schedules': schedules});
   }
 
-  getSchedule(){
+  renderSchedule(){
     return (
-      <Schedule
-        ref="scheduleAdmin"
-        setSchedule={this.setSchedule.bind(this)}
-        setSchedules={this.setSchedules.bind(this)}
-        schedule={ this.state.schedule }
-        schedules={ this.state.schedules }
-        courseId={this.state.course._id}
-        teacherId={this.state.teacher._id}
-        courseTypeId={this.state.courseType._id}
-      />
+      <div>
+        <Schedule
+          ref="scheduleAdmin"
+          setSchedule={this.setSchedule.bind(this)}
+          setSchedules={this.setSchedules.bind(this)}
+          schedule={ this.state.schedule }
+          schedules={ this.state.schedules }
+          courseId={this.state.course._id}
+          teacherId={this.state.teacher._id}
+          courseTypeId={this.state.courseType._id}
+          />
+        <hr/>
+      </div>
     );
   }
 
   /*
    * Testing Day
    */
-
   _resetTestingDay(){
     this.setState({'testingDay': {} });
     if (this.refs.testingDayAdmin) {
@@ -258,53 +236,84 @@ export default class Admin extends React.Component {
     this.setState({'testingDays': testingDays});
   }
 
-  getTestingDay(){
+  renderTestingDay(){
     return (
-      <TestingDay
-        ref="testingDayAdmin"
-        setTestingDay={this.setTestingDay.bind(this)}
-        setTestingDays={this.setTestingDays.bind(this)}
-        testingDay={ this.state.testingDay }
-        testingDays={ this.state.testingDays }
-        courseId={this.state.course._id}
-        teacherId={this.state.teacher._id}
-        courseTypeId={this.state.courseType._id}
-        scheduleId={this.state.schedule._id}
-      />
+      <div>
+        <TestingDay
+          ref="testingDayAdmin"
+          setTestingDay={this.setTestingDay.bind(this)}
+          setTestingDays={this.setTestingDays.bind(this)}
+          testingDay={ this.state.testingDay }
+          testingDays={ this.state.testingDays }
+          courseId={this.state.course._id}
+          teacherId={this.state.teacher._id}
+          courseTypeId={this.state.courseType._id}
+          scheduleId={this.state.schedule._id}
+          />
+        <hr/>
+      </div>
     );
   }
 
-  render() {
-    var teacher = this.state.course._id ? this.teacher : '';
-    return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <BtnInfo
-              className="col-xs-4"
-              onClick={ (e)=>{ this.forceState(); } }
-              label="forceState"
-            />
-          </div>
-        </div>
 
-        <CourseName
-          course={this.state.course}
-          courses={this.state.courses}
-          setCourses={this.setCourses.bind(this)}
-          setCourse={this.setCourse.bind(this)}
+  /*
+   * Force Select
+   */
+
+  forceSelect(){
+    let course = {
+      _id : '56fd65bd884902915a0805ea'
+    };
+    let teacher = {
+      _id : '56fd65ce884902915a0805eb'
+    };
+
+    let courseType = {
+      _id : '56fd6659884902915a0805ec'
+    };
+
+    let schedule = {
+      _id : '56fd8725b8fbe2c25b6d2fe0'
+    };
+
+    let testingDay = {
+      _id: '5700701f83456569686a374b'
+    };
+
+    this.setState({
+      course : course,
+      teacher : teacher,
+      courseType : courseType,
+      schedule: schedule,
+      testingDay: testingDay
+    });
+  }
+
+  renderForceSelect(){
+    return(
+      <div className="clearfix">
+        <BtnInfo
+          className="col-xs-4"
+          onClick={ (e)=>{ this.forceSelect(); } }
+          label="forceSelect"
         />
+      </div>
+    );
+  }
 
-        {this.state.course._id ? this.getTeacher() : ''}
-
-        {this.state.teacher._id ? this.getCourseDescription() : ''}
-
-        {this.state.teacher._id ? this.getCourseType() : ''}
-
-        {this.state.courseType._id ? this.getSchedule() : ''}
-
-        {this.state.testingDay._id ? this.getTestingDay() : ''}
-
+  /*
+   * Render all sections
+   */
+  render() {
+    return (
+      <div className="container">
+        { this.renderForceSelect() }
+        { this.renderCourseName() }
+        { this.state.course._id ? this.renderTeacher() : '' }
+        { this.state.teacher._id ? this.renderCourseDescription() : '' }
+        { this.state.teacher._id ? this.renderCourseType() : '' }
+        { this.state.courseType._id ? this.renderSchedule() : '' }
+        { this.state.testingDay._id ? this.renderTestingDay() : '' }
       </div>
     );
   }

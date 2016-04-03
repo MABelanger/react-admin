@@ -119,7 +119,7 @@ export default class CourseType extends React.Component {
     });
 
     return (
-      <div className="container">
+      <div className="row">
 
         <ModalBootstrap
           ref="modalBootstrap"

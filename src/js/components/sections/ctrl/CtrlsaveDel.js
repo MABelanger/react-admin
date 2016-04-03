@@ -28,9 +28,13 @@ export default class CtrlSaveDel extends React.Component {
       return this.getBtns();
     } else {
       return (
-        <div className="row">
-          <div className="col-xs-offset-2 col-xs-10">
-            {this.getBtns()}
+        <div className="clearfix">
+          <div className="form-horizontal">
+            <div className="form-group">
+              <div className="col-xs-offset-2 col-xs-10">
+                {this.getBtns()}
+              </div>
+            </div>
           </div>
         </div>
       );

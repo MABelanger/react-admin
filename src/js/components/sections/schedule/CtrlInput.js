@@ -72,7 +72,7 @@ export default class CtrlInput extends React.Component {
 
   renderHours(){
     return(
-        <div className="row">
+        <div className="clearfix">
           <div className="col-sm-offset-1 col-sm-1">
             {this.renderCheckBox()}
           </div>
@@ -103,7 +103,7 @@ export default class CtrlInput extends React.Component {
 
   renderDates(){
     return(
-        <div className="row">
+        <div className="clearfix">
           <div className="col-sm-offset-2 col-sm-3">
             <b>Du:</b><br/>
             <DatePicker

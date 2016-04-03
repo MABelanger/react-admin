@@ -124,7 +124,7 @@ export default class Teacher extends React.Component {
 
     // TODO : add ( txt ... ) ?
     return (
-      <div className="container">
+      <div className="row">
 
         <ModalBootstrap
           ref="modalBootstrap"
@@ -148,7 +148,7 @@ export default class Teacher extends React.Component {
 
             <CtrlInput
               ref="ctrlInput"
-              courseDescription={ this.props.courseDescription} 
+              courseDescription={ this.props.courseDescription } 
             />
             <CtrlSaveDel
               onSave={ (e)=>{ this.onCtrlSave(e); } }
