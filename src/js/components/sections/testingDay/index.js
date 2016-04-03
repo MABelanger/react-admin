@@ -3,6 +3,7 @@ import React                      from "react";
 import classNames                 from "classnames/bind";
 import ModalBootstrap             from "../../ModalBootstrap";
 import toastr                     from 'toastr';
+import moment                     from "moment";
 
 
 // modules
@@ -119,6 +120,22 @@ export default class ScheduleSection extends React.Component {
     );
   }
 
+  getName(item){
+    moment.locale('fr');
+    // remove the utcOffset added by .format()
+    let date = moment( item.day ).utcOffset("+00:00");
+    let name = moment(date).format('LL');
+    return name;
+  }
+
+  getValue(){
+    if(this.props.testingDay.day){
+      return this.getName(this.props.testingDay);
+    } else {
+      return "Jours D'essaie...";
+    }
+  }
+
   // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
@@ -135,7 +152,7 @@ export default class ScheduleSection extends React.Component {
           ref="modalBootstrap"
           msg={
             "Voulez-vous vraiment supprimer ce cour "
-            + '( ' + this.props.testingDay.day + ' ) ?'
+            + '( ' + this.getValue() + ' ) ?'
             + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
           }
           onYes={::this.delete}
@@ -145,10 +162,12 @@ export default class ScheduleSection extends React.Component {
           list={this.props.testingDays}
           title="Jours D'essaie"
           onSelect={ this.select.bind(this) }
-          onModify={this.modify.bind(this)}
+          onModify={ this.modify.bind(this) }
           onNew={ this.new.bind(this) }
-          value={ this.props.testingDay.day}
+
           id={ this.props.testingDay._id }
+          cbGetName={ this.getName.bind(this) }
+          cbGetValue={ this.getValue.bind(this) }
         />
 
         <div className="section-animation">

@@ -46,9 +46,15 @@ export default class Dropdown extends React.Component {
   // if item has name return only the name
   // else return the firstName + lastName
   // TODO: get another solution
+
   getName(item) {
-    return item.day || item.name || item.dayName || (item.firstName + " " + item.lastName);
+    if (this.props.cbGetName){
+      return this.props.cbGetName(item);
+    } else {
+      return item.day || item.name || item.dayName || (item.firstName + " " + item.lastName);
+    }
   }
+
 
   getItem(item){
     return(
@@ -70,6 +76,9 @@ export default class Dropdown extends React.Component {
   }
 
   getValue(){
+    if(this.props.cbGetValue){
+      return this.props.cbGetValue();
+    }
     if(this.props.value){
       return this.props.value;
     }else {

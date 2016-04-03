@@ -16,7 +16,10 @@ export default class CtrlSelect extends React.Component {
                   list={this.props.list}
                   label={this.props.title}
                   onSelect={this.props.onSelect}
-                  value={this.props.value}/>
+                  value={this.props.value}
+                  cbGetName={this.props.cbGetName}
+                  cbGetValue={this.props.cbGetValue}
+                />
                 <BtnInfo
                   label="Modifier"
                   disabled={!this.props.id}

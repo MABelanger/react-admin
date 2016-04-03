@@ -6,7 +6,6 @@ import CourseDescription          from "./CourseDescription";
 import CourseType                 from "./CourseType";
 import Schedule                   from "./Schedule";
 import TestingDay                 from "./TestingDay";
-import moment                     from "moment";
 import BtnInfo                    from "../commons/BtnInfo";
 
 
@@ -73,10 +72,11 @@ export default class Admin extends React.Component {
     this.setState({'teacher': {}});
     // update the teachers list and hide sections
     // need an if because the component is not
-    if(this.refs.teacherAdmin){
+    if(this.refs.teacherAdmin) {
       this.refs.teacherAdmin.list(this.state.course._id);
       this.refs.teacherAdmin.refs.teacherSection.hideSection();
     }
+    this._resetCourseType();
   }
 
   setTeachers(teachers){
@@ -88,7 +88,6 @@ export default class Admin extends React.Component {
   setTeacher(teacher){
     this.setState({'teacher': teacher});
     this._resetCourseDescription();
-    this._resetCourseType();
   }
 
   renderTeacher(){
@@ -117,6 +116,7 @@ export default class Admin extends React.Component {
       this.refs.courseDescriptionAdmin.update( this.state.course._id, this.state.teacher._id );
       this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
     }
+    this._resetCourseType();
   }
   setCourseDescription(courseDescription) {
     this.setState({'courseDescription': courseDescription});
@@ -147,6 +147,7 @@ export default class Admin extends React.Component {
       this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
       this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
     }
+    this._resetSchedule();
   }
 
   setCourseType(courseType){
@@ -185,6 +186,7 @@ export default class Admin extends React.Component {
       this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
       this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
     }
+    this._resetTestingDay();
   }
   setSchedule(schedule){
     this.setState({'schedule': schedule});
