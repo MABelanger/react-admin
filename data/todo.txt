@@ -1,0 +1,6 @@
+order select
+add constants.js with msg error and success
+  ctrlSelect default name and titles
+image conpatible with folder django
+compress images
+parentheses nb of objects on the titles

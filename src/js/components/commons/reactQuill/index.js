@@ -15,7 +15,8 @@ export default class Admin extends React.Component {
   }
 
   handleChange(e) {
-    const value = e;
+    let noInlineStyle = e.replace(/style=\"[^\"]*\"/i, '');
+    const value = noInlineStyle;
     this.props.changeValue(this.props.name, value);
   }
 

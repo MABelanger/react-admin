@@ -51,7 +51,7 @@ export default class Dropdown extends React.Component {
     if (this.props.cbGetName){
       return this.props.cbGetName(item);
     } else {
-      return item.day || item.name || item.dayName || (item.firstName + " " + item.lastName);
+      return item.name || (item.firstName + " " + item.lastName);
     }
   }
 
