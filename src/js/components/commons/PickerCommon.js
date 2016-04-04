@@ -23,8 +23,9 @@ export default class PickerCommon extends React.Component {
     let myDate = this.props.date;
 
     // if no date, by default is the today at 00:00h
+    // ex:. "2016-03-18T00:00:00.000Z"
     if(! myDate){
-      myDate = String(moment().utcOffset("+00:00").startOf('day').toISOString());//"2016-03-18T20:28:00.000Z"
+      myDate = String(moment().utcOffset("+00:00").startOf('day').toISOString());
     }
 
     if (mode == 'date') {
