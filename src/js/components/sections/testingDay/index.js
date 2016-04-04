@@ -120,6 +120,10 @@ export default class ScheduleSection extends React.Component {
     );
   }
 
+
+ /* 
+  * custum cb for CtrlSelect
+  */
   getName(item){
     moment.locale('fr');
     // remove the utcOffset added by .format()

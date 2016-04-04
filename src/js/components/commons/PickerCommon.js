@@ -21,6 +21,11 @@ export default class PickerCommon extends React.Component {
     let defaultText = null;
     let inputFormat = null;
     let myDate = this.props.date;
+    //console.log('-', moment().startOf('day').utcOffset("-04:00").toISOString());
+    if(! myDate){
+      myDate = String(moment().utcOffset("+00:00").startOf('day').toISOString());//"2016-03-18T20:28:00.000Z"
+      console.log('myDate', myDate)
+    }
 
     if (mode == 'date') {
       defaultText = DEFAULT_TEXT_DATE;
@@ -37,7 +42,7 @@ export default class PickerCommon extends React.Component {
         <DateTimeField
           ref={mode + "Field"}
           mode={mode}
-          defaultText={defaultText}
+          defaultText="allo"
           dateTime={String(myDate)}
           format={FORMAT}
           inputFormat={inputFormat}

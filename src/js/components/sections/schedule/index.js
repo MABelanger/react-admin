@@ -3,6 +3,7 @@ import React                      from "react";
 import classNames                 from "classnames/bind";
 import ModalBootstrap             from "../../ModalBootstrap";
 import toastr                     from 'toastr';
+import moment                     from "moment";
 
 
 // modules
@@ -119,6 +120,38 @@ export default class ScheduleSection extends React.Component {
     );
   }
 
+
+ /* 
+  * custum cb for CtrlSelect
+  */
+
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  getName(item){
+    moment.locale('fr');
+    // remove the utcOffset added by .format()
+    let dateStart = moment( item.dayStart ).utcOffset("+00:00");
+    let dateEnd = moment( item.dayEnd ).utcOffset("+00:00");
+    let weekDayName = moment.weekdays( moment(dateStart).day() );
+    let name = '( ' + this.capitalizeFirstLetter( weekDayName ) + ' )'
+                + ' '
+                + dateStart.format('LL')
+                + ' - '
+                + dateEnd.format('LL');
+    return name;
+  }
+
+  getValue(){
+    if(this.props.schedule.dayStart){
+      return this.getName(this.props.schedule);
+    } else {
+      return "Jours de cours...";
+    }
+  }
+
   // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
@@ -147,8 +180,10 @@ export default class ScheduleSection extends React.Component {
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }
-          value={ this.props.schedule.dayName}
           id={ this.props.schedule._id }
+
+          cbGetName={ this.getName.bind(this) }
+          cbGetValue={ this.getValue.bind(this) }
         />
 
         <div className="section-animation">
