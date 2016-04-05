@@ -31,6 +31,14 @@ export default class CtrlInput extends React.Component {
     this.setState(newState);
   }
 
+  getError(name) {
+    if (this.props.errors[name]){
+      return this.props.errors[name].message;
+    } else {
+      return '';
+    }
+  }
+
   getFields(){
     return {
       name : this.state.name,
@@ -38,12 +46,15 @@ export default class CtrlInput extends React.Component {
     };
   }
 
+
+
   render() {
     return (
       <TextInput
         name="name"
         label="Nom"
         ref="name"
+        error={this.getError("name")}
         value={this.state.name}
         changeValue={ (name, value) => { this.changeValue(name, value); } }
       />

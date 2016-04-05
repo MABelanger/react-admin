@@ -9,6 +9,10 @@ export default class TextInput extends React.Component {
     this.props.changeValue(this.props.name, value);
   }
 
+  getBr(){
+    
+  }
+
   render() {
     var wrapperClass = 'form-group';
     if (this.props.error && this.props.error.length > 0) {

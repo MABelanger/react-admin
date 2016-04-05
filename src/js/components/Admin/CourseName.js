@@ -12,12 +12,21 @@ import 'toastr/build/toastr.css';
 
 export default class CourseName extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: {},
+      success: ""
+    };
+  }
+
   componentWillMount(){
     this.list();
   }
 
   select(course){
     this.props.setCourse(course);
+    this.setState({ errors: {} });
   }
 
   new(){
@@ -34,8 +43,11 @@ export default class CourseName extends React.Component {
         this.props.setCourse(course);
         this.list();
         toastr.success('Le cours à été crée.');
-      }, (err) => {
-        toastr.error('Erreur de création.');
+        this.refs.courseNameSection.hideSection();
+      }, (errors) => {
+        this.setState({
+          errors: errors
+        });
       });
   }
 
@@ -73,10 +85,12 @@ export default class CourseName extends React.Component {
   render() {
     return (
       <CourseNameSection
+        ref="courseNameSection"
         courses={this.props.courses}
         course={this.props.course}
         onSelect={this.select.bind(this)}
         onNew={this.new.bind(this)}
+        errors={this.state.errors}
 
         onCreate={this.create.bind(this)}
         onSave={this.save.bind(this)}

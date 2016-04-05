@@ -34,7 +34,8 @@ var CourseApi = {
             resolve(res.body);
           }
           else {
-            reject(err);
+            res.body.errors.msg = "Erreur de création.<br/>";
+            reject(res.body.errors);
           }
         });
     });

@@ -10,3 +10,8 @@ on save convert to class txt-red
 // convert mongodb date start, date end with hours
 
 set calendar in french
+add msg error
+
+fix name with dropdown that no value.name is used and use cb instead for all dropdown
+
+fix error display text input

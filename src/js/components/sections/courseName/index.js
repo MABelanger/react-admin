@@ -2,6 +2,7 @@
 import React                      from "react";
 import classNames                 from "classnames/bind";
 import ModalBootstrap             from "../../ModalBootstrap";
+import toastr                     from 'toastr';
 
 // modules
 import CtrlSelect                 from "../ctrl/CtrlSelect";
@@ -28,6 +29,23 @@ export default class CourseName extends React.Component {
   }
 
 
+  componentWillReceiveProps(nextProps) {
+    let hasError = false;
+    let errStr = '';
+    for (var property in nextProps.errors) {
+      if (nextProps.errors.hasOwnProperty(property)) {
+        hasError = true;
+        if( nextProps.errors[ property ].message ){
+          errStr += "- " + nextProps.errors[ property ].message + '<br/>';
+        }
+      }
+    }
+    if ( hasError ){
+      errStr = nextProps.errors.msg + errStr;
+      toastr.error(errStr);
+    }
+  }
+
   componentDidMount(){
 
   }
@@ -48,7 +66,6 @@ export default class CourseName extends React.Component {
     else{
       this.props.onCreate(course);
     }
-    this.hideSection();
   }
 
 
@@ -134,7 +151,11 @@ export default class CourseName extends React.Component {
 
         <div className="section-animation">
           <div className={this.sectionClasses}>
-                <CtrlInput ref="ctrlInput" course={this.props.course} />
+                <CtrlInput
+                  ref="ctrlInput"
+                  course={this.props.course}
+                  errors={this.props.errors}
+                />
                 <CtrlSaveDel
                   onSave={ (e)=>{ this.onCtrlSave(e); } }
                   onDelete={ (e)=>{ this.onCtrlDelete(e); } }
