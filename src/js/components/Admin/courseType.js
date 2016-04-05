@@ -37,7 +37,7 @@ export default class CourseType extends React.Component {
       .then( (courseType) => {
         // update teacher and teachers
         this.props.setCourseType(courseType);
-        //this.list(courseId, teacherId)
+        this.list(courseId, teacherId);
         toastr.success('Le Type de cours à été crée.');
       }, (err) => {
         toastr.error('Erreur de création.', err);

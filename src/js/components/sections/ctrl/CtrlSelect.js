@@ -10,7 +10,7 @@ export default class CtrlSelect extends React.Component {
         <div className="form-horizontal">
           <div className="form-group">
             <div className="col-xs-offset-2 col-xs-10">
-              <h4>{this.props.title}</h4>
+              <h4>{this.props.title} ({this.props.list.length})</h4>
               <div className="btn-toolbar">
                 <Dropdown
                   list={this.props.list}

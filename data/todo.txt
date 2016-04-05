@@ -1,6 +1,12 @@
-order select
+order alphabetic select
 add constants.js with msg error and success
   ctrlSelect default name and titles
 image conpatible with folder django
-compress images
-parentheses nb of objects on the titles
+compress images uploaded from django
+
+on save convert to class txt-red
+// parentheses nb of objects on the titles
+
+// convert mongodb date start, date end with hours
+
+set calendar in french
