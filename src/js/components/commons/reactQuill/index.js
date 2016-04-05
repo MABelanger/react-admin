@@ -10,15 +10,42 @@ export default class Admin extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: "hello"
+      description: ""
     };
   }
 
+  getOnlyRedInlineStyle(html) {
+    /* TODO use regex for clean the code
+    var findRed = '<span style="color: rgb\(161, 50, 50\);">';
+    var regRed = new RegExp(findRed, 'g');
+
+    var findBlack = '<span style="color: rgb\(0, 0, 0\);">';
+    var regBlak = new RegExp(findBlack, 'g');
+    */
+
+    // replace the inline style red by <red>
+    let noInlineColors = html.replace(/<span style="color: rgb\(161, 50, 50\);">/g, '<red>');//
+    noInlineColors = noInlineColors.replace(/<span style="color: rgb\(0, 0, 0\);">/g, '<black>'); // span class="autoColor"
+
+    // remove all inline styles
+    let noInlineStyle = noInlineColors.replace(/style=\"[^\"]*\"/i, '');
+
+    // re add the inline style of red
+    let addRed = noInlineStyle.replace(/<red>/g, '<span style="color: rgb(161, 50, 50);">');//
+    // the empty span is automatically removed by quill
+    let removeBlack = addRed.replace('<black>', '<span>');
+
+    return removeBlack;
+  }
+
   handleChange(e) {
-    let noInlineStyle = e.replace(/style=\"[^\"]*\"/i, '');
-    const value = noInlineStyle;
+    console.log('before', e);
+    // set the value
+    let value = this.getOnlyRedInlineStyle(e);
+    console.log('after', e);
     this.props.changeValue(this.props.name, value);
   }
+
 
   initToolbars(){
     this.menuColors = [

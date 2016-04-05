@@ -32,7 +32,53 @@ export default class Admin extends React.Component {
       testingDay : {},
 
     };
+
+    this.parseDom();
   }
+
+printTheDocument(theDocument) {
+    var book = theDocument.firstChild;
+    var str = "";
+    for (var i = 0; i < book.childNodes.length; i++) {
+        str += " " + book.childNodes[i].nodeName ;            
+    }        
+    console.log(str);
+}
+
+parseDom() {
+  var tmpl= '<div class="titi">' 
+            + '<span class="bibi">'
+              + 'hello'
+            + '</span>'
+          + '</div>'
+          + '<div class="mimi">' 
+            + '<span class="toto">'
+              + 'hello'
+            + '</span>'
+          + '</div>';
+
+  //var tmpl = "<book><auth></auth><price></price></book>";
+  var parser = new DOMParser();
+  var bkTmpl  = parser.parseFromString(tmpl,'text/xml');
+  //var bk = bkTmpl.cloneNode();
+
+
+  var divs = bkTmpl.getElementsByTagName('*');
+  console.log('divs', divs);
+
+
+/*
+  this.printTheDocument(bkTmpl);
+
+  var bkprice = bkTmpl.getElementsByTagName('price')[0];
+  bkTmpl.documentElement.removeChild(bkprice);
+  this.printTheDocument(bkTmpl);
+*/
+
+}
+
+
+
 
   /*
    * Course
