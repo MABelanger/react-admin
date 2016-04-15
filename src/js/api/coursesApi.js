@@ -34,8 +34,10 @@ var CourseApi = {
             resolve(res.body);
           }
           else {
-            res.body.errors.msg = "Erreur de création.<br/>";
-            reject(res.body.errors);
+            if(res) {
+              reject(res.body.errors);
+            }
+            reject(err);
           }
         });
     });
@@ -45,7 +47,7 @@ var CourseApi = {
   /**
    * Read
    **/
-  getCourses: function(callback) {
+  list: function(callback) {
     Request
     .get(URL, function(err, res){
       callback(res.body);
@@ -88,7 +90,7 @@ var CourseApi = {
             resolve(res.body);
           }
           else {
-            reject(err);
+            reject(res.body.errors);
           }
         });
     });

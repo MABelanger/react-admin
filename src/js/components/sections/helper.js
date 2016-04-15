@@ -18,3 +18,16 @@ export function overwriteAttrs(src, dest){
   }
   return dest;
 }
+
+export function getErrorsStr(errors){
+  let errorsStr = '';
+  // for all errors, build line for each one.
+  for (var property in errors) {
+    if (errors.hasOwnProperty(property)) {
+      if( errors[ property ].message ){
+        errorsStr += "- " + errors[ property ].message + '<br/>';
+      }
+    }
+  }
+  return errorsStr;
+}

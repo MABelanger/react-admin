@@ -15,8 +15,8 @@ export default class CourseName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      toastrMsg: {},
       errors: {},
-      success: ""
     };
   }
 
@@ -24,14 +24,23 @@ export default class CourseName extends React.Component {
     this.list();
   }
 
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
+  }
+
   select(course){
     this.props.setCourse(course);
-    this.setState({ errors: {} });
+    this._resetMsg();
   }
 
   new(){
     this.props.setCourse({});
+    this._resetMsg();
   }
+
 
   /**
    * CRUD Operations
@@ -40,20 +49,23 @@ export default class CourseName extends React.Component {
   create(course){
     coursesApi.create(course)
       .then( (course) => {
+        this._resetMsg();
         this.props.setCourse(course);
         this.list();
-        toastr.success('Le cours à été crée.');
+
+        let toastrMsg = { success : 'Le cours à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
         this.refs.courseNameSection.hideSection();
       }, (errors) => {
-        this.setState({
-          errors: errors
-        });
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
   // Read
   list(){
-    coursesApi.getCourses(courses => {
+    coursesApi.list(courses => {
       this.props.setCourses(courses);
     });
   }
@@ -65,6 +77,7 @@ export default class CourseName extends React.Component {
         this.props.setCourse(course);
         this.list();
         toastr.success('Le cour à été sauvegardé.');
+        this.refs.courseNameSection.hideSection();
       }, (err) => {
         toastr.error('Erreur de sauvegarde.', err);
       });
@@ -91,6 +104,7 @@ export default class CourseName extends React.Component {
         onSelect={this.select.bind(this)}
         onNew={this.new.bind(this)}
         errors={this.state.errors}
+        toastrMsg={this.state.toastrMsg}
 
         onCreate={this.create.bind(this)}
         onSave={this.save.bind(this)}

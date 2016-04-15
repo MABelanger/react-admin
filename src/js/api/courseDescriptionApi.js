@@ -14,9 +14,11 @@ function getUrl(courseId, teacherId){
 
 var TeacherApi = {
 
+
   /**
    * Create
    **/
+
   create: function(courseId, teacherId, courseDescription) {
     let url = getUrl(courseId, teacherId);
     var promise = new Promise(function(resolve, reject) {

@@ -42,7 +42,7 @@ export default class CtrlInput extends React.Component {
   getFields(){
     return {
       name : this.state.name,
-      svg : this.state.name,
+      svg : this.state.svg,
     };
   }
 

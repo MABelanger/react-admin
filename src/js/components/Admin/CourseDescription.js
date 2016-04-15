@@ -10,21 +10,8 @@ export default class Admin extends React.Component {
 
   constructor(props) {
     super(props);
-    // expose the method to the parent via props
-    this.update = this.update.bind(this);
   }
 
-  componentWillMount(){
-    //this.read();
-  }
-
-  /*
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      likesIncreasing: nextProps.likeCount > this.props.likeCount
-    });
-  }
-  */
 
   new(){
     this.props.setCourseDescription({});
@@ -49,8 +36,8 @@ export default class Admin extends React.Component {
       });
   }
 
-  // tmp
-  update(courseId, teacherId){
+  // read
+  read(courseId, teacherId){
     courseDescriptionApi.read(courseId, teacherId)
       .then( (courseDescription) => {
         this.props.setCourseDescription(courseDescription);
@@ -59,12 +46,6 @@ export default class Admin extends React.Component {
       });
   }
 
-  // Read
-  read(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    this.update(courseId, teacherId);
-  }
 
   // Update
   save(courseDescription){
