@@ -39,10 +39,8 @@ export default class Admin extends React.Component {
   }
 
   handleChange(e) {
-    console.log('before', e);
     // set the value
     let value = this.getOnlyRedInlineStyle(e);
-    console.log('after', e);
     this.props.changeValue(this.props.name, value);
   }
 

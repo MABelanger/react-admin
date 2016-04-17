@@ -8,10 +8,10 @@ import toastr                     from 'toastr';
 // modules
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
-import CtrlModNew                from "../ctrl/CtrlModNew";
+import CtrlModNew                 from "../ctrl/CtrlModNew";
 
 import CtrlInput                  from "./CtrlInput";
-import * as sectionHelper           from "../helper";
+import * as sectionHelper         from "../helper";
 
 // Styles
 import 'toastr/build/toastr.css';

@@ -62,7 +62,6 @@ export default class Schedule extends React.Component {
 
   // Read
   list(courseId, teacherId, courseTypeId){
-    console.log('call list')
     scheduleApi.list(courseId, teacherId, courseTypeId)
       .then( (schedules) => {
         this.props.setSchedules(schedules);

@@ -13,7 +13,6 @@ const INPUT_FORMAT_DATE = "YYYY-MM-DD",
 export default class PickerCommon extends React.Component {
 
   handleChange = (newDate) => {
-    console.log('newDate', newDate);
     this.props.changeValue(this.props.name, newDate);
   }
 

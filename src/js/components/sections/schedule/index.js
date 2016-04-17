@@ -213,6 +213,7 @@ export default class ScheduleSection extends React.Component {
             <CtrlInput
               ref="ctrlInput"
               schedule={this.props.schedule}
+              errors={this.props.errors}
               ctrlSaveDel={this.getCtrlSaveDel.bind(this)}
             />
           </div>
