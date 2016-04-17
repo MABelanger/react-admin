@@ -1,6 +1,8 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 
+import * as sectionHelper         from "../helper";
+
 export default class CtrlInput extends React.Component {
 
   constructor(props) {
@@ -54,7 +56,7 @@ export default class CtrlInput extends React.Component {
         name="name"
         label="Nom"
         ref="name"
-        error={this.getError("name")}
+        error={sectionHelper.getError("name", this.props.errors)}
         value={this.state.name}
         changeValue={ (name, value) => { this.changeValue(name, value); } }
       />

@@ -2,6 +2,7 @@
 
 import Request                    from "superagent";
 
+import commonApi                  from "./commonApi";
 
 const BASE_URL = 'http://localhost:3000/api/';
 
@@ -34,6 +35,9 @@ var TestingDayApi = {
             resolve(res.body);
           }
           else {
+            if(res) {
+              reject(commonApi.getFlatErrors(res.body.errors));
+            }
             reject(err);
           }
         });
@@ -80,6 +84,9 @@ var TestingDayApi = {
             resolve(res.body);
           }
           else {
+            if(res) {
+              reject(commonApi.getFlatErrors(res.body.errors));
+            }
             reject(err);
           }
         });

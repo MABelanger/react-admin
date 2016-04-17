@@ -2,6 +2,8 @@
 
 import Request                    from "superagent";
 
+import commonApi                  from "./commonApi";
+
 
 const URL = 'http://localhost:3000/api/';
 
@@ -21,10 +23,14 @@ var TeacherApi = {
         .type('application/json')
         .send(teacher)
         .end((err, res) => {
+
           if (! err ) {
             resolve(res.body);
           }
           else {
+            if(res) {
+              reject(commonApi.getFlatErrors(res.body.errors));
+            }
             reject(err);
           }
         });
@@ -79,7 +85,7 @@ var TeacherApi = {
             resolve(res.body);
           }
           else {
-            reject(err);
+            reject(commonApi.getFlatErrors(res.body.errors));
           }
         });
     });

@@ -10,7 +10,7 @@ import moment                     from "moment";
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
-import * as adminHelper           from "../helper";
+import * as sectionHelper           from "../helper";
 
 
 
@@ -33,6 +33,30 @@ export default class ScheduleSection extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    let toastrMsg = nextProps.toastrMsg;
+    let errorsStr = sectionHelper.getErrorsStr(nextProps.errors);
+
+    if( nextProps.errors != this.props.errors ){ 
+      if ( toastrMsg.error &&  errorsStr ){
+        // if error msg toaster, put it at the top
+        toastrMsg.error = toastrMsg.error + errorsStr;
+      }
+
+      // display the msg err
+      if( toastrMsg.error ||  errorsStr ){
+        toastr.error(toastrMsg.error);
+      }
+    }
+
+    if (toastrMsg != this.props.toastrMsg) {
+      // display the msg success
+      if( toastrMsg.success ){
+        toastr.success(toastrMsg.success);
+      }
+    }
+
+  }
 
   /**
    * Create
@@ -58,7 +82,7 @@ export default class ScheduleSection extends React.Component {
     let scheduleInput = this.refs.ctrlInput.getFields();
     let schedule = this.props.schedule;
 
-    schedule = adminHelper.overwriteAttrs(scheduleInput, schedule);
+    schedule = sectionHelper.overwriteAttrs(scheduleInput, schedule);
     // if schedule exist, save it, else create it
     if(schedule._id) {
       this.props.onSave(schedule);

@@ -2,6 +2,7 @@ import React                      from "react";
 import CheckboxCommon             from "../../commons/CheckboxCommon";
 import DatePicker                 from "../../commons/DatePicker";
 import TimePicker                 from "../../commons/TimePicker";
+import * as sectionHelper         from "../helper";
 
 import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css';
 import 'font-awesome/css/font-awesome.css'; 
@@ -49,6 +50,7 @@ export default class CtrlInput extends React.Component {
             name="isFull"
             label="Complet"
             ref="isFull"
+            error={sectionHelper.getError("isFull", this.props.errors)}
             checked={this.state.isFull}
             changeValue={ (name, value) => { this.changeValue(name, value); } }
           />
@@ -72,6 +74,7 @@ export default class CtrlInput extends React.Component {
               name="day"
               label="Jour"
               ref="day"
+              error={sectionHelper.getError("day", this.props.errors)}
               date={this.state.day}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />

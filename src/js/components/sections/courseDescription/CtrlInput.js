@@ -3,6 +3,7 @@ import TextInput                  from "../../commons/TextInput";
 import ReactQuill                 from "../../commons/reactQuill";
 import Checkbox                   from "../../commons/Checkbox";
 import Image                      from "../../Image";
+import * as sectionHelper         from "../helper";
 
 export default class CtrlInput extends React.Component {
 
@@ -56,6 +57,7 @@ export default class CtrlInput extends React.Component {
           name="isVisible"
           label="Visible"
           ref="isVisible"
+          error={sectionHelper.getError("isVisible", this.props.errors)}
           checked={this.state.isVisible}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
           
@@ -64,6 +66,7 @@ export default class CtrlInput extends React.Component {
           name="courseType"
           label="Type"
           ref="courseType"
+          error={sectionHelper.getError("courseType", this.props.errors)}
           value={this.state.courseType}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -72,6 +75,7 @@ export default class CtrlInput extends React.Component {
           name="image"
           label="Image"
           ref="courseDescriptionImg"
+          error={sectionHelper.getError("image", this.props.errors)}
           value={this.state.image}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -80,6 +84,7 @@ export default class CtrlInput extends React.Component {
           name="note"
           label="Note"
           ref="note"
+          error={sectionHelper.getError("note", this.props.errors)}
           value={this.state.note}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -88,6 +93,7 @@ export default class CtrlInput extends React.Component {
           name="description"
           label="Description"
           ref="description"
+          error={sectionHelper.getError("description", this.props.errors)}
           value={this.state.description}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -96,6 +102,7 @@ export default class CtrlInput extends React.Component {
           name="price"
           label="Prix"
           ref="price"
+          error={sectionHelper.getError("price", this.props.errors)}
           value={this.state.price}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />

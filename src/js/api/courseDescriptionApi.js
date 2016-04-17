@@ -2,6 +2,7 @@
 
 import Request                    from "superagent";
 
+import commonApi                  from "./commonApi";
 
 const BASE_URL = 'http://localhost:3000/api/';
 
@@ -12,7 +13,7 @@ function getUrl(courseId, teacherId){
   return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
 }
 
-var TeacherApi = {
+var CourseDescriptionApi = {
 
 
   /**
@@ -23,7 +24,7 @@ var TeacherApi = {
     let url = getUrl(courseId, teacherId);
     var promise = new Promise(function(resolve, reject) {
       Request
-        .post(url)
+        .put(url)
         .accept('application/json')
         .type('application/json')
         .send(courseDescription)
@@ -32,6 +33,9 @@ var TeacherApi = {
             resolve(res.body);
           }
           else {
+            if(res) {
+              reject(commonApi.getFlatErrors(res.body.errors));
+            }
             reject(err);
           }
         });
@@ -79,6 +83,9 @@ var TeacherApi = {
             resolve(res.body);
           }
           else {
+            if(res) {
+              reject(commonApi.getFlatErrors(res.body.errors));
+            }
             reject(err);
           }
         });
@@ -111,4 +118,4 @@ var TeacherApi = {
   }
 };
 
-module.exports = TeacherApi;
+module.exports = CourseDescriptionApi;

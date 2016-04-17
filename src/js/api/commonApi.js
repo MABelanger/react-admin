@@ -36,7 +36,24 @@ var CommonApi = {
         });
     });
     return promise;
-  }
+  },
 
+  /*
+   * Remove the document name and array position
+   * from mongoose error
+   * ex:. 'teachers.1.firstName' -> 'firstName'
+   */
+  getFlatErrors: function(errors){
+    let flatErrors = {};
+    for (var property in errors) {
+      if (errors.hasOwnProperty(property)) {
+        // 'teachers.1.firstName' -> 'firstName'
+        let newProperty = property.split('.').splice(-1);
+        flatErrors[newProperty] = errors[ property ];
+      }
+    }
+    return flatErrors;
+  }
+};
 
 module.exports = CommonApi;

@@ -1,3 +1,5 @@
+tar --exclude='./node_modules' --exclude='./.git'  -cvzf react-admin.tgz .
+
 http://derpturkey.com/react-pass-value-with-onclick/
 https://toddmotto.com/react-create-class-versus-component/
 

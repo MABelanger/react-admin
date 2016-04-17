@@ -8,18 +8,29 @@ var teachersApi =                  require("../../api/teachersApi");
 
 export default class Teacher extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      toastrMsg: {},
+      errors: {},
+    };
+  }
 
-  componentWillMount(){
-    let courseId = this.props.courseId;
-    //this.list(courseId);
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
   }
 
   select(teacher){
     this.props.setTeacher(teacher);
+    this._resetMsg();
   }
 
   new(){
     this.props.setTeacher({});
+    this._resetMsg();
   }
 
   /**
@@ -31,12 +42,18 @@ export default class Teacher extends React.Component {
     let courseId = this.props.courseId;
     teachersApi.create(teacher, courseId)
       .then( (teacher) => {
+        this._resetMsg();
         // update teacher and teachers
         this.props.setTeacher(teacher);
-        this.list(courseId)
-        toastr.success('Le professeur à été crée.');
-      }, (err) => {
-        toastr.error('Erreur de création.', err);
+        this.list(courseId);
+
+        let toastrMsg = { success : 'Le professeur à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.teacherSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -56,10 +73,16 @@ export default class Teacher extends React.Component {
 
     teachersApi.save(teacher, courseId)
       .then( (teacher) => {
+        this._resetMsg();
         this.props.setTeacher(teacher);
-        toastr.success('Le professeur à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.', err);
+
+        let toastrMsg = { success : 'Le professeur à été sauvegardé.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.teacherSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -69,11 +92,17 @@ export default class Teacher extends React.Component {
 
     teachersApi.delete(teacher, courseId)
       .then( (teacher) => {
+        this._resetMsg();
         this.props.setTeacher({});
         this.list(courseId);
-        toastr.success('Le professeur à été supprimé.');
-      }, (err) => {
-        toastr.error('Erreur Supression', err);
+ 
+        let toastrMsg = { success : 'Le professeur à été supprimé.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.teacherSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de supression.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -86,7 +115,9 @@ export default class Teacher extends React.Component {
           teacher={this.props.teacher}
           onSelect={this.select.bind(this)}
           onNew={this.new.bind(this)}
-
+          errors={this.state.errors}
+          toastrMsg={this.state.toastrMsg}
+        
           onCreate={this.create.bind(this)}
           onSave={this.save.bind(this)}
           onDelete={this.delete.bind(this)}

@@ -31,3 +31,11 @@ export function getErrorsStr(errors){
   }
   return errorsStr;
 }
+
+export function getError(name, errors) {
+  if (errors && errors[name]){
+    return errors[name].message;
+  } else {
+    return '';
+  }
+}

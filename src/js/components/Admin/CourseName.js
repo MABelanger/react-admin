@@ -74,12 +74,17 @@ export default class CourseName extends React.Component {
   save(course){
     coursesApi.save(course)
       .then( (course) => {
+        this._resetMsg();
         this.props.setCourse(course);
         this.list();
-        toastr.success('Le cour à été sauvegardé.');
+
+        let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
+        this.setState({ toastrMsg: toastrMsg });
+
         this.refs.courseNameSection.hideSection();
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.', err);
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -87,11 +92,17 @@ export default class CourseName extends React.Component {
   delete(){
     coursesApi.delete(this.props.course)
       .then( (course) => {
+        this._resetMsg();
         this.props.setCourse({});
         this.list();
-        toastr.success('Le cour à été supprimé.');
-      }, (err) => {
-        toastr.error('Erreur Supression', err);
+
+        let toastrMsg = { success : 'Le cours à été supprimé.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseNameSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de supression.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 

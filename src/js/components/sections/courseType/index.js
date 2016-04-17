@@ -9,7 +9,7 @@ import toastr                     from 'toastr';
 import CtrlSelect                 from "../ctrl/CtrlSelect";
 import CtrlSaveDel                from "../ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
-import * as adminHelper           from "../helper";
+import * as sectionHelper           from "../helper";
 
 
 
@@ -32,7 +32,31 @@ export default class CourseType extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    let toastrMsg = nextProps.toastrMsg;
+    let errorsStr = sectionHelper.getErrorsStr(nextProps.errors);
 
+    if( nextProps.errors != this.props.errors ){ 
+      if ( toastrMsg.error &&  errorsStr ){
+        // if error msg toaster, put it at the top
+        toastrMsg.error = toastrMsg.error + errorsStr;
+      }
+
+      // display the msg err
+      if( toastrMsg.error ||  errorsStr ){
+        toastr.error(toastrMsg.error);
+      }
+    }
+
+    if (toastrMsg != this.props.toastrMsg) {
+      // display the msg success
+      if( toastrMsg.success ){
+        toastr.success(toastrMsg.success);
+      }
+    }
+
+  }
+  
   /**
    * Create
    **/
@@ -57,7 +81,7 @@ export default class CourseType extends React.Component {
     let courseTypeInput = this.refs.ctrlInput.getFields();
     let courseType = this.props.courseType;
 
-    courseType = adminHelper.overwriteAttrs(courseTypeInput, courseType);
+    courseType = sectionHelper.overwriteAttrs(courseTypeInput, courseType);
     // if courseType exist, save it, else create it
     if(courseType._id) {
       this.props.onSave(courseType);

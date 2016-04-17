@@ -17,3 +17,5 @@ fix name with dropdown that no value.name is used and use cb instead for all dro
 fix error display text input
 
 faire apparaitre type de cours seulement quand cours description est remplis
+
+Faire un component commun pour componentWillReceiveProps au lieu de faire du copier coller.

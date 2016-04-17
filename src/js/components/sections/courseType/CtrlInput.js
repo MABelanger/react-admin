@@ -1,6 +1,7 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
 import ReactQuill                 from "../../commons/reactQuill";
+import * as sectionHelper         from "../helper";
 
 export default class CtrlInput extends React.Component {
 
@@ -41,6 +42,7 @@ export default class CtrlInput extends React.Component {
           name="name"
           label="Titre"
           ref="name"
+          error={sectionHelper.getError("name", this.props.errors)}
           value={this.state.name}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -48,6 +50,7 @@ export default class CtrlInput extends React.Component {
           name="description"
           label="Note"
           ref="description"
+          error={sectionHelper.getError("description", this.props.errors)}
           value={this.state.description}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />

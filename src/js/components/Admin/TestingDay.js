@@ -8,21 +8,29 @@ var testingDayApi =                  require("../../api/testingDayApi");
 
 export default class Schedule extends React.Component {
 
-
-  componentWillMount(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    let courseTypeId = this.props.courseTypeId;
-    let scheduleId = this.props.scheduleId;
-    //this.list(courseId, teacherId, courseTypeId, scheduleId);
+  constructor(props) {
+    super(props);
+    this.state = {
+      toastrMsg: {},
+      errors: {},
+    };
+  }
+  
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
   }
 
   select(testingDay){
     this.props.setTestingDay(testingDay);
+    this._resetMsg();
   }
 
   new(){
     this.props.setTestingDay({});
+    this._resetMsg();
   }
 
   /**
@@ -38,22 +46,25 @@ export default class Schedule extends React.Component {
 
     testingDayApi.create(courseId, teacherId, courseTypeId, scheduleId, testingDay)
       .then( (testingDay) => {
-        // update teacher and teachers
+        this._resetMsg();
         this.props.setTestingDay(testingDay);
         this.list(courseId, teacherId, courseTypeId, scheduleId);
-        toastr.success('La testingDay à été crée.');
-      }, (err) => {
-        toastr.error('Erreur de création.', err);
+
+        let toastrMsg = { success : 'Le jours d\'essaie à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.testingDaySection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
 
   // Read
   list(courseId, teacherId, courseTypeId, scheduleId){
-    console.log('call list')
     testingDayApi.list(courseId, teacherId, courseTypeId, scheduleId)
       .then( (testingDays) => {
-        console.log('admin.list', testingDays)
         this.props.setTestingDays(testingDays);
       }, (err) => {
         console.log(err);
@@ -69,11 +80,17 @@ export default class Schedule extends React.Component {
 
     testingDayApi.save(courseId, teacherId, courseTypeId, scheduleId, testingDay)
       .then( (testingDay) => {
+        this._resetMsg();
         this.props.setTestingDay(testingDay);
         this.list(courseId, teacherId, courseTypeId, scheduleId);
-        toastr.success('La testingDay à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.', err);
+
+        let toastrMsg = { success : 'Le jours d\'essaie à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.testingDaySection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -86,11 +103,17 @@ export default class Schedule extends React.Component {
 
     testingDayApi.delete(courseId, teacherId, courseTypeId, scheduleId, testingDay)
       .then( (msg) => {
+        this._resetMsg();
         this.props.setTestingDay({});
         this.list(courseId, teacherId, courseTypeId, scheduleId);
-        toastr.success('La testingDay à été supprimé.');
-      }, (err) => {
-        toastr.error('Erreur Supression', err);
+
+        let toastrMsg = { success : 'Le jours d\'essaie à été supprimer.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.testingDaySection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de supression.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -103,6 +126,8 @@ export default class Schedule extends React.Component {
           testingDay={this.props.testingDay}
           onSelect={this.select.bind(this)}
           onNew={this.new.bind(this)}
+          errors={this.state.errors}
+          toastrMsg={this.state.toastrMsg}
 
           onCreate={this.create.bind(this)}
           onSave={this.save.bind(this)}

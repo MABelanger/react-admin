@@ -33,9 +33,6 @@ export default class CourseName extends React.Component {
     let toastrMsg = nextProps.toastrMsg;
     let errorsStr = sectionHelper.getErrorsStr(nextProps.errors);
 
-    console.log('toastrMsg', toastrMsg);
-    console.log('errorsStr', errorsStr);
-
     if( nextProps.errors != this.props.errors ){ 
       if ( toastrMsg.error &&  errorsStr ){
         // if error msg toaster, put it at the top
@@ -56,11 +53,6 @@ export default class CourseName extends React.Component {
     }
 
   }
-
-  componentDidMount(){
-
-  }
-
 
   // Save button click
   onCtrlSave(e){

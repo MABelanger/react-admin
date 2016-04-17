@@ -8,19 +8,29 @@ var courseTypeApi =                  require("../../api/courseTypeApi");
 
 export default class CourseType extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      toastrMsg: {},
+      errors: {},
+    };
+  }
 
-  componentWillMount(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    //this.list(courseId, teacherId);
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
   }
 
   select(courseType){
     this.props.setCourseType(courseType);
+    this._resetMsg();
   }
 
   new(){
     this.props.setCourseType({});
+    this._resetMsg();
   }
 
 
@@ -35,12 +45,17 @@ export default class CourseType extends React.Component {
 
     courseTypeApi.create(courseId, teacherId, courseType)
       .then( (courseType) => {
-        // update teacher and teachers
+        this._resetMsg();
         this.props.setCourseType(courseType);
         this.list(courseId, teacherId);
-        toastr.success('Le Type de cours à été crée.');
-      }, (err) => {
-        toastr.error('Erreur de création.', err);
+
+        let toastrMsg = { success : 'Le type de cours à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseTypeSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -62,11 +77,17 @@ export default class CourseType extends React.Component {
 
     courseTypeApi.save(courseId, teacherId, courseType)
       .then( (courseType) => {
+        this._resetMsg();
         this.props.setCourseType(courseType);
         this.list(courseId, teacherId);
-        toastr.success('Le Type de cours à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.', err);
+
+        let toastrMsg = { success : 'Le type de cours à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseTypeSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -77,11 +98,17 @@ export default class CourseType extends React.Component {
 
     courseTypeApi.delete(courseId, teacherId, courseType)
       .then( (msg) => {
+        this._resetMsg();
         this.props.setCourseType({});
         this.list(courseId, teacherId);
-        toastr.success('Le professeur à été supprimé.');
-      }, (err) => {
-        toastr.error('Erreur Supression', err);
+
+        let toastrMsg = { success : 'Le Type de cours à été supprimé.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseNameSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de supression.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -94,7 +121,9 @@ export default class CourseType extends React.Component {
           courseType={this.props.courseType}
           onSelect={this.select.bind(this)}
           onNew={this.new.bind(this)}
-
+          errors={this.state.errors}
+          toastrMsg={this.state.toastrMsg}
+        
           onCreate={this.create.bind(this)}
           onSave={this.save.bind(this)}
           onDelete={this.delete.bind(this)}

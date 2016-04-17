@@ -1,5 +1,6 @@
 import React                      from "react";
 import TextInput                  from "../../commons/TextInput";
+import * as sectionHelper         from "../helper";
 
 export default class CtrlInput extends React.Component {
 
@@ -20,6 +21,7 @@ export default class CtrlInput extends React.Component {
     newState[name] = value;
     this.setState(newState);
   }
+
 
   getFields(){
     return {
@@ -50,6 +52,7 @@ export default class CtrlInput extends React.Component {
           name="firstName"
           label="Prénom"
           ref="firstName"
+          error={sectionHelper.getError("firstName", this.props.errors)}
           value={this.state.firstName}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -58,6 +61,7 @@ export default class CtrlInput extends React.Component {
           name="lastName"
           label="Nom"
           ref="lastName"
+          error={sectionHelper.getError("lastName", this.props.errors)}
           value={this.state.lastName}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -66,6 +70,7 @@ export default class CtrlInput extends React.Component {
           name="schoolName"
           label="Lien Nom"
           ref="schoolName"
+          error={sectionHelper.getError("schoolName", this.props.errors)}
           value={this.state.schoolName}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -74,6 +79,7 @@ export default class CtrlInput extends React.Component {
           name="schoolUrl"
           label="Lien URL"
           ref="schoolUrl"
+          error={sectionHelper.getError("schoolUrl", this.props.errors)}
           value={this.state.schoolUrl}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
@@ -82,6 +88,7 @@ export default class CtrlInput extends React.Component {
           name="tel"
           label="Tel"
           ref="tel"
+          error={sectionHelper.getError("tel", this.props.errors)}
           value={this.state.tel}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />

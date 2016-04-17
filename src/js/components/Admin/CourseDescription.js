@@ -10,11 +10,22 @@ export default class Admin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      toastrMsg: {},
+      errors: {},
+    };
   }
 
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
+  }
 
   new(){
     this.props.setCourseDescription({});
+    this._resetMsg();
   }
 
   /**
@@ -28,11 +39,16 @@ export default class Admin extends React.Component {
 
     courseDescriptionApi.create(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
-        // update courseDescription and courseDescriptions
+        this._resetMsg();
         this.props.setCourseDescription(courseDescription);
-        toastr.success('La description du cours à été crée.');
-      }, (err) => {
-        toastr.error('Erreur de création.', err);
+
+        let toastrMsg = { success : 'La description de cours à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseDescriptionSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -54,10 +70,16 @@ export default class Admin extends React.Component {
 
     courseDescriptionApi.save(courseId, teacherId, courseDescription)
       .then( (courseDescription) => {
+        this._resetMsg();
         this.props.setCourseDescription(courseDescription);
-        toastr.success('La description du cours à été sauvegardé.');
-      }, (err) => {
-        toastr.error('Erreur de sauvegarde.', err);
+
+        let toastrMsg = { success : 'La description de cours à été crée.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseDescriptionSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de création.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -68,10 +90,16 @@ export default class Admin extends React.Component {
 
     courseDescriptionApi.delete(courseId, teacherId)
       .then( (msg) => {
+        this._resetMsg();
         this.props.setCourseDescription({});
-        toastr.success('La description du cours à été supprimé.');
-      }, (err) => {
-        toastr.error('Erreur Supression', err);
+
+        let toastrMsg = { success : 'La description de cours à été supprimer.'};
+        this.setState({ toastrMsg: toastrMsg });
+
+        this.refs.courseDescriptionSection.hideSection();
+      }, (errors) => {
+        let toastrMsg = { error : "Erreur de supression.<br/>"};
+        this.setState({ errors: errors, toastrMsg: toastrMsg });
       });
   }
 
@@ -81,6 +109,8 @@ export default class Admin extends React.Component {
           ref="courseDescriptionSection"
           courseDescription={ this.props.courseDescription }
           onNew={this.new.bind(this)}
+          errors={this.state.errors}
+          toastrMsg={this.state.toastrMsg}
 
           onCreate={this.create.bind(this)}
           onSave={this.save.bind(this)}

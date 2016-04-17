@@ -2,6 +2,7 @@ import React                      from "react";
 import CheckboxCommon             from "../../commons/CheckboxCommon";
 import DatePicker                 from "../../commons/DatePicker";
 import TimePicker                 from "../../commons/TimePicker";
+import * as sectionHelper         from "../helper";
 
 import 'awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css';
 import 'font-awesome/css/font-awesome.css'; 
@@ -53,6 +54,7 @@ export default class CtrlInput extends React.Component {
             name="isFull"
             label="Complet"
             ref="isFull"
+            error={sectionHelper.getError("isFull", this.props.errors)}
             checked={this.state.isFull}
             changeValue={ (name, value) => { this.changeValue(name, value); } }
           />
@@ -76,6 +78,7 @@ export default class CtrlInput extends React.Component {
               name="dayStart"
               label="Début"
               ref="dayStart"
+              error={sectionHelper.getError("dayStart", this.props.errors)}
               date={this.state.dayStart}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
@@ -86,6 +89,7 @@ export default class CtrlInput extends React.Component {
               name="dayEnd"
               label="Fin"
               ref="dayEnd"
+              error={sectionHelper.getError("dayEnd", this.props.errors)}
               date={this.state.dayEnd}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
@@ -104,6 +108,7 @@ export default class CtrlInput extends React.Component {
               name="dayStart"
               label="Début"
               ref="dayStart"
+              error={sectionHelper.getError("dayStart", this.props.errors)}
               date={this.state.dayStart}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
@@ -114,6 +119,7 @@ export default class CtrlInput extends React.Component {
               name="dayEnd"
               label="Fin"
               ref="dayEnd"
+              error={sectionHelper.getError("dayEnd", this.props.errors)}
               date={this.state.dayEnd}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
