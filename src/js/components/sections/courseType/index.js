@@ -141,6 +141,8 @@ export default class CourseType extends React.Component {
         'section-hide': ( this.state.showSection == false )
     });
 
+    console.log('this.props.courseTypes', this.props.courseTypes)
+
     return (
       <div className="row">
 

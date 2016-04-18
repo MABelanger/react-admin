@@ -48,18 +48,30 @@ export default class CtrlInput extends React.Component {
     };
   }
 
+/*
 
+*/
 
   render() {
     return (
-      <TextInput
-        name="name"
-        label="Nom"
-        ref="name"
-        error={sectionHelper.getError("name", this.props.errors)}
-        value={this.state.name}
-        changeValue={ (name, value) => { this.changeValue(name, value); } }
-      />
+      <div>
+        <TextInput
+          name="name"
+          label="Nom"
+          ref="name"
+          error={sectionHelper.getError("name", this.props.errors)}
+          value={this.state.name}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+        <TextInput
+          name="svg"
+          label="Svg"
+          ref="svg"
+          error={sectionHelper.getError("svg", this.props.errors)}
+          value={this.state.svg}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+      </div>
     );
   }
 }
