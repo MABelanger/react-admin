@@ -133,16 +133,33 @@ export default class ScheduleSection extends React.Component {
     this.setState({'showSection': !this.state.showSection});
   }
 
+
   getCtrlSaveDel(){
+    var errorBr = '';
+
+    if (this.props.errors && this.props.errors.day ) {
+      errorBr = <br/>;
+    }
+
     return(
-      <CtrlSaveDel
-        noRow={true}
-        onSave={ (e)=>{ this.onCtrlSave(e); } }
-        onDelete={ (e)=>{ this.onCtrlDelete(e); } }
-      />
+      <div className="form-horizontal">
+        <div className="col-sm-3">
+          <label className="control-label">
+            &nbsp;
+            { errorBr }
+            { errorBr }
+          </label>
+          <div className="input">&nbsp;</div>
+            
+            <CtrlSaveDel
+              noRow={true}
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+            />
+        </div>
+      </div>
     );
   }
-
 
  /* 
   * custum cb for CtrlSelect
@@ -162,6 +179,8 @@ export default class ScheduleSection extends React.Component {
       return "Jours D'essaie...";
     }
   }
+
+
 
   // render the component
   render() {

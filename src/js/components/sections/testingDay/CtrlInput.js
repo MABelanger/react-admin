@@ -68,8 +68,6 @@ export default class CtrlInput extends React.Component {
           <div className="col-sm-offset-1 col-sm-1">
             {this.renderCheckBox()}
           </div>
-          <div className="col-sm-3">
-            <b>Jour:</b><br/>
             <DatePicker
               name="day"
               label="Jour"
@@ -78,11 +76,10 @@ export default class CtrlInput extends React.Component {
               date={this.state.day}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
-          </div>
-          <div className="col-sm-4">
-            <br/>
-            {this.props.ctrlSaveDel()}
-          </div>
+
+
+          {this.props.ctrlSaveDel()}
+
           <div className="col-sm-3">
             &nbsp;
           </div>

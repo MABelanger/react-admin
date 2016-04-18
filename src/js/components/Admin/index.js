@@ -333,7 +333,7 @@ export default class Admin extends React.Component {
         { this.renderCourseName() }
         { this.state.course._id ? this.renderTeacher() : '' }
         { this.state.teacher._id ? this.renderCourseDescription() : '' }
-        { this.state.teacher._id ? this.renderCourseType() : '' }
+        { (this.state.courseDescription && this.state.courseDescription.courseType)  ? this.renderCourseType() : '' }
         { this.state.courseType._id ? this.renderSchedule() : '' }
         { this.state.schedule._id ? this.renderTestingDay() : '' }
       </div>

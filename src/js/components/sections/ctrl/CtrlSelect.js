@@ -14,6 +14,7 @@ export default class CtrlSelect extends React.Component {
   isDisabled(){
     return this.getLength() == 0;
   }
+
   render() {
     return (
       <div className="clearfix">

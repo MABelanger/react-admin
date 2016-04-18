@@ -100,7 +100,7 @@ export default class CtrlInput extends React.Component {
     return(
         <div className="clearfix">
           <div className="col-sm-offset-1 col-sm-1">
-            {this.renderCheckBox()}
+            &nbsp;
           </div>
           <DatePicker
             name="dayStart"
