@@ -89,7 +89,6 @@ export default class CourseType extends React.Component {
     else{
       this.props.onCreate(courseType);
     }
-    this.hideSection();
   }
   /**
    * Delete

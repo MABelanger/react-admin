@@ -281,21 +281,21 @@ export default class Admin extends React.Component {
   /*
    * Force Select
    */
-
+   
   forceSelect(){
     let course = {
-      _id : '56fd65bd884902915a0805ea'
+      _id : '570432f35b64f9c47dc5c486'
     };
     let teacher = {
-      _id : '56fd65ce884902915a0805eb'
+      _id : '570433265b64f9c47dc5c488'
     };
 
     let courseType = {
-      _id : '56fd6659884902915a0805ec'
+      _id : '57116dbddadf99b0114469aa'
     };
 
     let schedule = {
-      _id : '56fd8725b8fbe2c25b6d2fe0'
+      _id : '57116dcadadf99b0114469ab'
     };
 
     let testingDay = {

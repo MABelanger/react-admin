@@ -72,8 +72,7 @@ export default class CtrlInput extends React.Component {
           <div className="col-sm-offset-1 col-sm-1">
             {this.renderCheckBox()}
           </div>
-          <div className="col-sm-3">
-            <b>Début:</b><br/>
+          
             <TimePicker
               name="dayStart"
               label="Début"
@@ -82,9 +81,7 @@ export default class CtrlInput extends React.Component {
               date={this.state.dayStart}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
-          </div>
-          <div className="col-sm-3">
-            <b>Fin:</b><br/>
+          
             <TimePicker
               name="dayEnd"
               label="Fin"
@@ -93,7 +90,7 @@ export default class CtrlInput extends React.Component {
               date={this.state.dayEnd}
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
-          </div>
+
           <div className="col-sm-4">&nbsp;</div>
         </div>
     );
@@ -102,32 +99,32 @@ export default class CtrlInput extends React.Component {
   renderDates(){
     return(
         <div className="clearfix">
-          <div className="col-sm-offset-2 col-sm-3">
-            <b>Du:</b><br/>
-            <DatePicker
-              name="dayStart"
-              label="Début"
-              ref="dayStart"
-              error={sectionHelper.getError("dayStart", this.props.errors)}
-              date={this.state.dayStart}
-              changeValue={ (name, value) => { this.changeValue(name, value); } }
-            />
+          <div className="col-sm-offset-1 col-sm-1">
+            {this.renderCheckBox()}
           </div>
-          <div className="col-sm-3">
-            <b>Au:</b><br/>
-            <DatePicker
-              name="dayEnd"
-              label="Fin"
-              ref="dayEnd"
-              error={sectionHelper.getError("dayEnd", this.props.errors)}
-              date={this.state.dayEnd}
-              changeValue={ (name, value) => { this.changeValue(name, value); } }
-            />
-          </div>
-          <div className="col-sm-4">
-            <br/>
-            {this.props.ctrlSaveDel()}
-          </div>
+          <DatePicker
+            name="dayStart"
+            label="Début"
+            ref="dayStart"
+            error={sectionHelper.getError("dayStart", this.props.errors)}
+            date={this.state.dayStart}
+            changeValue={ (name, value) => { this.changeValue(name, value); } }
+          />
+
+          <DatePicker
+            name="dayEnd"
+            label="Fin"
+            ref="dayEnd"
+            error={sectionHelper.getError("dayEnd", this.props.errors)}
+            date={this.state.dayEnd}
+            changeValue={ (name, value) => { this.changeValue(name, value); } }
+          />
+  
+
+
+          {this.props.ctrlSaveDel()}
+
+
         </div>
     );
   }

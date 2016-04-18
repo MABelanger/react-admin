@@ -111,7 +111,6 @@ export default class CourseName extends React.Component {
   }
 
   onDelete(){
-    this.hideSection();
     // call the admin delete
     this.props.onDelete();
   }

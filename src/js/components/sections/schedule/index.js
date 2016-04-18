@@ -90,7 +90,6 @@ export default class ScheduleSection extends React.Component {
     else{
       this.props.onCreate(schedule);
     }
-    this.hideSection();
   }
   /**
    * Delete
@@ -135,12 +134,29 @@ export default class ScheduleSection extends React.Component {
   }
 
   getCtrlSaveDel(){
+    var errorBr = '';
+
+    if (this.props.errors && (this.props.errors.dayStart || this.props.errors.dayEnd) ) {
+      errorBr = <br/>;
+    }
+
     return(
-      <CtrlSaveDel
-        noRow={true}
-        onSave={ (e)=>{ this.onCtrlSave(e); } }
-        onDelete={ (e)=>{ this.onCtrlDelete(e); } }
-      />
+      <div className="form-horizontal">
+        <div className="col-sm-3">
+          <label className="control-label">
+            &nbsp;
+            { errorBr }
+            { errorBr }
+          </label>
+          <div className="input">&nbsp;</div>
+            
+            <CtrlSaveDel
+              noRow={true}
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+            />
+        </div>
+      </div>
     );
   }
 

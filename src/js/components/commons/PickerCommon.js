@@ -6,8 +6,8 @@ import                            "react-bootstrap-datetimepicker/css/bootstrap-
 const INPUT_FORMAT_DATE = "YYYY-MM-DD",
       INPUT_FORMAT_TIME = "HH:mm",
       FORMAT = "YYYY-MM-DD[T]HH:mm:ss.SSS[Z]",
-      DEFAULT_TEXT_DATE = "Please select a date",
-      DEFAULT_TEXT_TIME = "Select Hours"
+      DEFAULT_TEXT_DATE = "Choisir une date",
+      DEFAULT_TEXT_TIME = "Choisir une heure"
 
 
 export default class PickerCommon extends React.Component {
@@ -36,16 +36,31 @@ export default class PickerCommon extends React.Component {
       inputFormat = INPUT_FORMAT_TIME;
     }
 
+    var wrapperClass = '';
+    if (this.props.error && this.props.error.length > 0) {
+      wrapperClass += " " + 'has-error';
+    }
     return (
-      <DateTimeField
-        ref={mode + "Field"}
-        mode={mode}
-        defaultText={defaultText}
-        dateTime={String(myDate)}
-        format={FORMAT}
-        inputFormat={inputFormat}
-        onChange={this.handleChange}
-      />
+      <div className="form-horizontal">
+        <div className={wrapperClass}>
+          <div className="col-sm-3">
+            <label htmlFor={this.props.name} className="control-label">
+              <br />
+              {this.props.label} :
+            </label>
+            <div className="input">{this.props.error}</div>
+              <DateTimeField
+                ref={mode + "Field"}
+                mode={mode}
+                defaultText={defaultText}
+                dateTime={String(myDate)}
+                format={FORMAT}
+                inputFormat={inputFormat}
+                onChange={this.handleChange}
+              />
+          </div>
+        </div>
+      </div>
     );
   }
 

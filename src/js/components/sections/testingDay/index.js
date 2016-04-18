@@ -90,7 +90,6 @@ export default class ScheduleSection extends React.Component {
     else{
       this.props.onCreate(testingDay);
     }
-    this.hideSection();
   }
   /**
    * Delete
