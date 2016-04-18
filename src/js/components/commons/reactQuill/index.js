@@ -83,11 +83,9 @@ export default class Admin extends React.Component {
       <div className="form-horizontal">
         <div className={wrapperClass}>
           <label htmlFor={this.props.name} className="control-label col-xs-2">
-            <br />
             {this.props.label} :
           </label>
           <div className="col-sm-10">
-            &nbsp;
             <ReactQuill
               theme="snow"
               ref={this.props.name}

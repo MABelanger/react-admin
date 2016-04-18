@@ -11,11 +11,9 @@ export default class Checkbox extends React.Component {
       <div className="form-horizontal">
         <div className={wrapperClass}>
           <label htmlFor={this.props.name} className="control-label col-xs-2">
-            <br />
             {this.props.label} :
           </label>
           <div className="col-sm-3">
-            &nbsp;
             <div className="input">{this.props.error}</div>
               <CheckboxCommon
                 {...this.props}

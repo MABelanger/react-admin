@@ -10,7 +10,7 @@ export default class TextInput extends React.Component {
   }
 
   render() {
-    var wrapperClass = 'form-group';
+    var wrapperClass = 'form-group no-margin';
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
@@ -18,11 +18,9 @@ export default class TextInput extends React.Component {
       <div className="form-horizontal">
         <div className={wrapperClass}>
           <label htmlFor={this.props.name} className="control-label col-xs-2">
-            <br />
             {this.props.label} :
           </label>
           <div className="col-sm-3">
-            &nbsp;
             <div className="input">{this.props.error}</div>
             <input type="text"
               name={this.props.name}

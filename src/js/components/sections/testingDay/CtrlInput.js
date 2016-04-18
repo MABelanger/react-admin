@@ -77,7 +77,6 @@ export default class CtrlInput extends React.Component {
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
 
-
           {this.props.ctrlSaveDel()}
 
           <div className="col-sm-3">
