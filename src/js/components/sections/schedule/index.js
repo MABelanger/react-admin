@@ -27,6 +27,7 @@ export default class ScheduleSection extends React.Component {
     // expose the method to the parent via props
     this.showSection = this.showSection.bind(this);
     this.hideSection = this.hideSection.bind(this);
+    this.newKey = 0;
 
     this.state = {
       showSection: false,
@@ -121,6 +122,7 @@ export default class ScheduleSection extends React.Component {
   new(){
     this.props.onNew();
     this.showSection();
+    this.incrementNewKey();
   }
 
   // A schedule has been selected
@@ -190,6 +192,11 @@ export default class ScheduleSection extends React.Component {
     }
   }
 
+  incrementNewKey(){
+    this.newKey ++;
+    return this.newKey;
+  }
+
   // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
@@ -227,6 +234,7 @@ export default class ScheduleSection extends React.Component {
         <div className="section-animation">
           <div className={sectionClasses}>
             <CtrlInput
+              key={this.newKey}
               ref="ctrlInput"
               schedule={this.props.schedule}
               errors={this.props.errors}
@@ -234,7 +242,6 @@ export default class ScheduleSection extends React.Component {
             />
           </div>
         </div>
-
       </div>
     );
   }
