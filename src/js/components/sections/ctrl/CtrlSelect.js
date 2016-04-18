@@ -10,6 +10,10 @@ export default class CtrlSelect extends React.Component {
     }
     return 0;
   }
+
+  isDisabled(){
+    return this.getLength() == 0;
+  }
   render() {
     return (
       <div className="clearfix">
@@ -19,6 +23,7 @@ export default class CtrlSelect extends React.Component {
               <h4>{this.props.title} ({ this.getLength() })</h4>
               <div className="btn-toolbar">
                 <Dropdown
+                  disabled={this.isDisabled()}
                   list={this.props.list}
                   label={this.props.title}
                   onSelect={this.props.onSelect}

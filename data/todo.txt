@@ -19,3 +19,7 @@ fix error display text input
 faire apparaitre type de cours seulement quand cours description est remplis
 
 Faire un component commun pour componentWillReceiveProps au lieu de faire du copier coller.
+
+Disable dropdown when 0 items
+
+fix   getName(item) dropdown

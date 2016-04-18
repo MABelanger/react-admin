@@ -17,7 +17,11 @@ export default class Dropdown extends React.Component {
 
   toogleDropDown(e){
     e.preventDefault();
-    this.setState({ open: !this.state.open });
+
+    // open only if the button is not disabled
+    if(this.props.disabled != true){
+      this.setState({ open: !this.state.open });
+    }
   }
 
   blurDropDown(e){
@@ -92,11 +96,20 @@ export default class Dropdown extends React.Component {
       'open': ( this.state.open == true ),
     });
 
+
+    var button = ClassNames(this.props.className, {
+      'btn': true,
+      'dropdown-toggle': true,
+      'btn-info' : true,
+      'disabled': ( this.props.disabled == true )
+    });
+
     return (
       <div className={btnGroup}>
           <button 
             type="button"
-            className="btn dropdown-toggle btn-info"
+            disable
+            className={button}
             onClick={ (e) => { this.toogleDropDown(e); } }
             onBlur={ (e) => { this.blurDropDown(e); } }>
               <span>
