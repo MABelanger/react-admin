@@ -158,7 +158,6 @@ export default class Admin extends React.Component {
 
     this.setState({'courseType': {} }, function(){
       if ( this.refs.courseTypeAdmin ) {
-        console.log('_resetCourseType')
         this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
         this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
       }

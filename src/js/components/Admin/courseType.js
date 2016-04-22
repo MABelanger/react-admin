@@ -64,7 +64,7 @@ export default class CourseType extends React.Component {
   list(courseId, teacherId){
     courseTypeApi.list(courseId, teacherId)
       .then( (courseTypes) => {
-        console.log('courseTypes', courseTypes);
+        console.log('courseTypes', courseTypes);  
         this.props.setCourseTypes(courseTypes);
       }, (err) => {
         console.log(err);
