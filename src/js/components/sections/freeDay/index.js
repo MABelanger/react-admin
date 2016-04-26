@@ -176,7 +176,7 @@ export default class ScheduleSection extends React.Component {
     if(this.props.freeDay.day){
       return this.getName(this.props.freeDay);
     } else {
-      return "Jours D'essaie...";
+      return "Jours Gratuit...";
     }
   }
 
@@ -206,7 +206,7 @@ export default class ScheduleSection extends React.Component {
 
         <CtrlSelect
           list={this.props.freeDays}
-          title="Jours D'essaie"
+          title="Jours Gratuit"
           onSelect={ this.select.bind(this) }
           onModify={ this.modify.bind(this) }
           onNew={ this.new.bind(this) }
