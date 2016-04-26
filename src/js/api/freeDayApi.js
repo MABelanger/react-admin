@@ -14,22 +14,22 @@ function getUrl(courseId, teacherId, courseTypeId, scheduleId){
                   + '/teachers/' + teacherId 
                   + '/course_description/course_types/' + courseTypeId
                   + '/schedules/' + scheduleId
-                  + '/testing_days';
+                  + '/free_days';
 }
 
-var TestingDayApi = {
+var FreeDayApi = {
 
   /**
    * Create
    **/
-  create: function(courseId, teacherId, courseTypeId, scheduleId, testingDay) {
+  create: function(courseId, teacherId, courseTypeId, scheduleId, freeDay) {
     let url = getUrl(courseId, teacherId, courseTypeId, scheduleId);
     var promise = new Promise(function(resolve, reject) {
       Request
         .post(url)
         .accept('application/json')
         .type('application/json')
-        .send(testingDay)
+        .send(freeDay)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -71,14 +71,14 @@ var TestingDayApi = {
   /**
    * Update
    **/
-  save: function(courseId, teacherId, courseTypeId, scheduleId, testingDay) {
-    let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + testingDay._id;
+  save: function(courseId, teacherId, courseTypeId, scheduleId, freeDay) {
+    let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + freeDay._id;
     var promise = new Promise(function(resolve, reject) {
       Request
         .put(url)
         .accept('application/json')
         .type('application/json')
-        .send(testingDay)
+        .send(freeDay)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -98,8 +98,8 @@ var TestingDayApi = {
    * Delete
    **/
 
-  delete: function(courseId, teacherId, courseTypeId, scheduleId, testingDay) {
-    let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + testingDay._id;
+  delete: function(courseId, teacherId, courseTypeId, scheduleId, freeDay) {
+    let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + freeDay._id;
     var promise = new Promise(function(resolve, reject) {
       Request
         .del(url)
@@ -118,4 +118,4 @@ var TestingDayApi = {
   }
 };
 
-module.exports = TestingDayApi;
+module.exports = FreeDayApi;

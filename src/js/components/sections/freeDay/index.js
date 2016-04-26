@@ -61,41 +61,41 @@ export default class ScheduleSection extends React.Component {
   /**
    * Create
    **/
-  create(testingDay){
-     // call admin to create the testingDay
-     this.props.onCreate(testingDay);
+  create(freeDay){
+     // call admin to create the freeDay
+     this.props.onCreate(freeDay);
 
   }
 
   /**
    * Update
    **/
-  save(testingDay){
-    // call admin to save the testingDay
-    this.props.onSave(testingDay);
+  save(freeDay){
+    // call admin to save the freeDay
+    this.props.onSave(freeDay);
   }
 
   // Save button click
   onCtrlSave(e){
 
     // Get the new values fields
-    let testingDayInput = this.refs.ctrlInput.getFields();
-    let testingDay = this.props.testingDay;
+    let freeDayInput = this.refs.ctrlInput.getFields();
+    let freeDay = this.props.freeDay;
 
-    testingDay = sectionHelper.overwriteAttrs(testingDayInput, testingDay);
-    // if testingDay exist, save it, else create it
-    if(testingDay._id) {
-      this.props.onSave(testingDay);
+    freeDay = sectionHelper.overwriteAttrs(freeDayInput, freeDay);
+    // if freeDay exist, save it, else create it
+    if(freeDay._id) {
+      this.props.onSave(freeDay);
     }
     else{
-      this.props.onCreate(testingDay);
+      this.props.onCreate(freeDay);
     }
   }
   /**
    * Delete
    **/
   delete(){
-    this.props.onDelete(this.props.testingDay);
+    this.props.onDelete(this.props.freeDay);
     this.hideSection()
   }
 
@@ -123,9 +123,9 @@ export default class ScheduleSection extends React.Component {
     this.showSection();
   }
 
-  // A testingDay has been selected
-  select(testingDay){
-    this.props.onSelect(testingDay);
+  // A freeDay has been selected
+  select(freeDay){
+    this.props.onSelect(freeDay);
   }
 
   // Modify button click
@@ -173,8 +173,8 @@ export default class ScheduleSection extends React.Component {
   }
 
   getValue(){
-    if(this.props.testingDay.day){
-      return this.getName(this.props.testingDay);
+    if(this.props.freeDay.day){
+      return this.getName(this.props.freeDay);
     } else {
       return "Jours D'essaie...";
     }
@@ -205,13 +205,13 @@ export default class ScheduleSection extends React.Component {
         />
 
         <CtrlSelect
-          list={this.props.testingDays}
+          list={this.props.freeDays}
           title="Jours D'essaie"
           onSelect={ this.select.bind(this) }
           onModify={ this.modify.bind(this) }
           onNew={ this.new.bind(this) }
 
-          id={ this.props.testingDay._id }
+          id={ this.props.freeDay._id }
           cbGetName={ this.getName.bind(this) }
           cbGetValue={ this.getValue.bind(this) }
         />
@@ -220,7 +220,7 @@ export default class ScheduleSection extends React.Component {
           <div className={sectionClasses}>
             <CtrlInput
               ref="ctrlInput"
-              testingDay={this.props.testingDay}
+              freeDay={this.props.freeDay}
               errors={this.props.errors}
               ctrlSaveDel={this.getCtrlSaveDel.bind(this)}
             />

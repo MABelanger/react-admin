@@ -12,8 +12,8 @@ export default class CtrlInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      day: this.props.testingDay.day,
-      isFull: this.props.testingDay.isFull,
+      day: this.props.freeDay.day,
+      isFull: this.props.freeDay.isFull,
     };
   }
 
@@ -31,10 +31,10 @@ export default class CtrlInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.testingDay) {
+    if(nextProps.freeDay) {
       this.setState({
-        day: nextProps.testingDay.day,
-        isFull: nextProps.testingDay.isFull
+        day: nextProps.freeDay.day,
+        isFull: nextProps.freeDay.isFull
       });
     }
   }

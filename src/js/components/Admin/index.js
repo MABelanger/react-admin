@@ -5,7 +5,7 @@ import Teacher                    from "./Teacher";
 import CourseDescription          from "./CourseDescription";
 import CourseType                 from "./CourseType";
 import Schedule                   from "./Schedule";
-import TestingDay                 from "./TestingDay";
+import FreeDay                 from "./FreeDay";
 import BtnInfo                    from "../commons/BtnInfo";
 
 
@@ -28,8 +28,8 @@ export default class Admin extends React.Component {
       schedules: [],
       schedule : {},
 
-      testingDays: [],
-      testingDay : {},
+      freeDays: [],
+      freeDay : {},
 
     };
   }
@@ -202,13 +202,13 @@ export default class Admin extends React.Component {
         this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }
-      this._resetTestingDay();
+      this._resetFreeDay();
     });
   }
 
   setSchedule(schedule){
     this.setState({'schedule': schedule}, function(){
-      this._resetTestingDay();
+      this._resetFreeDay();
     });
     
   }
@@ -238,37 +238,37 @@ export default class Admin extends React.Component {
   /*
    * Testing Day
    */
-  _resetTestingDay(){
-    this.setState({'testingDay': {} }, function(){
-      if (this.refs.testingDayAdmin) {
-        this.refs.testingDayAdmin.list(
+  _resetFreeDay(){
+    this.setState({'freeDay': {} }, function(){
+      if (this.refs.freeDayAdmin) {
+        this.refs.freeDayAdmin.list(
             this.state.course._id,
             this.state.teacher._id,
             this.state.courseType._id,
             this.state.schedule._id,
         );
-        this.refs.testingDayAdmin.refs.testingDaySection.hideSection();
+        this.refs.freeDayAdmin.refs.freeDaySection.hideSection();
       }
     });
   }
 
-  setTestingDay(testingDay){
-    this.setState({'testingDay': testingDay});
+  setFreeDay(freeDay){
+    this.setState({'freeDay': freeDay});
   }
 
-  setTestingDays(testingDays){
-    this.setState({'testingDays': testingDays});
+  setFreeDays(freeDays){
+    this.setState({'freeDays': freeDays});
   }
 
-  renderTestingDay(){
+  renderFreeDay(){
     return (
       <div>
-        <TestingDay
-          ref="testingDayAdmin"
-          setTestingDay={this.setTestingDay.bind(this)}
-          setTestingDays={this.setTestingDays.bind(this)}
-          testingDay={ this.state.testingDay }
-          testingDays={ this.state.testingDays }
+        <FreeDay
+          ref="freeDayAdmin"
+          setFreeDay={this.setFreeDay.bind(this)}
+          setFreeDays={this.setFreeDays.bind(this)}
+          freeDay={ this.state.freeDay }
+          freeDays={ this.state.freeDays }
           courseId={this.state.course._id}
           teacherId={this.state.teacher._id}
           courseTypeId={this.state.courseType._id}
@@ -300,7 +300,7 @@ export default class Admin extends React.Component {
       _id : '57116dcadadf99b0114469ab'
     };
 
-    let testingDay = {
+    let freeDay = {
       _id: '5700701f83456569686a374b'
     };
 
@@ -309,7 +309,7 @@ export default class Admin extends React.Component {
       teacher : teacher,
       courseType : courseType,
       schedule: schedule,
-      testingDay: testingDay
+      freeDay: freeDay
     });
   }
 
@@ -337,7 +337,7 @@ export default class Admin extends React.Component {
         { this.state.teacher._id ? this.renderCourseDescription() : '' }
         { (this.state.courseDescription && this.state.courseDescription.courseType) ? this.renderCourseType() : '' }
         { this.state.courseType._id ? this.renderSchedule() : '' }
-        { this.state.schedule._id ? this.renderTestingDay() : '' }
+        { this.state.schedule._id ? this.renderFreeDay() : '' }
       </div>
     );
   }
