@@ -166,6 +166,7 @@ export default class ScheduleSection extends React.Component {
  /* 
   * custum cb for CtrlSelect
   */
+  // TODO put it into the helper
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -176,7 +177,8 @@ export default class ScheduleSection extends React.Component {
     let dateStart = moment( item.dayStart ).utcOffset("+00:00");
     let dateEnd = moment( item.dayEnd ).utcOffset("+00:00");
     let weekDayName = moment.weekdays( moment(dateStart).day() );
-    let name = '( ' + this.capitalizeFirstLetter( weekDayName ) + ' )'
+    let name = '( ' + this.capitalizeFirstLetter( weekDayName ) 
+                + ' ' + dateStart.format('HH:mm') + ' )'
                 + ' '
                 + dateStart.format('LL')
                 + ' - '
