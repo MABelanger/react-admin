@@ -28,9 +28,11 @@ export default class ConferenceNameCtrlInput extends React.Component {
   }
 
   changeValue(name, value) {
-    let newState = {};
+    let newState = this.state;
     newState[name] = value;
     this.setState(newState);
+    // change value to the parent.
+    this.props.changeValue(this.props.name, newState);
   }
 
   getError(name) {

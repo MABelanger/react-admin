@@ -20,6 +20,7 @@ export default class ConferenceNameCtrlInput extends React.Component {
       price: "",
       schoolName: "",
       schoolUrl: "",
+      "image": "",
       description: "",
       abstract: "",
     };
@@ -28,12 +29,14 @@ export default class ConferenceNameCtrlInput extends React.Component {
   componentWillMount(){
     this.setState({
       title : this.props.conference.title,
+      image: this.state.image,
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       title : nextProps.conference.title,
+      image: nextProps.conference.image,
     });
   }
 
@@ -54,6 +57,7 @@ export default class ConferenceNameCtrlInput extends React.Component {
   getFields(){
     return {
       title : this.state.title,
+      image: this.state.image,
       speaker: this.refs.speakerInput.getFields()
     };
   }
@@ -100,9 +104,11 @@ export default class ConferenceNameCtrlInput extends React.Component {
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
         <SpeakerInput
+          name="speaker"
           ref="speakerInput"
           error={this.props.errors}
           speaker={this.state.speaker}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
         <TextInput
           name="title"
