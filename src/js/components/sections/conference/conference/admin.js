@@ -1,8 +1,8 @@
-var coursesApi =                  require("./api");
+var conferencesApi =                  require("./api");
 import React                      from "react";
 import toastr                     from 'toastr';
 
-import CourseNameSection          from "./section";
+import ConferenceNameSection          from "./section";
 
 
 // CSS
@@ -10,7 +10,7 @@ import 'toastr/build/toastr.css';
 
 
 
-export default class CourseNameAdmin extends React.Component {
+export default class ConferenceNameAdmin extends React.Component {
 
   constructor(props) {
     super(props);
@@ -32,13 +32,13 @@ export default class CourseNameAdmin extends React.Component {
     });
   }
 
-  select(course){
-    this.props.setCourse(course);
+  select(conference){
+    this.props.setConference(conference);
     this._resetMsg();
   }
 
   new(){
-    this.props.setCourse({});
+    this.props.setConference({});
     this._resetMsg();
   }
 
@@ -47,17 +47,17 @@ export default class CourseNameAdmin extends React.Component {
    * CRUD Operations
    **/
   // Create
-  create(course){
-    coursesApi.create(course)
-      .then( (course) => {
+  create(conference){
+    conferencesApi.create(conference)
+      .then( (conference) => {
         this._resetMsg();
-        this.props.setCourse(course);
+        this.props.setConference(conference);
         this.list();
 
         let toastrMsg = { success : 'Le cours à été crée.'};
         this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
+        this.refs.conferenceNameSection.hideSection();
       }, (errors) => {
         let toastrMsg = { error : "Erreur de création.<br/>"};
         this.setState({ errors: errors, toastrMsg: toastrMsg });
@@ -66,23 +66,23 @@ export default class CourseNameAdmin extends React.Component {
 
   // Read
   list(){
-    coursesApi.list(courses => {
-      this.props.setCourses(courses);
+    conferencesApi.list(conferences => {
+      this.props.setConferences(conferences);
     });
   }
 
   // Update
-  save(course){
-    coursesApi.save(course)
-      .then( (course) => {
+  save(conference){
+    conferencesApi.save(conference)
+      .then( (conference) => {
         this._resetMsg();
-        this.props.setCourse(course);
+        this.props.setConference(conference);
         this.list();
 
         let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
         this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
+        this.refs.conferenceNameSection.hideSection();
       }, (errors) => {
         let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
         this.setState({ errors: errors, toastrMsg: toastrMsg });
@@ -91,16 +91,16 @@ export default class CourseNameAdmin extends React.Component {
 
   // Delete
   delete(){
-    coursesApi.delete(this.props.course)
-      .then( (course) => {
+    conferencesApi.delete(this.props.conference)
+      .then( (conference) => {
         this._resetMsg();
-        this.props.setCourse({});
+        this.props.setConference({});
         this.list();
 
         let toastrMsg = { success : 'Le cours à été supprimé.'};
         this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
+        this.refs.conferenceNameSection.hideSection();
       }, (errors) => {
         let toastrMsg = { error : "Erreur de supression.<br/>"};
         this.setState({ errors: errors, toastrMsg: toastrMsg });
@@ -109,10 +109,10 @@ export default class CourseNameAdmin extends React.Component {
 
   render() {
     return (
-      <CourseNameSection
-        ref="courseNameSection"
-        courses={this.props.courses}
-        course={this.props.course}
+      <ConferenceNameSection
+        ref="conferenceNameSection"
+        conferences={this.props.conferences}
+        conference={this.props.conference}
         onSelect={this.select.bind(this)}
         onNew={this.new.bind(this)}
         errors={this.state.errors}

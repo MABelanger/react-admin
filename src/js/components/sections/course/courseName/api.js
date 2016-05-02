@@ -2,7 +2,7 @@
 
 import Request                    from "superagent";
 
-import commonApi                  from "../commonApi";
+import commonApi                  from "../../commonApi";
 
 const URL = 'http://localhost:3000/api/courses';
 

@@ -4,30 +4,33 @@ import Request                    from "superagent";
 
 import commonApi                  from "../../commonApi";
 
-const BASE_URL = 'http://localhost:3000/api/';
+const URL = 'http://localhost:3000/api/conferences';
 
 // TODO : change this module to object and constructor... es6.
 
 
-function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
-}
+var ConferenceApi = {
 
-var CourseDescriptionApi = {
-
+  getIndexById: function(objs, _id) {
+    let index;
+    for (let i=0; i < objs.length; i++) {
+      if(_id == objs[i]._id){
+        index = i; 
+      }
+    }
+    return index;
+  },
 
   /**
    * Create
    **/
-
-  create: function(courseId, teacherId, courseDescription) {
-    let url = getUrl(courseId, teacherId);
+  create: function(obj) {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .put(url)
+        .post(URL)
         .accept('application/json')
         .type('application/json')
-        .send(courseDescription)
+        .send(obj)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -46,14 +49,20 @@ var CourseDescriptionApi = {
   /**
    * Read
    **/
+  list: function(callback) {
+    Request
+    .get(URL, function(err, res){
+      callback(res.body);
+    });
+  },
 
-  read: function(courseId, teacherId) {
-    let url = getUrl(courseId, teacherId);
+  read: function(conferenceId) {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .get(url)
+        .get(URL + '/' + conferenceId)
         .accept('application/json')
         .type('application/json')
+        .send(conference)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -67,26 +76,23 @@ var CourseDescriptionApi = {
   },
 
 
+
   /**
    * Update
    **/
-  save: function(courseId, teacherId, courseDescription) {
-    let url = getUrl(courseId, teacherId);
+  save: function(conference) {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .put(url)
+        .put(URL + '/' + conference._id)
         .accept('application/json')
         .type('application/json')
-        .send(courseDescription)
+        .send(conference)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
           }
           else {
-            if(res) {
-              reject(commonApi.getFlatErrors(res.body.errors));
-            }
-            reject(err);
+            reject(commonApi.getFlatErrors(res.body.errors));
           }
         });
     });
@@ -97,14 +103,13 @@ var CourseDescriptionApi = {
    * Delete
    **/
 
-  delete: function(courseId, teacherId) {
-    let url = getUrl(courseId, teacherId);
+  delete: function(conference) {
     var promise = new Promise(function(resolve, reject) {
       Request
-        .del(url)
+        .del(URL + '/' + conference._id)
         .accept('application/json')
         .type('application/json')
-        .send("")
+        .send(conference)
         .end((err, res) => {
           if (! err ) {
             resolve(res.body);
@@ -118,4 +123,4 @@ var CourseDescriptionApi = {
   }
 };
 
-module.exports = CourseDescriptionApi;
+module.exports = ConferenceApi;
