@@ -35,7 +35,8 @@ export default class ConferenceAdmin extends React.Component {
 
   setConference(conference){
     this.setState({'conference': conference}, function(){
-      this._resetTeachers();
+      console.log('conference', conference)
+      //this._resetTeachers();
     });
   }
 
@@ -57,12 +58,13 @@ export default class ConferenceAdmin extends React.Component {
 
   /*
    * Render all sections
+   { this.state.conference._id ? this.renderTeacher() : '' }
    */
   render() {
     return (
       <div className="container">
         { this.renderConference() }
-        { this.state.conference._id ? this.renderTeacher() : '' }
+        
       </div>
     );
   }

@@ -4,28 +4,36 @@ import ReactQuill                 from "../../../commons/reactQuill";
 import Checkbox                   from "../../../commons/Checkbox";
 import Image                      from "../../../Image";
 import * as sectionHelper         from "../../helper";
+import SpeakerInput               from './speakerInput';
 
 export default class ConferenceNameCtrlInput extends React.Component {
+
 
   constructor(props) {
     super(props);
     this.state = {
-        name : "",
-        svg : ""
+      isVisible: true,
+      speaker: {},
+      title: "",
+      tel: "",
+      note: "",
+      price: "",
+      schoolName: "",
+      schoolUrl: "",
+      description: "",
+      abstract: "",
     };
   }
 
   componentWillMount(){
     this.setState({
-      name : this.props.conference.name,
-      svg : this.props.conference.svg,
+      title : this.props.conference.title,
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      name : nextProps.conference.name,
-      svg : nextProps.conference.svg,
+      title : nextProps.conference.title,
     });
   }
 
@@ -45,8 +53,8 @@ export default class ConferenceNameCtrlInput extends React.Component {
 
   getFields(){
     return {
-      name : this.state.name,
-      svg : this.state.svg,
+      title : this.state.title,
+      speaker: this.refs.speakerInput.getFields()
     };
   }
 
@@ -90,6 +98,11 @@ export default class ConferenceNameCtrlInput extends React.Component {
           error={sectionHelper.getError("isVisible", this.props.errors)}
           checked={this.state.isVisible}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+        <SpeakerInput
+          ref="speakerInput"
+          error={this.props.errors}
+          speaker={this.state.speaker}
         />
         <TextInput
           name="title"
