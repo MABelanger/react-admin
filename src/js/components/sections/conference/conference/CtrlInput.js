@@ -4,7 +4,7 @@ import ReactQuill                 from "../../../commons/reactQuill";
 import Checkbox                   from "../../../commons/Checkbox";
 import Image                      from "../../../Image";
 import * as sectionHelper         from "../../helper";
-import SpeakerInput               from './speakerInput';
+
 
 export default class ConferenceNameCtrlInput extends React.Component {
 
@@ -15,10 +15,8 @@ export default class ConferenceNameCtrlInput extends React.Component {
     super(props);
     this.state = {
       isVisible: true,
-      speaker: {
-        firstName: "",
-        lastName : ""
-      },
+      firstName: "",
+      lastName: "",
       title: "",
       tel: "",
       schoolName: "",
@@ -31,10 +29,26 @@ export default class ConferenceNameCtrlInput extends React.Component {
     };
   }
 
+  _getNames(speaker){
+    let firstName = null;
+    let lastName = null;
+    if(speaker){
+      firstName = speaker.firstName;
+      lastName = speaker.lastName;
+    }
+    return {
+      firstName : firstName,
+      lastName : lastName
+    }
+  }
+
+
   componentWillMount(){
+    let {firstName, lastName} = this._getNames(this.props.conference.speaker);
     this.setState({
       isVisible: this.props.conference.isVisible,
-      speaker: this.props.conference.speaker,
+      firstName: firstName,
+      lastName: lastName,
       title: this.props.conference.title,
       tel: this.props.conference.tel,
       schoolName: this.props.conference.schoolName,
@@ -48,9 +62,11 @@ export default class ConferenceNameCtrlInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let {firstName, lastName} = this._getNames(nextProps.conference.speaker);
     this.setState({
       isVisible: nextProps.conference.isVisible,
-      speaker: nextProps.conference.speaker,
+      firstName: firstName,
+      lastName: lastName,
       title: nextProps.conference.title,
       tel: nextProps.conference.tel,
       schoolName: nextProps.conference.schoolName,
@@ -80,7 +96,10 @@ export default class ConferenceNameCtrlInput extends React.Component {
   getFields(){
     return {
       isVisible: this.state.isVisible,
-      speaker: this.state.speaker,
+      speaker: {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+      },
       title: this.state.title,
       tel: this.state.tel,
       schoolName: this.state.schoolName,
@@ -133,11 +152,20 @@ export default class ConferenceNameCtrlInput extends React.Component {
           checked={this.state.isVisible}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
-        <SpeakerInput
-          name="speaker"
-          ref="speakerInput"
-          error={this.props.errors}
-          speaker={this.state.speaker}
+        <TextInput
+          name="firstName"
+          label="Prénom"
+          ref="firstName"
+          error={sectionHelper.getError("firstName", this.props.errors)}
+          value={this.state.firstName}
+          changeValue={ (name, value) => { this.changeValue(name, value); } }
+        />
+        <TextInput
+          name="lastName"
+          label="Nom"
+          ref="lastName"
+          error={sectionHelper.getError("lastName", this.props.errors)}
+          value={this.state.lastName}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
         <TextInput

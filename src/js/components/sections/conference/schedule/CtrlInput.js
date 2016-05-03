@@ -66,6 +66,25 @@ export default class ScheduleCtrlInput extends React.Component {
     );
   }
 
+  renderDates(){
+    return(
+        <div className="clearfix">
+          <div className="col-sm-offset-1 col-sm-1">
+            &nbsp;
+          </div>
+          <DatePicker
+            name="dayStart"
+            label="Date"
+            ref="dayStart"
+            error={sectionHelper.getError("dayStart", this.props.errors)}
+            date={this.state.dayStart}
+            changeValue={ (name, value) => { this.changeValue(name, value); } }
+          />
+          <div className="col-sm-4">&nbsp;</div>
+        </div>
+    );
+  }
+
   renderHours(){
     return(
         <div className="clearfix">
@@ -91,40 +110,7 @@ export default class ScheduleCtrlInput extends React.Component {
               changeValue={ (name, value) => { this.changeValue(name, value); } }
             />
 
-          <div className="col-sm-4">&nbsp;</div>
-        </div>
-    );
-  }
-
-  renderDates(){
-    return(
-        <div className="clearfix">
-          <div className="col-sm-offset-1 col-sm-1">
-            &nbsp;
-          </div>
-          <DatePicker
-            name="dayStart"
-            label="Début"
-            ref="dayStart"
-            error={sectionHelper.getError("dayStart", this.props.errors)}
-            date={this.state.dayStart}
-            changeValue={ (name, value) => { this.changeValue(name, value); } }
-          />
-
-          <DatePicker
-            name="dayEnd"
-            label="Fin"
-            ref="dayEnd"
-            error={sectionHelper.getError("dayEnd", this.props.errors)}
-            date={this.state.dayEnd}
-            changeValue={ (name, value) => { this.changeValue(name, value); } }
-          />
-  
-
-
           {this.props.ctrlSaveDel()}
-
-
         </div>
     );
   }
@@ -133,8 +119,8 @@ export default class ScheduleCtrlInput extends React.Component {
   render() {
     return (
       <div>
-        {this.renderHours()}
         {this.renderDates()}
+        {this.renderHours()}
       </div>
     );
   }

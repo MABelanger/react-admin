@@ -37,8 +37,7 @@ export default class ConferenceAdmin extends React.Component {
 
   setConference(conference){
     this.setState({'conference': conference}, function(){
-      console.log('conference', conference)
-      //this._resetTeachers();
+      this._resetSchedule();
     });
   }
 
@@ -64,7 +63,7 @@ export default class ConferenceAdmin extends React.Component {
   _resetSchedule(){
     this.setState({'schedule': {} }, function(){
       if (this.refs.scheduleAdmin) {
-        this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        this.refs.scheduleAdmin.list(this.state.conference._id);
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }
     });
@@ -72,6 +71,7 @@ export default class ConferenceAdmin extends React.Component {
 
   setSchedule(schedule){
     this.setState({'schedule': schedule}, function(){
+      
     });
   }
 

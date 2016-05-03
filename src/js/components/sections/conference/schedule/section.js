@@ -177,12 +177,10 @@ export default class ScheduleSection extends React.Component {
     let dateStart = moment( item.dayStart ).utcOffset("+00:00");
     let dateEnd = moment( item.dayEnd ).utcOffset("+00:00");
     let weekDayName = moment.weekdays( moment(dateStart).day() );
-    let name = '( ' + this.capitalizeFirstLetter( weekDayName ) 
-                + ' ' + dateStart.format('HH:mm') + ' )'
-                + ' '
-                + dateStart.format('LL')
-                + ' - '
-                + dateEnd.format('LL');
+    let name =  this.capitalizeFirstLetter( weekDayName ) 
+                + ' ' + dateStart.format('LL')
+                + ' ( ' + dateStart.format('HH:mm') + ' )'
+                
     return name;
   }
 
@@ -214,9 +212,8 @@ export default class ScheduleSection extends React.Component {
         <ModalBootstrap
           ref="modalBootstrap"
           msg={
-            "Voulez-vous vraiment supprimer ce cour "
-            + '( ' + this.props.schedule.dayName + ' ) ?'
-            + " tout les professeurs relié à ce cour ainsi que leurs horaires seront aussi supprimé !"
+            "Voulez-vous vraiment supprimer la date de conference "
+            + '( ' + this.getValue() + ' ) ?'
           }
           onYes={::this.delete}
         />

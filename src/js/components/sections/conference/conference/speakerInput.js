@@ -9,9 +9,10 @@ export default class ConferenceNameCtrlInput extends React.Component {
     super(props);
     this.state = {
       firstName: "",
-      lastName: ""
+      lastName: "",
     }
   }
+
 
   componentWillMount(){
     if(this.props.speaker){
@@ -22,21 +23,36 @@ export default class ConferenceNameCtrlInput extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.speaker){
-      this.setState({
-        firstName : nextProps.speaker.firstName,
-        lastName : nextProps.speaker.lastName
-      });
+
+  _getNames(speaker){
+    let firstName = null;
+    let lastName = null;
+    if(speaker){
+      firstName = speaker.firstName;
+      lastName = speaker.lastName;
+    }
+    return {
+      firstName : firstName,
+      lastName : lastName
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    let {firstName, lastName} = this._getNames(nextProps.speaker)
+    console.log('componentWillReceiveProps.firstName', nextProps)
+    this.setState({
+      firstName : firstName,
+      lastName : lastName
+    });
+
+  }
+
+
   changeValue(name, value) {
-    let newState = this.state;
-    newState[name] = value;
-    this.setState(newState);
-    // change value to the parent.
-    this.props.changeValue(this.props.name, newState);
+    // let newState = this.state;
+    // newState[name] = value;
+    // this.setState(newState);
+    this.props.changeValue("speaker", this.getFields());
   }
 
   getError(name) {
@@ -49,30 +65,17 @@ export default class ConferenceNameCtrlInput extends React.Component {
 
   getFields(){
     return {
-      firstName : this.state.firstName,
-      lastName : this.state.lastName,
+        firstName : this.state.firstName,
+        lastName : this.state.lastName
     };
   }
 
   render() {
+
+
     return (
       <div>
-        <TextInput
-          name="firstName"
-          label="Prénom"
-          ref="firstName"
-          error={sectionHelper.getError("firstName", this.props.errors)}
-          value={this.state.firstName}
-          changeValue={ (name, value) => { this.changeValue(name, value); } }
-        />
-        <TextInput
-          name="lastName"
-          label="Nom"
-          ref="lastName"
-          error={sectionHelper.getError("lastName", this.props.errors)}
-          value={this.state.lastName}
-          changeValue={ (name, value) => { this.changeValue(name, value); } }
-        />
+
       </div>
     );
   }
