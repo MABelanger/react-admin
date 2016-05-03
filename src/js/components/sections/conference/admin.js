@@ -1,5 +1,6 @@
 import React                      from "react";
 import Conference                 from "./conference/admin";
+import Schedule                   from "./schedule/admin";
 
 
 export default class ConferenceAdmin extends React.Component {
@@ -16,14 +17,6 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
-
-  /*
-   * Conference
-   */
-  setConferences(conferences){
-    this.setState({'conferences': conferences});
-  }
-
   componentDidMount(){
 
   }
@@ -32,6 +25,15 @@ export default class ConferenceAdmin extends React.Component {
     //this.list();
     //this.refs.conferenceAdmin.list();
   }
+
+
+  /*
+   * Conference
+   */
+  setConferences(conferences){
+    this.setState({'conferences': conferences});
+  }
+
 
   setConference(conference){
     this.setState({'conference': conference}, function(){
@@ -57,14 +59,52 @@ export default class ConferenceAdmin extends React.Component {
 
 
   /*
+   * Schedule
+   */
+  _resetSchedule(){
+    this.setState({'schedule': {} }, function(){
+      if (this.refs.scheduleAdmin) {
+        this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
+      }
+    });
+  }
+
+  setSchedule(schedule){
+    this.setState({'schedule': schedule}, function(){
+    });
+  }
+
+  setSchedules(schedules){
+    this.setState({'schedules': schedules});
+  }
+
+  renderSchedule(){
+    return (
+      <div>
+        <Schedule
+          ref="scheduleAdmin"
+          setSchedule={this.setSchedule.bind(this)}
+          setSchedules={this.setSchedules.bind(this)}
+          schedule={ this.state.schedule }
+          schedules={ this.state.schedules }
+          conferenceId={this.state.conference._id}
+          />
+        <hr/>
+      </div>
+    );
+  }
+
+
+  /*
    * Render all sections
-   { this.state.conference._id ? this.renderTeacher() : '' }
+   
    */
   render() {
     return (
       <div className="container">
         { this.renderConference() }
-        
+        { this.state.conference._id ? this.renderSchedule() : '' }
       </div>
     );
   }

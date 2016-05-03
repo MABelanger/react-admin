@@ -9,11 +9,9 @@ const BASE_URL = 'http://localhost:3000/api/';
 // TODO : change this module to object and constructor... es6.
 
 
-function getUrl(courseId, teacherId, courseTypeId){
-  return BASE_URL + 'courses/' + courseId 
-                  + '/teachers/' + teacherId 
-                  + '/course_description/course_types/' + courseTypeId
-                  + '/schedules'
+function getUrl(conferenceId){
+  return BASE_URL + 'conferences/' + conferenceId 
+                  + '/schedules';
 }
 
 var CourseTypeApi = {
@@ -21,8 +19,8 @@ var CourseTypeApi = {
   /**
    * Create
    **/
-  create: function(courseId, teacherId, courseTypeId, schedule) {
-    let url = getUrl(courseId, teacherId, courseTypeId);
+  create: function(conferenceId, schedule) {
+    let url = getUrl(conferenceId);
     var promise = new Promise(function(resolve, reject) {
       Request
         .post(url)
@@ -48,8 +46,8 @@ var CourseTypeApi = {
    * Read
    **/
 
-  list: function(courseId, teacherId, courseTypeId) {
-    let url = getUrl(courseId, teacherId, courseTypeId);
+  list: function(conferenceId) {
+    let url = getUrl(conferenceId);
     var promise = new Promise(function(resolve, reject) {
       Request
         .get(url)
@@ -70,8 +68,8 @@ var CourseTypeApi = {
   /**
    * Update
    **/
-  save: function(courseId, teacherId, courseTypeId, schedule) {
-    let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+  save: function(conferenceId, schedule) {
+    let url = getUrl(conferenceId) + '/' + schedule._id;
     var promise = new Promise(function(resolve, reject) {
       Request
         .put(url)
@@ -97,8 +95,8 @@ var CourseTypeApi = {
    * Delete
    **/
 
-  delete: function(courseId, teacherId, courseTypeId, schedule) {
-    let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+  delete: function(conferenceId, schedule) {
+    let url = getUrl(conferenceId) + '/' + schedule._id;
     var promise = new Promise(function(resolve, reject) {
       Request
         .del(url)

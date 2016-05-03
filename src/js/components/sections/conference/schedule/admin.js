@@ -39,15 +39,13 @@ export default class ScheduleAdmin extends React.Component {
 
   // Create
   create(schedule){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    let courseTypeId = this.props.courseTypeId;
+    let conferenceId = this.props.conferenceId;
 
-    scheduleApi.create(courseId, teacherId, courseTypeId, schedule)
+    scheduleApi.create(conferenceId, schedule)
       .then( (schedule) => {
         this._resetMsg();
         this.props.setSchedule(schedule);
-        this.list(courseId, teacherId, courseTypeId);
+        this.list(conferenceId);
 
         let toastrMsg = { success : 'La schedule à été crée.'};
         this.setState({ toastrMsg: toastrMsg });
@@ -61,8 +59,8 @@ export default class ScheduleAdmin extends React.Component {
 
 
   // Read
-  list(courseId, teacherId, courseTypeId){
-    scheduleApi.list(courseId, teacherId, courseTypeId)
+  list(conferenceId){
+    scheduleApi.list(conferenceId)
       .then( (schedules) => {
         this.props.setSchedules(schedules);
       }, (err) => {
@@ -72,15 +70,13 @@ export default class ScheduleAdmin extends React.Component {
 
   // Update
   save(schedule){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    let courseTypeId = this.props.courseTypeId;
+    let conferenceId = this.props.conferenceId;
 
-    scheduleApi.save(courseId, teacherId, courseTypeId, schedule)
+    scheduleApi.save(conferenceId, schedule)
       .then( (schedule) => {
         this._resetMsg();
         this.props.setSchedule(schedule);
-        this.list(courseId, teacherId, courseTypeId);
+        this.list(conferenceId);
 
         let toastrMsg = { success : 'La schedule à été crée.'};
         this.setState({ toastrMsg: toastrMsg });
@@ -94,15 +90,13 @@ export default class ScheduleAdmin extends React.Component {
 
   // Delete
   delete(schedule){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-    let courseTypeId = this.props.courseTypeId;
+    let conferenceId = this.props.conferenceId;
 
-    scheduleApi.delete(courseId, teacherId, courseTypeId, schedule)
+    scheduleApi.delete(conferenceId, schedule)
       .then( (msg) => {
         this._resetMsg();
         this.props.setSchedule({});
-        this.list(courseId, teacherId, courseTypeId);
+        this.list(conferenceId);
 
         let toastrMsg = { success : 'La schedule à été supprimé.'};
         this.setState({ toastrMsg: toastrMsg });
