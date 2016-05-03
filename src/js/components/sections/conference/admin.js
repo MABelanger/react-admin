@@ -102,7 +102,7 @@ export default class ConferenceAdmin extends React.Component {
    */
   render() {
     return (
-      <div className="container">
+      <div>
         { this.renderConference() }
         { this.state.conference._id ? this.renderSchedule() : '' }
       </div>

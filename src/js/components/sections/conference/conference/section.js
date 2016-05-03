@@ -151,7 +151,7 @@ export default class ConferenceNameSection extends React.Component {
 
         <CtrlSelect
           list={this.props.conferences}
-          title="Noms de cours"
+          title="Titre des conférences"
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
           onNew={ this.new.bind(this) }

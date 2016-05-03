@@ -283,7 +283,7 @@ export default class CourseAdmin extends React.Component {
    */
   render() {
     return (
-      <div className="container">
+      <div>
         { this.renderCourseName() }
         { this.state.course._id ? this.renderTeacher() : '' }
         { this.state.teacher._id ? this.renderCourseDescription() : '' }
