@@ -278,59 +278,12 @@ export default class CourseAdmin extends React.Component {
     );
   }
 
-
-  /*
-   * Force Select
-   */
-   
-  forceSelect(){
-    let course = {
-      _id : '570432f35b64f9c47dc5c486'
-    };
-    let teacher = {
-      _id : '570433265b64f9c47dc5c488'
-    };
-
-    let courseType = {
-      _id : '57116dbddadf99b0114469aa'
-    };
-
-    let schedule = {
-      _id : '57116dcadadf99b0114469ab'
-    };
-
-    let freeDay = {
-      _id: '5700701f83456569686a374b'
-    };
-
-    this.setState({
-      course : course,
-      teacher : teacher,
-      courseType : courseType,
-      schedule: schedule,
-      freeDay: freeDay
-    });
-  }
-
-  renderForceSelect(){
-    return(
-      <div className="clearfix">
-        <BtnInfo
-          className="col-xs-4"
-          onClick={ (e)=>{ this.forceSelect(); } }
-          label="forceSelect"
-        />
-      </div>
-    );
-  }
-
   /*
    * Render all sections
    */
   render() {
     return (
       <div className="container">
-        { this.renderForceSelect() }
         { this.renderCourseName() }
         { this.state.course._id ? this.renderTeacher() : '' }
         { this.state.teacher._id ? this.renderCourseDescription() : '' }
