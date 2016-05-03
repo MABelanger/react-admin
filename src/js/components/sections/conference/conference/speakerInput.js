@@ -14,17 +14,21 @@ export default class ConferenceNameCtrlInput extends React.Component {
   }
 
   componentWillMount(){
-    this.setState({
-      firstName : this.props.speaker.firstName,
-      lastName : this.props.speaker.lastName
-    });
+    if(this.props.speaker){
+      this.setState({
+        firstName : this.props.speaker.firstName,
+        lastName : this.props.speaker.lastName
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      firstName : nextProps.speaker.firstName,
-      lastName : nextProps.speaker.lastName
-    });
+    if(nextProps.speaker){
+      this.setState({
+        firstName : nextProps.speaker.firstName,
+        lastName : nextProps.speaker.lastName
+      });
+    }
   }
 
   changeValue(name, value) {

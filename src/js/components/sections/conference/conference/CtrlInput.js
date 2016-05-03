@@ -8,35 +8,58 @@ import SpeakerInput               from './speakerInput';
 
 export default class ConferenceNameCtrlInput extends React.Component {
 
+// Visible, Titre, Téléphone, Lien Nom, Lien URL, Image
+// Résumé Description Côut Note
 
   constructor(props) {
     super(props);
     this.state = {
       isVisible: true,
-      speaker: {},
+      speaker: {
+        firstName: "",
+        lastName : ""
+      },
       title: "",
       tel: "",
-      note: "",
-      price: "",
       schoolName: "",
       schoolUrl: "",
-      "image": "",
-      description: "",
+      image: "",
       abstract: "",
+      description: "",
+      price: "",
+      note: "",
     };
   }
 
   componentWillMount(){
     this.setState({
-      title : this.props.conference.title,
-      image: this.state.image,
+      isVisible: this.props.conference.isVisible,
+      speaker: this.props.conference.speaker,
+      title: this.props.conference.title,
+      tel: this.props.conference.tel,
+      schoolName: this.props.conference.schoolName,
+      schoolUrl: this.props.conference.schoolUrl,
+      image: this.props.conference.image,
+      abstract: this.props.conference.abstract,
+      description: this.props.conference.description,
+      price: this.props.conference.price,
+      note: this.props.conference.note
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      title : nextProps.conference.title,
+      isVisible: nextProps.conference.isVisible,
+      speaker: nextProps.conference.speaker,
+      title: nextProps.conference.title,
+      tel: nextProps.conference.tel,
+      schoolName: nextProps.conference.schoolName,
+      schoolUrl: nextProps.conference.schoolUrl,
       image: nextProps.conference.image,
+      abstract: nextProps.conference.abstract,
+      description: nextProps.conference.description,
+      price: nextProps.conference.price,
+      note: nextProps.conference.note
     });
   }
 
@@ -56,9 +79,17 @@ export default class ConferenceNameCtrlInput extends React.Component {
 
   getFields(){
     return {
-      title : this.state.title,
+      isVisible: this.state.isVisible,
+      speaker: this.state.speaker,
+      title: this.state.title,
+      tel: this.state.tel,
+      schoolName: this.state.schoolName,
+      schoolUrl: this.state.schoolUrl,
       image: this.state.image,
-      speaker: this.refs.speakerInput.getFields()
+      abstract: this.state.abstract,
+      description: this.state.description,
+      price: this.state.price,
+      note: this.state.note
     };
   }
 
@@ -90,8 +121,7 @@ export default class ConferenceNameCtrlInput extends React.Component {
 */
 
 
-// Visible, Titre, Téléphone, Lien Nom, Lien URL, Image
-// Résumé Description Côut Note
+
   render() {
     return (
       <div>
