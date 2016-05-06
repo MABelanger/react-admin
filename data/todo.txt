@@ -1,25 +1,3 @@
 order alphabetic select
-add constants.js with msg error and success
-  ctrlSelect default name and titles
-image conpatible with folder django
-compress images uploaded from django
-
-on save convert to class txt-red
-// parentheses nb of objects on the titles
-
-// convert mongodb date start, date end with hours
-
-set calendar in french
-add msg error
-
-fix name with dropdown that no value.name is used and use cb instead for all dropdown
-
-fix error display text input
-
-faire apparaitre type de cours seulement quand cours description est remplis
-
-Faire un component commun pour componentWillReceiveProps au lieu de faire du copier coller.
-
-Disable dropdown when 0 items
-
-fix   getName(item) dropdown
+use flux
+free day hours = schedule.dayStart hours
