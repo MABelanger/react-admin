@@ -116,6 +116,9 @@ export default class CourseNameSection extends React.Component {
 
   }
 
+
+
+
   // render the component
   render() {
 
@@ -139,7 +142,7 @@ export default class CourseNameSection extends React.Component {
         />
 
         <CtrlSelect
-          list={this.props.courses}
+          list={sectionHelper.getOrderedList(this.props.courses, 'name')}
           title="Noms de cours"
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
@@ -150,15 +153,15 @@ export default class CourseNameSection extends React.Component {
 
         <div className="section-animation">
           <div className={this.sectionClasses}>
-                <CtrlInput
-                  ref="ctrlInput"
-                  course={this.props.course}
-                  errors={this.props.errors}
-                />
-                <CtrlSaveDel
-                  onSave={ (e)=>{ this.onCtrlSave(e); } }
-                  onDelete={ (e)=>{ this.onCtrlDelete(e); } }
-                />
+            <CtrlInput
+              ref="ctrlInput"
+              course={this.props.course}
+              errors={this.props.errors}
+            />
+            <CtrlSaveDel
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+            />
           </div>
         </div>
       </div>

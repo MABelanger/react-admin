@@ -112,11 +112,18 @@ export default class ConferenceNameSection extends React.Component {
     this.props.onDelete();
   }
 
+
+
  /* 
   * custum cb for CtrlSelect
   */
   getName(item){
-    return item.title;
+    let title = '';
+    if(sectionHelper.isScheduleCompleted(item.schedules)){
+      title += "(terminé) ";
+    }
+    title += item.title;
+    return title;
   }
 
   getValue(){
@@ -150,7 +157,7 @@ export default class ConferenceNameSection extends React.Component {
         />
 
         <CtrlSelect
-          list={this.props.conferences}
+          list={sectionHelper.getOrderedList(this.props.conferences, 'title')}
           title="Titre des conférences"
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
@@ -163,15 +170,15 @@ export default class ConferenceNameSection extends React.Component {
 
         <div className="section-animation">
           <div className={this.sectionClasses}>
-                <CtrlInput
-                  ref="ctrlInput"
-                  conference={this.props.conference}
-                  errors={this.props.errors}
-                />
-                <CtrlSaveDel
-                  onSave={ (e)=>{ this.onCtrlSave(e); } }
-                  onDelete={ (e)=>{ this.onCtrlDelete(e); } }
-                />
+            <CtrlInput
+              ref="ctrlInput"
+              conference={this.props.conference}
+              errors={this.props.errors}
+            />
+            <CtrlSaveDel
+              onSave={ (e)=>{ this.onCtrlSave(e); } }
+              onDelete={ (e)=>{ this.onCtrlDelete(e); } }
+            />
           </div>
         </div>
       </div>

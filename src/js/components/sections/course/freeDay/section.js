@@ -180,8 +180,6 @@ export default class ScheduleSection extends React.Component {
     }
   }
 
-
-
   // render the component
   render() {
     let cx = classNames.bind(sectionStyles);
