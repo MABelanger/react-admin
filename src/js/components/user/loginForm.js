@@ -1,6 +1,10 @@
 import React from 'react/addons';
+import ReactMixin from 'react-mixin';
 
-import ReactMixin from 'react-mixin'
+import Request                    from "superagent";
+
+require('./superagent-auth-bearer')(Request);
+
 
 
 // Flux User
@@ -44,13 +48,27 @@ export default class Login extends React.Component {
       // });
   }
 
+  getSecureData(){
+//.set('Authorization', `bearer ${JWT_KEY}`)
+    let token = UserStore.getToken();
+    console.log('token', token)
+    Request
+      .get('http://localhost:3000/api/sessions/private')
+      .accept('application/json')
+      .type('application/json')
+      .bearer(token)
+      .end((err, res) => {
+        console.log('res', res);
+      });
+  }
+
   render() {
     return (
       <div className="login jumbotron center-block">
         <h1>Login</h1>
         <form role="form">
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Username  gonto</label>
           <input type="text" valueLink={this.linkState('user')} className="form-control" id="username" placeholder="Username" />
         </div>
         <div className="form-group">
@@ -59,6 +77,7 @@ export default class Login extends React.Component {
         </div>
         <button type="submit" className="btn btn-default" onClick={this.login.bind(this)}>Submit</button>
       </form>
+      <button className="btn btn-default" onClick={this.getSecureData.bind(this)}>getSecureData</button>
     </div>
     );
   }

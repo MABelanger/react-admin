@@ -16,7 +16,8 @@ class UserStoreClass extends EventEmitter {
   constructor() {
     super();
     this.data = null;
-    this.user = null
+    this.user = null;
+    this.token = null;
   }
 
   addChangeListener(cb) {
@@ -33,14 +34,20 @@ class UserStoreClass extends EventEmitter {
 
   doneUser(data){
     this.data = data;
+    this.token = data.id_token;
     this.user = jwt_decode(data.id_token);
   }
 
   getData(){
     return this.data;
   }
+
   getUser(){
     return this.user;
+  }
+
+  getToken(){
+    return this.token;
   }
 }
 
