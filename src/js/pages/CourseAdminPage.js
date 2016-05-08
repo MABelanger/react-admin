@@ -1,7 +1,6 @@
 "use strict";
 import React from "react";
 
-//import Admin from "./components/sections/course/admin";
 import CourseAdmin from "../components/sections/course/admin";
 
 export default class CourseAdminPage extends React.Component {

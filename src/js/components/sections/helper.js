@@ -36,7 +36,6 @@ export function getError(name, errors) {
 
 
 function _compareObj(a, b, attName) {
-  console.log('attName', nameA)
   let nameA = a[attName].toUpperCase(); // ignore upper and lowercase
   let nameB = b[attName].toUpperCase(); // ignore upper and lowercase
   if (nameA < nameB)
@@ -67,15 +66,15 @@ export function isNotExpired(ISOStringDate){
   return isNotExpired;
 }
 
-export function isScheduleCompleted(schedules){
-  let isCompleted = true;
+export function isScheduleExpired(schedules){
+  let isExpired = true;
   if(schedules && schedules.length > 0){
     for(let index in schedules){
       let dayEnd = schedules[index].dayEnd;
       if( isNotExpired(dayEnd) ){
-        isCompleted = false;
+        isExpired = false;
       }
     }
   }
-  return isCompleted;
+  return isExpired;
 }

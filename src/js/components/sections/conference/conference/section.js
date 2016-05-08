@@ -119,7 +119,7 @@ export default class ConferenceNameSection extends React.Component {
   */
   getName(item){
     let title = '';
-    if(sectionHelper.isScheduleCompleted(item.schedules)){
+    if(sectionHelper.isScheduleExpired(item.schedules)){
       title += "(terminé) ";
     }
     title += item.title;

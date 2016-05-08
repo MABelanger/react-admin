@@ -5,20 +5,24 @@ import Request                        from "superagent";
 
 // Project modules
 import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import ReservationConstants           from "../constants/reservationConstants";
+import userConstants                  from "../constants/userConstants";
 
-export function sendReservation(reservation) {
-  const URL = 'http://localhost:3000/api/reservations';
-
+// login('gonto', 'gonto');
+export function login(username, password){
+  let data = {
+    username: username,
+    password: password
+  }
   Request
-    .post(URL)
+    .post(userConstants.LOGIN_URL)
     .accept('application/json')
     .type('application/json')
-    .send(reservation)
+    .send(data)
     .end((err, res) => {
       ClientDispatcher.dispatch({
-        actionType: ReservationConstants.DONE_RESERVATION,
-        confirmation: res.body
+        actionType: userConstants.DONE_LOGIN,
+        data: res.body
       });
     });
 }
+

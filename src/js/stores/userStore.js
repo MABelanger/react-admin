@@ -1,21 +1,22 @@
 "use strict";
+import jwt_decode                     from 'jwt-decode';
 
 // Flux CourseStore
 import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import CourseConstants                from '../constants/courseConstants';
+import UserConstants                  from '../constants/userConstants';
 import { EventEmitter }               from 'events';
 
-const CHANGE_EVENT = CourseConstants.CHANGE_EVENT;
-
+const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
 
 // Define the public event listeners and getters that
 // the views will use to listen for changes and retrieve
 // the store
-class CourseStoreClass extends EventEmitter {
+class UserStoreClass extends EventEmitter {
 
   constructor() {
     super();
-    this.courses = {};
+    this.data = null;
+    this.user = null
   }
 
   addChangeListener(cb) {
@@ -30,25 +31,22 @@ class CourseStoreClass extends EventEmitter {
     this.emit(CHANGE_EVENT);
   }
 
-  setCourses(courses){
-    this.courses = courses;
+  doneUser(data){
+    this.data = data;
+    this.user = jwt_decode(data.id_token);
   }
 
-  doneReservation(reservationMessage){
-    this.reservationMessage = reservationMessage;
+  getData(){
+    return this.data;
   }
-
-  getCourses(){
-    return this.courses;
+  getUser(){
+    return this.user;
   }
-
 }
-
-
 
 // Initialize the singleton to register with the
 // dispatcher and export for React components
-const courseStore = new CourseStoreClass();
+const userStore = new UserStoreClass();
 
 // Register each of the actions with the dispatcher
 // by changing the store's data and emitting a
@@ -56,10 +54,10 @@ const courseStore = new CourseStoreClass();
 AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
-  case CourseConstants.RECEIVE_COURSES:
-
-    courseStore.setCourses(payload.courses);
-    courseStore.emit(CHANGE_EVENT);
+  case UserConstants.DONE_LOGIN:
+    console.log('DONE_LOGIN');
+    userStore.doneUser(payload.data);
+    userStore.emit(CHANGE_EVENT);
     break;
 
   default:
@@ -67,4 +65,4 @@ AppDispatcher.register((payload) => {
   }
 });
 
-export default courseStore;
+export default userStore;

@@ -1,3 +1,7 @@
+#authentification RESTfull
+https://auth0.com/blog/2015/04/09/adding-authentication-to-your-react-flux-app/
+https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+
 tar --exclude='./node_modules' --exclude='./.git'  -cvzf react-admin.tgz .
 
 http://derpturkey.com/react-pass-value-with-onclick/

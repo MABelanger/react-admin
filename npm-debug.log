@@ -1,40 +1,285 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/Users/alex/.nvm/versions/node/v4.3.1/bin/node',
 1 verbose cli   '/Users/alex/.nvm/versions/node/v4.3.1/bin/npm',
-1 verbose cli   'run',
-1 verbose cli   'dev' ]
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'react-addons-linked-state-mixin' ]
 2 info using npm@2.14.12
 3 info using node@v4.3.1
-4 verbose run-script [ 'predev', 'dev', 'postdev' ]
-5 info predev react-admin@0.0.0
-6 info dev react-admin@0.0.0
-7 verbose unsafe-perm in lifecycle true
-8 info react-admin@0.0.0 Failed to exec dev script
-9 verbose stack Error: react-admin@0.0.0 dev: `webpack-dev-server --content-base ./src --inline --hot`
-9 verbose stack Exit status 1
-9 verbose stack     at EventEmitter.<anonymous> (/Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
-9 verbose stack     at emitTwo (events.js:87:13)
-9 verbose stack     at EventEmitter.emit (events.js:172:7)
-9 verbose stack     at ChildProcess.<anonymous> (/Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/lib/utils/spawn.js:24:14)
-9 verbose stack     at emitTwo (events.js:87:13)
-9 verbose stack     at ChildProcess.emit (events.js:172:7)
-9 verbose stack     at maybeClose (internal/child_process.js:821:16)
-9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
-10 verbose pkgid react-admin@0.0.0
-11 verbose cwd /Volumes/data/my_data/dev/github/react-admin
-12 error Darwin 14.5.0
-13 error argv "/Users/alex/.nvm/versions/node/v4.3.1/bin/node" "/Users/alex/.nvm/versions/node/v4.3.1/bin/npm" "run" "dev"
-14 error node v4.3.1
-15 error npm  v2.14.12
-16 error code ELIFECYCLE
-17 error react-admin@0.0.0 dev: `webpack-dev-server --content-base ./src --inline --hot`
-17 error Exit status 1
-18 error Failed at the react-admin@0.0.0 dev script 'webpack-dev-server --content-base ./src --inline --hot'.
-18 error This is most likely a problem with the react-admin package,
-18 error not with npm itself.
-18 error Tell the author that this fails on your system:
-18 error     webpack-dev-server --content-base ./src --inline --hot
-18 error You can get their info via:
-18 error     npm owner ls react-admin
-18 error There is likely additional logging output above.
-19 verbose exit [ 1, true ]
+4 verbose install initial load of /Volumes/data/my_data/dev/github/react-admin/package.json
+5 warn package.json react-admin@0.0.0 No repository field.
+6 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/animate.css/package.json
+7 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/awesome-bootstrap-checkbox/package.json
+8 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-core/package.json
+9 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-loader/package.json
+10 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-add-module-exports/package.json
+11 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-react-html-attrs/package.json
+12 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-transform-class-properties/package.json
+13 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-transform-decorators-legacy/package.json
+14 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-es2015/package.json
+15 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-react/package.json
+16 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-stage-0/package.json
+17 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/bootstrap/package.json
+18 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/bootstrap-webpack/package.json
+19 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/classnames/package.json
+20 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/css-loader/package.json
+21 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/exports-loader/package.json
+22 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/extract-text-webpack-plugin/package.json
+23 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/file-loader/package.json
+24 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/flux/package.json
+25 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/font-awesome/package.json
+26 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/history/package.json
+27 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/imports-loader/package.json
+28 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/jquery/package.json
+29 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/jwt-decode/package.json
+30 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/keymirror/package.json
+31 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/less/package.json
+32 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/less-loader/package.json
+33 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/lodash/package.json
+34 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/moment/package.json
+35 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/node-sass/package.json
+36 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/nodemon/package.json
+37 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react/package.json
+38 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-bootstrap/package.json
+39 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-bootstrap-datetimepicker/package.json
+40 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-dom/package.json
+41 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-mixin/package.json
+42 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-quill/package.json
+43 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-router/package.json
+44 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-toastr/package.json
+45 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/sass-loader/package.json
+46 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/style-loader/package.json
+47 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/superagent/package.json
+48 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/toastr/package.json
+49 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/url-loader/package.json
+50 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/webpack/package.json
+51 verbose installManyTop reading scoped package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/webpack-dev-server/package.json
+52 info package.json keymirror@0.1.1 No license field.
+53 info package.json less-loader@2.2.2 No license field.
+54 info package.json toastr@2.1.2 No license field.
+55 info package.json bootstrap-webpack@0.0.5 No license field.
+56 info package.json exports-loader@0.6.3 No license field.
+57 verbose readDependencies loading dependencies from /Volumes/data/my_data/dev/github/react-admin/package.json
+58 silly cache add args [ 'react-addons-linked-state-mixin', null ]
+59 verbose cache add spec react-addons-linked-state-mixin
+60 silly cache add parsed spec Result {
+60 silly cache add   raw: 'react-addons-linked-state-mixin',
+60 silly cache add   scope: null,
+60 silly cache add   name: 'react-addons-linked-state-mixin',
+60 silly cache add   rawSpec: '',
+60 silly cache add   spec: 'latest',
+60 silly cache add   type: 'tag' }
+61 silly addNamed react-addons-linked-state-mixin@latest
+62 verbose addNamed "latest" is being treated as a dist-tag for react-addons-linked-state-mixin
+63 info addNameTag [ 'react-addons-linked-state-mixin', 'latest' ]
+64 silly mapToRegistry name react-addons-linked-state-mixin
+65 silly mapToRegistry using default registry
+66 silly mapToRegistry registry https://registry.npmjs.org/
+67 silly mapToRegistry uri https://registry.npmjs.org/react-addons-linked-state-mixin
+68 verbose addNameTag registry:https://registry.npmjs.org/react-addons-linked-state-mixin not in flight; fetching
+69 verbose request uri https://registry.npmjs.org/react-addons-linked-state-mixin
+70 verbose request no auth needed
+71 info attempt registry request try #1 at 12:50:47 AM
+72 verbose request id 7548a753c355823d
+73 http request GET https://registry.npmjs.org/react-addons-linked-state-mixin
+74 http 200 https://registry.npmjs.org/react-addons-linked-state-mixin
+75 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+75 verbose headers   etag: '"CWUM9AADT284WDLQHLULG4G06"',
+75 verbose headers   'content-type': 'application/json',
+75 verbose headers   'content-encoding': 'gzip',
+75 verbose headers   'cache-control': 'max-age=300',
+75 verbose headers   'content-length': '3678',
+75 verbose headers   'accept-ranges': 'bytes',
+75 verbose headers   date: 'Sun, 08 May 2016 04:50:47 GMT',
+75 verbose headers   via: '1.1 varnish',
+75 verbose headers   age: '10',
+75 verbose headers   connection: 'keep-alive',
+75 verbose headers   'x-served-by': 'cache-iad2148-IAD',
+75 verbose headers   'x-cache': 'HIT',
+75 verbose headers   'x-cache-hits': '1',
+75 verbose headers   'x-timer': 'S1462683047.212458,VS0,VE0',
+75 verbose headers   vary: 'Accept-Encoding' }
+76 silly get cb [ 200,
+76 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+76 silly get     etag: '"CWUM9AADT284WDLQHLULG4G06"',
+76 silly get     'content-type': 'application/json',
+76 silly get     'content-encoding': 'gzip',
+76 silly get     'cache-control': 'max-age=300',
+76 silly get     'content-length': '3678',
+76 silly get     'accept-ranges': 'bytes',
+76 silly get     date: 'Sun, 08 May 2016 04:50:47 GMT',
+76 silly get     via: '1.1 varnish',
+76 silly get     age: '10',
+76 silly get     connection: 'keep-alive',
+76 silly get     'x-served-by': 'cache-iad2148-IAD',
+76 silly get     'x-cache': 'HIT',
+76 silly get     'x-cache-hits': '1',
+76 silly get     'x-timer': 'S1462683047.212458,VS0,VE0',
+76 silly get     vary: 'Accept-Encoding' } ]
+77 verbose get saving react-addons-linked-state-mixin to /Users/alex/.npm/registry.npmjs.org/react-addons-linked-state-mixin/.cache.json
+78 silly addNameTag next cb for react-addons-linked-state-mixin with tag latest
+79 silly addNamed react-addons-linked-state-mixin@15.0.2
+80 verbose addNamed "15.0.2" is a plain semver version for react-addons-linked-state-mixin
+81 silly mapToRegistry name react-addons-linked-state-mixin
+82 silly mapToRegistry using default registry
+83 silly mapToRegistry registry https://registry.npmjs.org/
+84 silly mapToRegistry uri https://registry.npmjs.org/react-addons-linked-state-mixin
+85 verbose addRemoteTarball https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz not in flight; adding
+86 verbose addRemoteTarball [ 'https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz',
+86 verbose addRemoteTarball   '947aab036e026a66d874df82af18d227043ad009' ]
+87 info retry fetch attempt 1 at 12:50:47 AM
+88 info attempt registry request try #1 at 12:50:47 AM
+89 http fetch GET https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz
+90 http fetch 200 https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz
+91 silly fetchAndShaCheck shasum 947aab036e026a66d874df82af18d227043ad009
+92 verbose addTmpTarball /var/folders/vv/_kb5v7794xgf26w5pj3gp4940000gn/T/npm-50766-56c4f450/registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz not in flight; adding
+93 verbose addTmpTarball already have metadata; skipping unpack for react-addons-linked-state-mixin@15.0.2
+94 silly cache afterAdd react-addons-linked-state-mixin@15.0.2
+95 verbose afterAdd /Users/alex/.npm/react-addons-linked-state-mixin/15.0.2/package/package.json not in flight; writing
+96 verbose afterAdd /Users/alex/.npm/react-addons-linked-state-mixin/15.0.2/package/package.json written
+97 silly install resolved [ { name: 'react-addons-linked-state-mixin',
+97 silly install resolved     version: '15.0.2',
+97 silly install resolved     main: 'index.js',
+97 silly install resolved     repository:
+97 silly install resolved      { type: 'git',
+97 silly install resolved        url: 'git+https://github.com/facebook/react.git' },
+97 silly install resolved     keywords: [ 'react', 'react-addon' ],
+97 silly install resolved     license: 'BSD-3-Clause',
+97 silly install resolved     dependencies: {},
+97 silly install resolved     peerDependencies: { react: '^15.0.2' },
+97 silly install resolved     description: 'This package provides the React LinkedStateMixin add-on.',
+97 silly install resolved     bugs: { url: 'https://github.com/facebook/react/issues' },
+97 silly install resolved     homepage: 'https://github.com/facebook/react#readme',
+97 silly install resolved     _id: 'react-addons-linked-state-mixin@15.0.2',
+97 silly install resolved     _shasum: '947aab036e026a66d874df82af18d227043ad009',
+97 silly install resolved     _resolved: 'https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz',
+97 silly install resolved     _from: 'react-addons-linked-state-mixin@latest',
+97 silly install resolved     scripts: {},
+97 silly install resolved     _npmVersion: '2.15.1',
+97 silly install resolved     _nodeVersion: '4.4.3',
+97 silly install resolved     _npmUser: { name: 'zpao', email: 'paul@oshannessy.com' },
+97 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
+97 silly install resolved     dist:
+97 silly install resolved      { shasum: '947aab036e026a66d874df82af18d227043ad009',
+97 silly install resolved        tarball: 'https://registry.npmjs.org/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-15.0.2.tgz' },
+97 silly install resolved     _npmOperationalInternal:
+97 silly install resolved      { host: 'packages-12-west.internal.npmjs.com',
+97 silly install resolved        tmp: 'tmp/react-addons-linked-state-mixin-15.0.2.tgz_1461976681876_0.025322482688352466' },
+97 silly install resolved     directories: {} } ]
+98 info install react-addons-linked-state-mixin@15.0.2 into /Volumes/data/my_data/dev/github/react-admin
+99 info installOne react-addons-linked-state-mixin@15.0.2
+100 verbose installOne of react-addons-linked-state-mixin to /Volumes/data/my_data/dev/github/react-admin not in flight; installing
+101 verbose lock using /Users/alex/.npm/_locks/react-addons-linked-stat-107d79ad4bed3616.lock for /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+102 silly install write writing react-addons-linked-state-mixin 15.0.2 to /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+103 verbose unbuild node_modules/react-addons-linked-state-mixin
+104 silly gentlyRm /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin is being purged from base /Volumes/data/my_data/dev/github/react-admin
+105 verbose gentlyRm don't care about contents; nuking /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+106 verbose tar unpack /Users/alex/.npm/react-addons-linked-state-mixin/15.0.2/package.tgz
+107 verbose tar unpacking to /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+108 silly gentlyRm /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin is being purged
+109 verbose gentlyRm don't care about contents; nuking /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+110 silly gunzTarPerm modes [ '755', '644' ]
+111 silly gunzTarPerm extractEntry package.json
+112 silly gunzTarPerm extractEntry README.md
+113 silly gunzTarPerm extractEntry LICENSE
+114 silly gunzTarPerm extractEntry index.js
+115 silly gunzTarPerm extractEntry PATENTS
+116 verbose write writing to /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin/package.json
+117 info preinstall react-addons-linked-state-mixin@15.0.2
+118 verbose readDependencies loading dependencies from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin/package.json
+119 silly prepareForInstallMany adding react@^15.0.2 from react-addons-linked-state-mixin peerDependencies
+120 warn peerDependencies The peer dependency react@^15.0.2 included from react-addons-linked-state-mixin will no
+121 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+122 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+123 verbose readDependencies loading dependencies from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin/package.json
+124 silly install resolved []
+125 verbose about to build /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+126 info build /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+127 info linkStuff react-addons-linked-state-mixin@15.0.2
+128 silly linkStuff react-addons-linked-state-mixin@15.0.2 has /Volumes/data/my_data/dev/github/react-admin/node_modules as its parent node_modules
+129 verbose linkBins react-addons-linked-state-mixin@15.0.2
+130 verbose linkMans react-addons-linked-state-mixin@15.0.2
+131 verbose rebuildBundles react-addons-linked-state-mixin@15.0.2
+132 info install react-addons-linked-state-mixin@15.0.2
+133 info postinstall react-addons-linked-state-mixin@15.0.2
+134 verbose readDependencies loading dependencies from /Volumes/data/my_data/dev/github/react-admin/package.json
+135 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/animate.css/package.json
+136 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/awesome-bootstrap-checkbox/package.json
+137 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-core/package.json
+138 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-loader/package.json
+139 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-add-module-exports/package.json
+140 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-react-html-attrs/package.json
+141 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-transform-class-properties/package.json
+142 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-plugin-transform-decorators-legacy/package.json
+143 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-es2015/package.json
+144 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-react/package.json
+145 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/babel-preset-stage-0/package.json
+146 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/bootstrap/package.json
+147 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/bootstrap-webpack/package.json
+148 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/classnames/package.json
+149 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/css-loader/package.json
+150 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/exports-loader/package.json
+151 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/extract-text-webpack-plugin/package.json
+152 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/file-loader/package.json
+153 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/flux/package.json
+154 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/font-awesome/package.json
+155 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/history/package.json
+156 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/imports-loader/package.json
+157 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/jquery/package.json
+158 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/jwt-decode/package.json
+159 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/keymirror/package.json
+160 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/less/package.json
+161 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/less-loader/package.json
+162 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/lodash/package.json
+163 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/moment/package.json
+164 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/node-sass/package.json
+165 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/nodemon/package.json
+166 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react/package.json
+167 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin/package.json
+168 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-bootstrap/package.json
+169 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-bootstrap-datetimepicker/package.json
+170 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-dom/package.json
+171 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-mixin/package.json
+172 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-quill/package.json
+173 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-router/package.json
+174 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/react-toastr/package.json
+175 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/sass-loader/package.json
+176 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/style-loader/package.json
+177 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/superagent/package.json
+178 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/toastr/package.json
+179 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/url-loader/package.json
+180 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/webpack/package.json
+181 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/webpack-dev-server/package.json
+182 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/.bin/lessc/package.json
+183 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/.bin/node-sass/package.json
+184 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/.bin/webpack/package.json
+185 verbose targetResolver reading package data from /Volumes/data/my_data/dev/github/react-admin/node_modules/.bin/webpack-dev-server/package.json
+186 verbose already installed skipping react@^15.0.2 /Volumes/data/my_data/dev/github/react-admin
+187 silly install resolved []
+188 verbose unlock done using /Users/alex/.npm/_locks/react-addons-linked-stat-107d79ad4bed3616.lock for /Volumes/data/my_data/dev/github/react-admin/node_modules/react-addons-linked-state-mixin
+189 verbose validateInstall loading /Volumes/data/my_data/dev/github/react-admin/package.json for validation
+190 verbose stack Error: The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/lib/install.js:125:32
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/lib/install.js:268:7
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+190 verbose stack     at cb (/Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+190 verbose stack     at cb (/Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+190 verbose stack     at cb (/Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+190 verbose stack     at /Users/alex/.nvm/versions/node/v4.3.1/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+191 verbose cwd /Volumes/data/my_data/dev/github/react-admin
+192 error Darwin 14.5.0
+193 error argv "/Users/alex/.nvm/versions/node/v4.3.1/bin/node" "/Users/alex/.nvm/versions/node/v4.3.1/bin/npm" "install" "--save" "react-addons-linked-state-mixin"
+194 error node v4.3.1
+195 error npm  v2.14.12
+196 error code EPEERINVALID
+197 error peerinvalid The package react@0.14.7 does not satisfy its siblings' peerDependencies requirements!
+197 error peerinvalid Peer react-bootstrap@0.28.3 wants react@>=0.14.0
+197 error peerinvalid Peer react-bootstrap-datetimepicker@0.0.22 wants react@>=0.14
+197 error peerinvalid Peer react-dom@0.14.7 wants react@^0.14.7
+197 error peerinvalid Peer react-quill@0.4.1 wants react@>=0.14.0
+197 error peerinvalid Peer react-toastr@2.4.0 wants react@^0.14.6
+197 error peerinvalid Peer react-addons-linked-state-mixin@15.0.2 wants react@^15.0.2
+198 verbose exit [ 1, true ]

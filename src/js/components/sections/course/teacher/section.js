@@ -4,15 +4,11 @@ import classNames                 from "classnames/bind";
 import ModalBootstrap             from "../../../ModalBootstrap";
 import toastr                     from 'toastr';
 
-
 // modules
 import CtrlSelect                 from "../../../commons/ctrl/CtrlSelect";
 import CtrlSaveDel                from "../../../commons/ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
 import * as sectionHelper         from "../../helper";
-
-
-
 
 // Styles
 import 'toastr/build/toastr.css';
@@ -156,7 +152,7 @@ export default class TeacherSection extends React.Component {
         />
 
         <CtrlSelect
-          list={this.props.teachers}
+          list={sectionHelper.getOrderedList(this.props.teachers, 'firstName')}
           title="Professeurs"
           onSelect={ this.select.bind(this) }
           onModify={this.modify.bind(this)}
@@ -178,7 +174,6 @@ export default class TeacherSection extends React.Component {
             />
           </div>
         </div>
-
       </div>
     );
   }
