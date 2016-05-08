@@ -1,16 +1,15 @@
-import React from 'react/addons';
-import ReactMixin from 'react-mixin';
-
+import React                      from 'react/addons';
+import ReactMixin                 from 'react-mixin';
 import Request                    from "superagent";
-
-require('./superagent-auth-bearer')(Request);
-
 
 
 // Flux User
 import UserStore               from '../../stores/userStore';
 import * as UserActions        from '../../actions/userActions';
 import UserConstants           from '../../constants/userConstants';
+
+// Add bearer to superagent prototype
+require('superagent-auth-bearer')(Request);
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
 
@@ -56,7 +55,7 @@ export default class Login extends React.Component {
       .get('http://localhost:3000/api/sessions/private')
       .accept('application/json')
       .type('application/json')
-      .bearer(token)
+      .authBearer(token)
       .end((err, res) => {
         console.log('res', res);
       });
