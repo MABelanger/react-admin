@@ -8,7 +8,8 @@ import { EventEmitter }               from 'events';
 const { LIST_COURSE_NAME_EVENT,
         CREATE_COURSE_NAME_EVENT,
         SAVED_COURSE_NAME_EVENT,
-        READ_COURSE_NAME_EVENT } = CourseNameConstants;
+        READ_COURSE_NAME_EVENT,
+        ERROR_SAVE_COURSE_NAME_EVENT } = CourseNameConstants;
 
 
 
@@ -21,6 +22,7 @@ class CourseNameStoreClass extends EventEmitter {
     super();
     this.courseNames = [];
     this.courseName = {};
+    this.errors = {};
   }
 
   /* 
@@ -34,6 +36,10 @@ class CourseNameStoreClass extends EventEmitter {
     this.courseName = courseName;
   }
 
+  setErrors(errors){
+    this.errors = errors;
+  }  
+
   getCourseNames(){
     return this.courseNames;
   }
@@ -42,6 +48,9 @@ class CourseNameStoreClass extends EventEmitter {
     return this.courseName;
   }
 
+  getErrors(){
+    return this.errors;
+  }
   // new(){
   //   return {
   //     id: null,
@@ -103,7 +112,7 @@ class CourseNameStoreClass extends EventEmitter {
 
 
   /*
-   * CREATE
+   * Create
    */
   addCreateListener(cb) {
     this.on(CREATE_COURSE_NAME_EVENT, cb);
@@ -117,7 +126,7 @@ class CourseNameStoreClass extends EventEmitter {
 
 
   /*
-   * READ
+   * Read
    */
   addReadListener(cb) {
     this.on(READ_COURSE_NAME_EVENT, cb);
@@ -132,7 +141,7 @@ class CourseNameStoreClass extends EventEmitter {
 
 
   /*
-   * SAVED
+   * Saved
    */
   addSavedListener(cb) {
     this.on(SAVED_COURSE_NAME_EVENT, cb);
@@ -144,7 +153,18 @@ class CourseNameStoreClass extends EventEmitter {
     this.emit(SAVED_COURSE_NAME_EVENT);
   }
 
-
+  /*
+   * Error
+   */
+  addErrorListener(cb) {
+    this.on(ERROR_SAVE_COURSE_NAME_EVENT, cb);
+  }
+  removeErrorListener(cb) {
+    this.removeReadListener(ERROR_SAVE_COURSE_NAME_EVENT, cb);
+  }
+  emitError(){
+    this.emit(ERROR_SAVE_COURSE_NAME_EVENT);
+  }
 
 }
 
@@ -168,6 +188,11 @@ AppDispatcher.register((payload) => {
   case CourseNameConstants.CREATE_COURSE_NAME_EVENT:
     courseNameStore.setCourseName(payload.courseName);
     courseNameStore.emitSaved();
+    break;
+
+  case CourseNameConstants.ERROR_SAVE_COURSE_NAME_EVENT:
+    courseNameStore.setErrors(payload.errors);
+    courseNameStore.emitError();
     break;
 
   default:

@@ -25,11 +25,13 @@ export default class CourseNameAdmin extends React.Component {
   }
 
   componentWillMount() {
-    CourseNameStore.addSavedListener(this._saved.bind(this));
+    CourseNameStore.addSavedListener(this.onSaved.bind(this));
+    CourseNameStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
-    CourseNameStore.removeSavedListener(this._saved.bind(this));
+    CourseNameStore.removeSavedListener(this.onSaved.bind(this));
+    CourseNameStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){
@@ -73,13 +75,18 @@ export default class CourseNameAdmin extends React.Component {
     CourseNameActions.createCourseName(course);
   }
 
-  _saved(){
+  onSaved(){
     let toastrMsg = { success : 'Le cours à été sauvegardé.'};
     this.setState({ toastrMsg: toastrMsg });
     this.refs.courseNameSection.hideSection();
   }
 
-
+  onError(){
+    let errors = CourseNameStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur de création.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
 
   // Read
   list(){

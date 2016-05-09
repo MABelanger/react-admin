@@ -9,6 +9,14 @@ import CourseNameConstants            from "../constants/courseNameConstants";
 // Flux (to get token)
 import UserStore                      from '../stores/userStore';
 
+const { URL,
+        LIST_COURSE_NAME_EVENT,
+        CREATE_COURSE_NAME_EVENT,
+        SAVED_COURSE_NAME_EVENT,
+        READ_COURSE_NAME_EVENT,
+        ERROR_SAVE_COURSE_NAME_EVENT } = CourseNameConstants;
+
+
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
@@ -23,21 +31,19 @@ function getFlatErrors(errors){
 
 
 export function getCourseNames() {
-  const URL = CourseNameConstants.URL;
   let token = UserStore.getToken();
   Request
   .get(URL)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: CourseNameConstants.LIST_COURSE_NAME_EVENT,
+      actionType: LIST_COURSE_NAME_EVENT,
       courseNames: res.body
     });
   });
 }
 
 export function createCourseName(courseName) {
-  const URL = CourseNameConstants.URL;
   let token = UserStore.getToken();
   Request
     .post(URL)
@@ -47,9 +53,8 @@ export function createCourseName(courseName) {
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
-        console.log(res.body);
         ClientDispatcher.dispatch({
-          actionType: CourseNameConstants.CREATE_COURSE_NAME_EVENT,
+          actionType: CREATE_COURSE_NAME_EVENT,
           courseName: res.body
         });
         // trigger refresh all courseNames
@@ -57,9 +62,16 @@ export function createCourseName(courseName) {
       }
       else {
         if(res) {
-          console.log(getFlatErrors(res.body.errors));
+          ClientDispatcher.dispatch({
+            actionType: ERROR_SAVE_COURSE_NAME_EVENT,
+            errors: getFlatErrors(res.body.errors)
+          });
         }
-        reject(err);
+        // TODO error connection
+        // ClientDispatcher.dispatch({
+        //   actionType: ERROR_CONNECTION,
+        //   errors: err
+        // });
       }
     });
 }
