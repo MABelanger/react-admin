@@ -10,7 +10,10 @@ const { LIST_COURSE_NAME_EVENT,
         SAVED_COURSE_NAME_EVENT,
         READ_COURSE_NAME_EVENT,
         SAVE_COURSE_NAME_EVENT,
-        ERROR_SAVE_COURSE_NAME_EVENT } = CourseNameConstants;
+
+        DELETED_COURSE_NAME_EVENT,
+        ERROR_SAVE_COURSE_NAME_EVENT,
+        ERROR_DELETE_COURSE_NAME_EVENT } = CourseNameConstants;
 
 
 
@@ -155,6 +158,19 @@ class CourseNameStoreClass extends EventEmitter {
   }
 
   /*
+   * Deleted
+   */
+  addDeletedListener(cb) {
+    this.on(DELETED_COURSE_NAME_EVENT, cb);
+  }
+  removeDeletedListener(cb) {
+    this.removeReadListener(DELETED_COURSE_NAME_EVENT, cb);
+  }
+  emitDeleted(){
+    this.emit(DELETED_COURSE_NAME_EVENT);
+  }
+
+  /*
    * Error
    */
   addErrorListener(cb) {
@@ -194,6 +210,11 @@ AppDispatcher.register((payload) => {
   case CourseNameConstants.SAVE_COURSE_NAME_EVENT:
     courseNameStore.setCourseName(payload.courseName);
     courseNameStore.emitSaved();
+    break;
+
+  case CourseNameConstants.DELETE_COURSE_NAME_EVENT:
+    courseNameStore.setCourseName({});
+    courseNameStore.emitDeleted();
     break;
 
   case CourseNameConstants.ERROR_SAVE_COURSE_NAME_EVENT:

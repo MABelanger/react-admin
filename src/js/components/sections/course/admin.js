@@ -41,14 +41,16 @@ export default class CourseAdmin extends React.Component {
   }
 
   componentWillMount() {
-    CourseNameStore.addListListener(this.setCourses.bind(this))
+    CourseNameStore.addListListener(this.setCourses.bind(this));
     CourseNameStore.addReadListener(this._getCourse.bind(this));
+    CourseNameStore.addDeletedListener(this._deletedCourse.bind(this))
     CourseNameActions.getCourseNames();
   }
 
   componentWillUnmount() {
     CourseNameStore.removeListListener(this.setCourses.bind(this));
     CourseNameStore.removeReadListener(this._getCourse.bind(this));
+    CourseNameStore.removeDeletedListener(this._deletedCourse.bind(this))
   }
 
   /*
@@ -58,8 +60,11 @@ export default class CourseAdmin extends React.Component {
     this.setState({'courses': CourseNameStore.getCourseNames()});
   }
 
+  _deletedCourse(){
+    this._getCourse();
+  }
+
   _getCourse(){
-    console.log('CourseNameStore.getCourseName()', CourseNameStore.getCourseName())
     this.setCourse(CourseNameStore.getCourseName());
   }
 

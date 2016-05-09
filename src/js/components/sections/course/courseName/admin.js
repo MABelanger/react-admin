@@ -26,11 +26,13 @@ export default class CourseNameAdmin extends React.Component {
 
   componentWillMount() {
     CourseNameStore.addSavedListener(this.onSaved.bind(this));
+    CourseNameStore.addDeletedListener(this.onDeleted.bind(this));
     CourseNameStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
     CourseNameStore.removeSavedListener(this.onSaved.bind(this));
+    CourseNameStore.removeDeletedListener(this.onDeleted.bind(this));
     CourseNameStore.removeErrorListener(this.onError.bind(this));
   }
 
@@ -81,10 +83,16 @@ export default class CourseNameAdmin extends React.Component {
     this.refs.courseNameSection.hideSection();
   }
 
+  onDeleted(){
+    let toastrMsg = { success : 'Le cours à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseNameSection.hideSection();
+  }
+
   onError(){
     let errors = CourseNameStore.getErrors();
     console.log('errors', errors)
-    let toastrMsg = { error : "Erreur de création.<br/>"};
+    let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }
 
@@ -116,20 +124,21 @@ export default class CourseNameAdmin extends React.Component {
 
   // Delete
   delete(){
-    coursesApi.delete(this.props.course)
-      .then( (course) => {
-        this._resetMsg();
-        this.props.setCourse({});
-        this.list();
+    // coursesApi.delete(this.props.course)
+    //   .then( (course) => {
+    //     this._resetMsg();
+    //     this.props.setCourse({});
+    //     this.list();
 
-        let toastrMsg = { success : 'Le cours à été supprimé.'};
-        this.setState({ toastrMsg: toastrMsg });
+    //     let toastrMsg = { success : 'Le cours à été supprimé.'};
+    //     this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    //     this.refs.courseNameSection.hideSection();
+    //   }, (errors) => {
+    //     let toastrMsg = { error : "Erreur de supression.<br/>"};
+    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
+    //   });
+    CourseNameActions.deleteCourseName(this.props.course);  
   }
 
   render() {
