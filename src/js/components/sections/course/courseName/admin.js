@@ -53,91 +53,49 @@ export default class CourseNameAdmin extends React.Component {
     this._resetMsg();
   }
 
-
-
-  /**
-   * CRUD Operations
-   **/
-  // Create
-  create(course){
-    // coursesApi.create(course)
-    //   .then( (course) => {
-    //     this._resetMsg();
-    //     this.props.setCourse(course);
-    //     this.list();
-
-    //     let toastrMsg = { success : 'Le cours à été crée.'};
-    //     this.setState({ toastrMsg: toastrMsg });
-
-    //     this.refs.courseNameSection.hideSection();
-    //   }, (errors) => {
-    //     let toastrMsg = { error : "Erreur de création.<br/>"};
-    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
-    //   });
-    CourseNameActions.createCourseName(course);
-  }
+  /*
+   * listener called by the store
+   */
 
   onSaved(){
+    this._resetMsg();
     let toastrMsg = { success : 'Le cours à été sauvegardé.'};
     this.setState({ toastrMsg: toastrMsg });
     this.refs.courseNameSection.hideSection();
   }
 
   onDeleted(){
+    this._resetMsg();
     let toastrMsg = { success : 'Le cours à été supprimé.'};
     this.setState({ toastrMsg: toastrMsg });
     this.refs.courseNameSection.hideSection();
   }
 
   onError(){
+    this._resetMsg();
     let errors = CourseNameStore.getErrors();
     console.log('errors', errors)
     let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }
 
-  // Read
-  list(){
-    coursesApi.list(courses => {
-      this.props.setCourses(courses);
-    });
+  /**
+   * CRUD Operations
+   **/
+  // Create
+  create(course){
+    CourseNameActions.createCourseName(course);
   }
+
+  // Read is admin by the parent component.
 
   // Update
   save(course){
-    // coursesApi.save(course)
-    //   .then( (course) => {
-    //     this._resetMsg();
-    //     this.props.setCourse(course);
-    //     this.list();
-
-    //     let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
-    //     this.setState({ toastrMsg: toastrMsg });
-
-    //     this.refs.courseNameSection.hideSection();
-    //   }, (errors) => {
-    //     let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
-    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
-    //   });
     CourseNameActions.saveCourseName(course);
   }
 
   // Delete
   delete(){
-    // coursesApi.delete(this.props.course)
-    //   .then( (course) => {
-    //     this._resetMsg();
-    //     this.props.setCourse({});
-    //     this.list();
-
-    //     let toastrMsg = { success : 'Le cours à été supprimé.'};
-    //     this.setState({ toastrMsg: toastrMsg });
-
-    //     this.refs.courseNameSection.hideSection();
-    //   }, (errors) => {
-    //     let toastrMsg = { error : "Erreur de supression.<br/>"};
-    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
-    //   });
     CourseNameActions.deleteCourseName(this.props.course);  
   }
 
