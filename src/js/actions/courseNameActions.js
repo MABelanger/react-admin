@@ -14,6 +14,7 @@ const { URL,
         CREATE_COURSE_NAME_EVENT,
         SAVED_COURSE_NAME_EVENT,
         READ_COURSE_NAME_EVENT,
+        SAVE_COURSE_NAME_EVENT,
         ERROR_SAVE_COURSE_NAME_EVENT } = CourseNameConstants;
 
 
@@ -55,6 +56,40 @@ export function createCourseName(courseName) {
       if (! err ) {
         ClientDispatcher.dispatch({
           actionType: CREATE_COURSE_NAME_EVENT,
+          courseName: res.body
+        });
+        // trigger refresh all courseNames
+        this.getCourseNames();
+      }
+      else {
+        if(res) {
+          ClientDispatcher.dispatch({
+            actionType: ERROR_SAVE_COURSE_NAME_EVENT,
+            errors: getFlatErrors(res.body.errors)
+          });
+        }
+        // TODO error connection
+        // ClientDispatcher.dispatch({
+        //   actionType: ERROR_CONNECTION,
+        //   errors: err
+        // });
+      }
+    });
+}
+
+export function saveCourseName(courseName) {
+  let token = UserStore.getToken();
+  let url = URL + '/' + courseName._id;
+  Request
+    .put(url)
+    .accept('application/json')
+    .type('application/json')
+    .send(courseName)
+    .set('Authorization', 'Bearer ' + token)
+    .end((err, res) => {
+      if (! err ) {
+        ClientDispatcher.dispatch({
+          actionType: SAVE_COURSE_NAME_EVENT,
           courseName: res.body
         });
         // trigger refresh all courseNames

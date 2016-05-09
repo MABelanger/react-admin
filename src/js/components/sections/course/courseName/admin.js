@@ -97,20 +97,21 @@ export default class CourseNameAdmin extends React.Component {
 
   // Update
   save(course){
-    coursesApi.save(course)
-      .then( (course) => {
-        this._resetMsg();
-        this.props.setCourse(course);
-        this.list();
+    // coursesApi.save(course)
+    //   .then( (course) => {
+    //     this._resetMsg();
+    //     this.props.setCourse(course);
+    //     this.list();
 
-        let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
-        this.setState({ toastrMsg: toastrMsg });
+    //     let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
+    //     this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    //     this.refs.courseNameSection.hideSection();
+    //   }, (errors) => {
+    //     let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
+    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
+    //   });
+    CourseNameActions.saveCourseName(course);
   }
 
   // Delete

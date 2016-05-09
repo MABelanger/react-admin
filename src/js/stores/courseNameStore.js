@@ -9,6 +9,7 @@ const { LIST_COURSE_NAME_EVENT,
         CREATE_COURSE_NAME_EVENT,
         SAVED_COURSE_NAME_EVENT,
         READ_COURSE_NAME_EVENT,
+        SAVE_COURSE_NAME_EVENT,
         ERROR_SAVE_COURSE_NAME_EVENT } = CourseNameConstants;
 
 
@@ -186,6 +187,11 @@ AppDispatcher.register((payload) => {
     break;
 
   case CourseNameConstants.CREATE_COURSE_NAME_EVENT:
+    courseNameStore.setCourseName(payload.courseName);
+    courseNameStore.emitSaved();
+    break;
+
+  case CourseNameConstants.SAVE_COURSE_NAME_EVENT:
     courseNameStore.setCourseName(payload.courseName);
     courseNameStore.emitSaved();
     break;
