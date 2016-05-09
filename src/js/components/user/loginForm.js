@@ -4,14 +4,20 @@ import Request                    from "superagent";
 
 
 // Flux User
-import UserStore               from '../../stores/userStore';
-import * as UserActions        from '../../actions/userActions';
-import UserConstants           from '../../constants/userConstants';
+import UserStore                   from '../../stores/userStore';
+import * as UserActions            from '../../actions/userActions';
+import UserConstants               from '../../constants/userConstants';
+
+// Flux CourseName
+import CourseNameStore             from '../../stores/courseNameStore';
+import * as CourseNameActions      from '../../actions/courseNameActions';
+import CourseNameConstants         from '../../constants/courseNameConstants';
 
 // Add bearer to superagent prototype
 require('superagent-auth-bearer')(Request);
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
+const LIST_EVENT = CourseNameConstants.LIST_EVENT;
 
 export default class Login extends React.Component {
 
@@ -25,17 +31,26 @@ export default class Login extends React.Component {
 
   componentWillMount() {
     UserStore.on(CHANGE_EVENT, this.getUser);
+    UserStore.on(LIST_EVENT, this.printCourseNames);
   }
 
   componentWillUnmount() {
     UserStore.removeListener(CHANGE_EVENT, this.getUser);
+    UserStore.removeListener(LIST_EVENT, this.printCourseNames);
   }
 
   getUser() {
     //let data = UserStore.getData();
     let user = UserStore.getUser();
 
+    // action the courseNames
+    CourseNameActions.getCourseNames();
+
     console.log('user', user);
+  }
+
+  printCourseNames(){
+    console.log('CourseNameStore.getCourseNames()', CourseNameStore.getCourseNames())
   }
 
   login(e) {

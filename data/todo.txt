@@ -1,3 +1,1 @@
-order alphabetic select
-use flux
-free day hours = schedule.dayStart hours
+use flux instead of api on each sections.
