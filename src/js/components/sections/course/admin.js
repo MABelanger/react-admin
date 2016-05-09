@@ -9,6 +9,12 @@ import BtnInfo                    from "../../commons/BtnInfo";
 
 import LoginForm                  from "../../user/loginForm";
 
+// Flux CourseName
+import CourseNameStore                from '../../../stores/courseNameStore';
+import * as CourseNameActions         from '../../../actions/courseNameActions';
+
+
+
 export default class CourseAdmin extends React.Component {
 
   constructor(props) {
@@ -34,21 +40,27 @@ export default class CourseAdmin extends React.Component {
     };
   }
 
+  componentWillMount() {
+    CourseNameStore.addListListener(this.setCourses.bind(this))
+    CourseNameStore.addReadListener(this._getCourse.bind(this));
+    CourseNameActions.getCourseNames();
+  }
+
+  componentWillUnmount() {
+    CourseNameStore.removeListListener(this.setCourses.bind(this));
+    CourseNameStore.removeReadListener(this._getCourse.bind(this));
+  }
 
   /*
    * Course
    */
-  setCourses(courses){
-    this.setState({'courses': courses});
+  setCourses(){
+    this.setState({'courses': CourseNameStore.getCourseNames()});
   }
 
-  componentDidMount(){
-
-  }
-
-  componentWillMount(){
-    //this.list();
-    //this.refs.courseNameAdmin.list();
+  _getCourse(){
+    console.log('CourseNameStore.getCourseName()', CourseNameStore.getCourseName())
+    this.setCourse(CourseNameStore.getCourseName());
   }
 
   setCourse(course){
@@ -64,7 +76,6 @@ export default class CourseAdmin extends React.Component {
           ref="courseNameAdmin"
           course={this.state.course}
           courses={this.state.courses}
-          setCourses={this.setCourses.bind(this)}
           setCourse={this.setCourse.bind(this)}
         />
         <hr/>

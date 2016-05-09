@@ -5,7 +5,11 @@ import AppDispatcher                  from '../dispatcher/clientDispatcher';
 import CourseNameConstants            from '../constants/courseNameConstants';
 import { EventEmitter }               from 'events';
 
-const LIST_EVENT = CourseNameConstants.LIST_EVENT;
+const { LIST_COURSE_NAME_EVENT,
+        CREATE_COURSE_NAME_EVENT,
+        SAVED_COURSE_NAME_EVENT,
+        READ_COURSE_NAME_EVENT } = CourseNameConstants;
+
 
 
 // Define the public event listeners and getters that
@@ -88,18 +92,57 @@ class CourseNameStoreClass extends EventEmitter {
    * LIST
    */
   addListListener(cb) {
-    this.on(LIST_EVENT, cb);
+    this.on(LIST_COURSE_NAME_EVENT, cb);
   }
   removeListListener(cb) {
-    this.removeListener(LIST_EVENT, cb);
+    this.removeListener(LIST_COURSE_NAME_EVENT, cb);
   }
   emitList(){
-    this.emit(LIST_EVENT);
+    this.emit(LIST_COURSE_NAME_EVENT);
+  }
+
+
+  /*
+   * CREATE
+   */
+  addCreateListener(cb) {
+    this.on(CREATE_COURSE_NAME_EVENT, cb);
+  }
+  removeCreateListener(cb) {
+    this.removeCreateListener(CREATE_COURSE_NAME_EVENT, cb);
+  }
+  emitCreate(){
+    this.emit(CREATE_COURSE_NAME_EVENT);
+  }
+
+
+  /*
+   * READ
+   */
+  addReadListener(cb) {
+    this.on(READ_COURSE_NAME_EVENT, cb);
+  }
+  removeReadListener(cb) {
+    this.removeReadListener(READ_COURSE_NAME_EVENT, cb);
+  }
+  emitRead(){
+    this.emit(READ_COURSE_NAME_EVENT);
   }
 
 
 
-
+  /*
+   * SAVED
+   */
+  addSavedListener(cb) {
+    this.on(SAVED_COURSE_NAME_EVENT, cb);
+  }
+  removeSavedListener(cb) {
+    this.removeReadListener(SAVED_COURSE_NAME_EVENT, cb);
+  }
+  emitSaved(){
+    this.emit(SAVED_COURSE_NAME_EVENT);
+  }
 
 
 
@@ -117,10 +160,14 @@ const courseNameStore = new CourseNameStoreClass();
 AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
-  case CourseNameConstants.LIST_EVENT:
-
+  case CourseNameConstants.LIST_COURSE_NAME_EVENT:
     courseNameStore.setCourseNames(payload.courseNames);
-    courseNameStore.emit(LIST_EVENT);
+    courseNameStore.emitList();
+    break;
+
+  case CourseNameConstants.CREATE_COURSE_NAME_EVENT:
+    courseNameStore.setCourseName(payload.courseName);
+    courseNameStore.emitSaved();
     break;
 
   default:

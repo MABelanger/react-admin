@@ -1,14 +1,18 @@
-var coursesApi =                  require("./api");
-import React                      from "react";
-import toastr                     from 'toastr';
+var coursesApi =                      require("./api");
+import React                          from "react";
+import toastr                         from 'toastr';
 
-import CourseNameSection          from "./section";
+import CourseNameSection              from "./section";
 
+// Flux CourseName
+import CourseNameStore             from '../../../../stores/courseNameStore';
+import * as CourseNameActions      from '../../../../actions/courseNameActions';
+import CourseNameConstants         from '../../../../constants/courseNameConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
 
-
+const LIST_EVENT = CourseNameConstants.READ_EVENT;
 
 export default class CourseNameAdmin extends React.Component {
 
@@ -20,9 +24,12 @@ export default class CourseNameAdmin extends React.Component {
     };
   }
 
-  // TODO use FLUX
-  componentWillMount(){
-    this.list();
+  componentWillMount() {
+    CourseNameStore.addSavedListener(this._saved.bind(this));
+  }
+
+  componentWillUnmount() {
+    CourseNameStore.removeSavedListener(this._saved.bind(this));
   }
 
   _resetMsg(){
@@ -43,26 +50,36 @@ export default class CourseNameAdmin extends React.Component {
   }
 
 
+
   /**
    * CRUD Operations
    **/
   // Create
   create(course){
-    coursesApi.create(course)
-      .then( (course) => {
-        this._resetMsg();
-        this.props.setCourse(course);
-        this.list();
+    // coursesApi.create(course)
+    //   .then( (course) => {
+    //     this._resetMsg();
+    //     this.props.setCourse(course);
+    //     this.list();
 
-        let toastrMsg = { success : 'Le cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
+    //     let toastrMsg = { success : 'Le cours à été crée.'};
+    //     this.setState({ toastrMsg: toastrMsg });
 
-        this.refs.courseNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    //     this.refs.courseNameSection.hideSection();
+    //   }, (errors) => {
+    //     let toastrMsg = { error : "Erreur de création.<br/>"};
+    //     this.setState({ errors: errors, toastrMsg: toastrMsg });
+    //   });
+    CourseNameActions.createCourseName(course);
   }
+
+  _saved(){
+    let toastrMsg = { success : 'Le cours à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseNameSection.hideSection();
+  }
+
+
 
   // Read
   list(){
