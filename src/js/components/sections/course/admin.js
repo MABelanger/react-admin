@@ -13,6 +13,10 @@ import LoginForm                  from "../../user/loginForm";
 import CourseNameStore                from '../../../stores/courseNameStore';
 import * as CourseNameActions         from '../../../actions/courseNameActions';
 
+// Flux Teacher
+import TeacherStore                from '../../../stores/teacherStore';
+import * as TeacherActions         from '../../../actions/teacherActions';
+
 
 
 export default class CourseAdmin extends React.Component {
@@ -41,24 +45,34 @@ export default class CourseAdmin extends React.Component {
   }
 
   componentWillMount() {
-    CourseNameStore.addListListener(this.setCourses.bind(this));
+    // CourseName
+    CourseNameStore.addListListener(this._setCourses.bind(this));
     CourseNameStore.addReadListener(this._getCourse.bind(this));
-    CourseNameStore.addDeletedListener(this._deletedCourse.bind(this))
+    CourseNameStore.addDeletedListener(this._deletedCourse.bind(this));
+
+    // Teacher
+    TeacherStore.addListListener(this._setTeachers.bind(this));
+    TeacherStore.addReadListener(this._getTeacher.bind(this));
+    TeacherStore.addDeletedListener(this._deletedTeacher.bind(this));
+
     CourseNameActions.getCourseNames();
   }
 
   componentWillUnmount() {
-    CourseNameStore.removeListListener(this.setCourses.bind(this));
+    // CourseName
+    CourseNameStore.removeListListener(this._setCourses.bind(this));
     CourseNameStore.removeReadListener(this._getCourse.bind(this));
     CourseNameStore.removeDeletedListener(this._deletedCourse.bind(this))
+
+    // Teacher
+    TeacherStore.removeListListener(this._setTeachers.bind(this));
+    TeacherStore.removeReadListener(this._getTeacher.bind(this));
+    TeacherStore.removeDeletedListener(this._deletedTeacher.bind(this))
   }
 
   /*
    * Course
    */
-  setCourses(){
-    this.setState({'courses': CourseNameStore.getCourseNames()});
-  }
 
   _deletedCourse(){
     this._getCourse();
@@ -66,6 +80,10 @@ export default class CourseAdmin extends React.Component {
 
   _getCourse(){
     this.setCourse(CourseNameStore.getCourseName());
+  }
+
+  _setCourses(){
+    this.setState({'courses': CourseNameStore.getCourseNames()});
   }
 
   setCourse(course){
@@ -95,17 +113,24 @@ export default class CourseAdmin extends React.Component {
   _resetTeachers(){
     this.setState({'teacher': {}}, function(){
       if(this.refs.teacherAdmin) {
-        this.refs.teacherAdmin.list(this.state.course._id);
+        TeacherActions.getTeachers(this.state.course._id);
         this.refs.teacherAdmin.refs.teacherSection.hideSection();
       }
       this._resetCourseDescription();
     });
   }
 
-  setTeachers(teachers){
-    this.setState({'teachers': teachers});
+  _deletedTeacher(){
+    this._getTeacher();
   }
 
+  _getTeacher(){
+    this.setTeacher(TeacherStore.getTeacher());
+  }
+
+  _setTeachers(){
+    this.setState( {'teachers': TeacherStore.getTeachers()} );
+  }
 
 
   setTeacher(teacher){
@@ -122,7 +147,6 @@ export default class CourseAdmin extends React.Component {
           courseId={this.state.course._id}
           teacher={this.state.teacher}
           teachers={this.state.teachers}
-          setTeachers={this.setTeachers.bind(this)}
           setTeacher={this.setTeacher.bind(this)}
           />
         <hr/>

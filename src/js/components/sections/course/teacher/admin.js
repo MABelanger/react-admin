@@ -4,7 +4,12 @@ import 'toastr/build/toastr.css';
 
 import TeacherSection             from "./section";
 
-var teachersApi =                  require("./api");
+// Flux Teacher
+import TeacherStore                from '../../../../stores/teacherStore';
+import * as TeacherActions         from '../../../../actions/teacherActions';
+import TeacherConstants            from '../../../../constants/teacherConstants';
+
+
 
 export default class TeacherAdmin extends React.Component {
 
@@ -32,78 +37,79 @@ export default class TeacherAdmin extends React.Component {
     this.props.setTeacher({});
     this._resetMsg();
   }
+  componentWillMount() {
+    TeacherStore.addSavedListener(this.onSaved.bind(this));
+    TeacherStore.addDeletedListener(this.onDeleted.bind(this));
+    TeacherStore.addErrorListener(this.onError.bind(this));
+  }
+
+  componentWillUnmount() {
+    TeacherStore.removeSavedListener(this.onSaved.bind(this));
+    TeacherStore.removeDeletedListener(this.onDeleted.bind(this));
+    TeacherStore.removeErrorListener(this.onError.bind(this));
+  }
+
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
+  }
+
+  select(teacher){
+    this.props.setTeacher(teacher);
+    this._resetMsg();
+  }
+
+  new(){
+    this.props.setTeacher({});
+    this._resetMsg();
+  }
+
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'Le professeur à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.teacherSection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'Le professeur à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.teacherSection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = TeacherStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
 
   /**
    * CRUD Operations
    **/
-
   // Create
   create(teacher){
-    let courseId = this.props.courseId;
-    teachersApi.create(teacher, courseId)
-      .then( (teacher) => {
-        this._resetMsg();
-        // update teacher and teachers
-        this.props.setTeacher(teacher);
-        this.list(courseId);
-
-        let toastrMsg = { success : 'Le professeur à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.teacherSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    TeacherActions.createTeacher(teacher, this.props.courseId);
   }
 
-  // Read
-  list(courseId){
-    teachersApi.getTeachers(courseId)
-      .then( (teachers) => {
-        this.props.setTeachers(teachers);
-      }, (err) => {
-        console.log(err);
-      });
-  }
+  // Read is admin by the parent component.
 
   // Update
   save(teacher){
-    let courseId = this.props.courseId;
-
-    teachersApi.save(teacher, courseId)
-      .then( (teacher) => {
-        this._resetMsg();
-        this.props.setTeacher(teacher);
-
-        let toastrMsg = { success : 'Le professeur à été sauvegardé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.teacherSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    TeacherActions.saveTeacher(teacher, this.props.courseId);
   }
 
   // Delete
-  delete(teacher){
-    let courseId = this.props.courseId;
-
-    teachersApi.delete(teacher, courseId)
-      .then( (teacher) => {
-        this._resetMsg();
-        this.props.setTeacher({});
-        this.list(courseId);
- 
-        let toastrMsg = { success : 'Le professeur à été supprimé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.teacherSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+  delete(){
+    TeacherActions.deleteTeacher(this.props.teacher, this.props.courseId);  
   }
 
   render() {

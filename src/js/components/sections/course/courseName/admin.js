@@ -1,13 +1,12 @@
-var coursesApi =                      require("./api");
 import React                          from "react";
 import toastr                         from 'toastr';
 
 import CourseNameSection              from "./section";
 
 // Flux CourseName
-import CourseNameStore             from '../../../../stores/courseNameStore';
-import * as CourseNameActions      from '../../../../actions/courseNameActions';
-import CourseNameConstants         from '../../../../constants/courseNameConstants';
+import CourseNameStore                from '../../../../stores/courseNameStore';
+import * as CourseNameActions         from '../../../../actions/courseNameActions';
+import CourseNameConstants            from '../../../../constants/courseNameConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
