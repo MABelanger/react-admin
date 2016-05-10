@@ -1,10 +1,15 @@
-import React                      from "react";
-import toastr                     from 'toastr';
+import React                          from "react";
+import toastr                         from 'toastr';
 import 'toastr/build/toastr.css';
 
-import CourseTypeSection          from "./section";
+import CourseTypeSection              from "./section";
 
-var courseTypeApi =                  require("./api");
+// Flux CourseType
+import CourseTypeStore                from '../../../../stores/courseTypeStore';
+import * as CourseTypeActions         from '../../../../actions/courseTypeActions';
+import CourseTypeConstants            from '../../../../constants/courseTypeConstants';
+
+
 
 export default class CourseTypeAdmin extends React.Component {
 
@@ -32,85 +37,79 @@ export default class CourseTypeAdmin extends React.Component {
     this.props.setCourseType({});
     this._resetMsg();
   }
+  componentWillMount() {
+    CourseTypeStore.addSavedListener(this.onSaved.bind(this));
+    CourseTypeStore.addDeletedListener(this.onDeleted.bind(this));
+    CourseTypeStore.addErrorListener(this.onError.bind(this));
+  }
 
+  componentWillUnmount() {
+    CourseTypeStore.removeSavedListener(this.onSaved.bind(this));
+    CourseTypeStore.removeDeletedListener(this.onDeleted.bind(this));
+    CourseTypeStore.removeErrorListener(this.onError.bind(this));
+  }
+
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
+  }
+
+  select(courseType){
+    this.props.setCourseType(courseType);
+    this._resetMsg();
+  }
+
+  new(){
+    this.props.setCourseType({});
+    this._resetMsg();
+  }
+
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'Le type de cours à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseTypeSection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'Le type de cours à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseTypeSection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = CourseTypeStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
 
   /**
    * CRUD Operations
    **/
-
   // Create
   create(courseType){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseTypeApi.create(courseId, teacherId, courseType)
-      .then( (courseType) => {
-        this._resetMsg();
-        this.props.setCourseType(courseType);
-        this.list(courseId, teacherId);
-
-        let toastrMsg = { success : 'Le type de cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseTypeSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    CourseTypeActions.createCourseType(courseType, this.props.courseId, this.props.teacherId);
   }
 
-
-  // Read
-  list(courseId, teacherId){
-    courseTypeApi.list(courseId, teacherId)
-      .then( (courseTypes) => {
-        console.log('courseTypes', courseTypes);  
-        this.props.setCourseTypes(courseTypes);
-      }, (err) => {
-        console.log(err);
-      });
-  }
+  // Read is admin by the parent component.
 
   // Update
   save(courseType){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseTypeApi.save(courseId, teacherId, courseType)
-      .then( (courseType) => {
-        this._resetMsg();
-        this.props.setCourseType(courseType);
-        this.list(courseId, teacherId);
-
-        let toastrMsg = { success : 'Le type de cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseTypeSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    CourseTypeActions.saveCourseType(courseType, this.props.courseId, this.props.teacherId);
   }
 
   // Delete
-  delete(courseType){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseTypeApi.delete(courseId, teacherId, courseType)
-      .then( (msg) => {
-        this._resetMsg();
-        this.props.setCourseType({});
-        this.list(courseId, teacherId);
-
-        let toastrMsg = { success : 'Le Type de cours à été supprimé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+  delete(){
+    CourseTypeActions.deleteCourseType(this.props.courseType, this.props.courseId, this.props.teacherId);  
   }
 
   render() {

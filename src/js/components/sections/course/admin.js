@@ -1,21 +1,33 @@
-import React                      from "react";
-import CourseName                 from "./courseName/admin";
-import Teacher                    from "./teacher/admin";
-import CourseDescription          from "./courseDescription/admin";
-import CourseType                 from "./courseType/admin";
-import Schedule                   from "./schedule/admin";
-import FreeDay                    from "./freeDay/admin";
-import BtnInfo                    from "../../commons/BtnInfo";
+import React                          from "react";
+import CourseName                     from "./courseName/admin";
+import Teacher                        from "./teacher/admin";
+import CourseDescription              from "./courseDescription/admin";
+import CourseType                     from "./courseType/admin";
+import Schedule                       from "./schedule/admin";
+import FreeDay                        from "./freeDay/admin";
+import BtnInfo                        from "../../commons/BtnInfo";
 
-import LoginForm                  from "../../user/loginForm";
+import LoginForm                      from "../../user/loginForm";
 
 // Flux CourseName
 import CourseNameStore                from '../../../stores/courseNameStore';
 import * as CourseNameActions         from '../../../actions/courseNameActions';
 
 // Flux Teacher
-import TeacherStore                from '../../../stores/teacherStore';
-import * as TeacherActions         from '../../../actions/teacherActions';
+import TeacherStore                   from '../../../stores/teacherStore';
+import * as TeacherActions            from '../../../actions/teacherActions';
+
+// Flux CourseDescription
+import CourseDescriptionStore         from '../../../stores/courseDescriptionStore';
+import * as CourseDescriptionActions  from '../../../actions/courseDescriptionActions';
+
+// Flux CourseType
+import CourseTypeStore                from '../../../stores/courseTypeStore';
+import * as CourseTypeActions         from '../../../actions/courseTypeActions';
+
+// Flux Schedule
+import ScheduleStore                  from '../../../stores/scheduleStore';
+import * as ScheduleActions           from '../../../actions/scheduleActions';
 
 
 
@@ -55,6 +67,20 @@ export default class CourseAdmin extends React.Component {
     TeacherStore.addReadListener(this._getTeacher.bind(this));
     TeacherStore.addDeletedListener(this._deletedTeacher.bind(this));
 
+    // CourseDescription
+    CourseDescriptionStore.addReadListener(this._getCourseDescription.bind(this));
+    CourseDescriptionStore.addDeletedListener(this._deletedCourseDescription.bind(this));
+
+    // CourseType
+    CourseTypeStore.addListListener(this._setCourseTypes.bind(this));
+    CourseTypeStore.addReadListener(this._getCourseType.bind(this));
+    CourseTypeStore.addDeletedListener(this._deletedCourseType.bind(this));
+
+    // Schedule
+    ScheduleStore.addListListener(this._setSchedules.bind(this));
+    ScheduleStore.addReadListener(this._getSchedule.bind(this));
+    ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
+
     CourseNameActions.getCourseNames();
   }
 
@@ -62,12 +88,26 @@ export default class CourseAdmin extends React.Component {
     // CourseName
     CourseNameStore.removeListListener(this._setCourses.bind(this));
     CourseNameStore.removeReadListener(this._getCourse.bind(this));
-    CourseNameStore.removeDeletedListener(this._deletedCourse.bind(this))
+    CourseNameStore.removeDeletedListener(this._deletedCourse.bind(this));
 
     // Teacher
     TeacherStore.removeListListener(this._setTeachers.bind(this));
     TeacherStore.removeReadListener(this._getTeacher.bind(this));
-    TeacherStore.removeDeletedListener(this._deletedTeacher.bind(this))
+    TeacherStore.removeDeletedListener(this._deletedTeacher.bind(this));
+
+    // CourseDescription
+    CourseDescriptionStore.removeReadListener(this._getCourseDescription.bind(this));
+    CourseDescriptionStore.removeDeletedListener(this._deletedCourseDescription.bind(this));
+
+    // CourseType
+    CourseTypeStore.removeListListener(this._setCourseTypes.bind(this));
+    CourseTypeStore.removeReadListener(this._getCourseType.bind(this));
+    CourseTypeStore.removeDeletedListener(this._deletedCourseType.bind(this));
+
+    // Schedule
+    ScheduleStore.removeListListener(this._setSchedules.bind(this));
+    ScheduleStore.removeReadListener(this._getSchedule.bind(this));
+    ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
   }
 
   /*
@@ -162,12 +202,23 @@ export default class CourseAdmin extends React.Component {
     // need an if because the component is not
     this.setState({'courseDescription': {}}, function(){
       if ( this.refs.courseDescriptionAdmin ) {
-        this.refs.courseDescriptionAdmin.read( this.state.course._id, this.state.teacher._id );
+        CourseDescriptionActions.getCourseDescription(this.state.course._id, this.state.teacher._id);
+        //this.refs.courseDescriptionAdmin.read( this.state.course._id, this.state.teacher._id );
         this.refs.courseDescriptionAdmin.refs.courseDescriptionSection.hideSection();
       }
       this._resetCourseType();
     });
   }
+
+  _deletedCourseDescription(){
+    this._getCourseDescription();
+  }
+
+  _getCourseDescription(){
+    console.log('CourseDescriptionStore.getCourseDescription()', CourseDescriptionStore.getCourseDescription())
+    this.setCourseDescription(CourseDescriptionStore.getCourseDescription());
+  }
+
 
   setCourseDescription(courseDescription) {
     this.setState({'courseDescription': courseDescription}, function(){
@@ -198,11 +249,23 @@ export default class CourseAdmin extends React.Component {
 
     this.setState({'courseType': {} }, function(){
       if ( this.refs.courseTypeAdmin ) {
-        this.refs.courseTypeAdmin.list(this.state.course._id, this.state.teacher._id);
+        CourseTypeActions.getCourseTypes(this.state.course._id, this.state.teacher._id);
         this.refs.courseTypeAdmin.refs.courseTypeSection.hideSection();
       }
       this._resetSchedule();
     });
+  }
+
+  _deletedCourseType(){
+    this._getCourseType();
+  }
+
+  _getCourseType(){
+    this.setCourseType(CourseTypeStore.getCourseType());
+  }
+
+  _setCourseTypes(){
+    this.setState( {'courseTypes': CourseTypeStore.getCourseTypes()} );
   }
 
   setCourseType(courseType){
@@ -239,11 +302,24 @@ export default class CourseAdmin extends React.Component {
   _resetSchedule(){
     this.setState({'schedule': {} }, function(){
       if (this.refs.scheduleAdmin) {
-        this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        ScheduleActions.getSchedules(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        //this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }
       this._resetFreeDay();
     });
+  }
+
+  _deletedSchedule(){
+    this._getSchedule();
+  }
+
+  _getSchedule(){
+    this.setSchedule(ScheduleStore.getSchedule());
+  }
+
+  _setSchedules(){
+    this.setState( {'schedules': ScheduleStore.getSchedules()} );
   }
 
   setSchedule(schedule){

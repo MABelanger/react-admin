@@ -210,6 +210,7 @@ AppDispatcher.register((payload) => {
   case CourseNameConstants.SAVE_COURSE_NAME_EVENT:
     courseNameStore.setCourseName(payload.courseName);
     courseNameStore.emitSaved();
+    console.log(' CourseNameConstants.SAVE_COURSE_NAME_EVENT', payload.courseName)
     break;
 
   case CourseNameConstants.DELETE_COURSE_NAME_EVENT:

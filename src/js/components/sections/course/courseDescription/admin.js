@@ -1,10 +1,15 @@
-import React                      from "react";
-import toastr                     from 'toastr';
+import React                          from "react";
+import toastr                         from 'toastr';
 import 'toastr/build/toastr.css';
 
-import CourseDescriptionSection   from "./section";
+import CourseDescriptionSection              from "./section";
 
-var courseDescriptionApi =         require("./api");
+// Flux CourseDescription
+import CourseDescriptionStore                from '../../../../stores/courseDescriptionStore';
+import * as CourseDescriptionActions         from '../../../../actions/courseDescriptionActions';
+import CourseDescriptionConstants            from '../../../../constants/courseDescriptionConstants';
+
+
 
 export default class CourseDescriptionAdmin extends React.Component {
 
@@ -23,86 +28,87 @@ export default class CourseDescriptionAdmin extends React.Component {
     });
   }
 
+  select(courseDescription){
+    this.props.setCourseDescription(courseDescription);
+    this._resetMsg();
+  }
+
+  new(){
+    this.props.setCourseDescription({});
+    this._resetMsg();
+  }
+  componentWillMount() {
+    CourseDescriptionStore.addSavedListener(this.onSaved.bind(this));
+    CourseDescriptionStore.addDeletedListener(this.onDeleted.bind(this));
+    CourseDescriptionStore.addErrorListener(this.onError.bind(this));
+  }
+
+  componentWillUnmount() {
+    CourseDescriptionStore.removeSavedListener(this.onSaved.bind(this));
+    CourseDescriptionStore.removeDeletedListener(this.onDeleted.bind(this));
+    CourseDescriptionStore.removeErrorListener(this.onError.bind(this));
+  }
+
+  _resetMsg(){
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
+  }
+
+
   new(){
     this.props.setCourseDescription({});
     this._resetMsg();
   }
 
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La description de cours à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseDescriptionSection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La description de cours à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.courseDescriptionSection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = CourseDescriptionStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
+
   /**
    * CRUD Operations
    **/
-
   // Create
   create(courseDescription){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseDescriptionApi.create(courseId, teacherId, courseDescription)
-      .then( (courseDescription) => {
-        this._resetMsg();
-        this.props.setCourseDescription(courseDescription);
-
-        let toastrMsg = { success : 'La description de cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseDescriptionSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    CourseDescriptionActions.createCourseDescription(courseDescription, this.props.courseId, this.props.teacherId);
   }
 
-  // read
-  read(courseId, teacherId){
-    courseDescriptionApi.read(courseId, teacherId)
-      .then( (courseDescription) => {
-        this.props.setCourseDescription(courseDescription);
-      }, (err) => {
-        console.log(err);
-      });
-  }
-
+  // Read is admin by the parent component.
 
   // Update
   save(courseDescription){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseDescriptionApi.save(courseId, teacherId, courseDescription)
-      .then( (courseDescription) => {
-        this._resetMsg();
-        this.props.setCourseDescription(courseDescription);
-
-        let toastrMsg = { success : 'La description de cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseDescriptionSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    CourseDescriptionActions.saveCourseDescription(courseDescription, this.props.courseId, this.props.teacherId);
   }
 
   // Delete
   delete(){
-    let courseId = this.props.courseId;
-    let teacherId = this.props.teacherId;
-
-    courseDescriptionApi.delete(courseId, teacherId)
-      .then( (msg) => {
-        this._resetMsg();
-        this.props.setCourseDescription({});
-
-        let toastrMsg = { success : 'La description de cours à été supprimer.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.courseDescriptionSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    CourseDescriptionActions.deleteCourseDescription(this.props.courseDescription, this.props.courseId, this.props.teacherId);  
   }
 
+  // toastrMsg={this.state.toastrMsg}
   render() {
     return (
         <CourseDescriptionSection
@@ -111,6 +117,7 @@ export default class CourseDescriptionAdmin extends React.Component {
           onNew={this.new.bind(this)}
           errors={this.state.errors}
           toastrMsg={this.state.toastrMsg}
+          
 
           onCreate={this.create.bind(this)}
           onSave={this.save.bind(this)}

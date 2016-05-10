@@ -2,7 +2,7 @@
 
 // Flux TeacherStore
 import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import TeacherConstants            from '../constants/teacherConstants';
+import TeacherConstants               from '../constants/teacherConstants';
 import { EventEmitter }               from 'events';
 
 const { LIST_TEACHER_EVENT,
@@ -56,8 +56,6 @@ class TeacherStoreClass extends EventEmitter {
     return this.errors;
   }
 
-
-
   /*
    * LIST
    */
@@ -98,8 +96,6 @@ class TeacherStoreClass extends EventEmitter {
   emitRead(){
     this.emit(READ_TEACHER_EVENT);
   }
-
-
 
   /*
    * Saved
@@ -155,7 +151,6 @@ AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
   case TeacherConstants.LIST_TEACHER_EVENT:
-    console.log('payload.teachers', payload.teachers)
     teacherStore.setTeachers(payload.teachers);
     teacherStore.emitList();
     break;
