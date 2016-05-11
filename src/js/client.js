@@ -7,9 +7,10 @@ import { Router, Route, IndexRoute,
   hashHistory, browserHistory }       from "react-router";
 
 // Project modules
-import Layout from './pages/Layout';
-import ConferenceAdminPage from './pages/ConferenceAdminPage';
-import CourseAdminPage from './pages/CourseAdminPage';
+import Layout                         from './pages/Layout';
+import ConferenceAdminPage            from './pages/ConferenceAdminPage';
+import CourseAdminPage                from './pages/CourseAdminPage';
+import LoginPage                      from './pages/LoginPage';
 
 const APP = document.getElementById('app');
 ReactDOM.render(
@@ -20,6 +21,11 @@ ReactDOM.render(
               name="courseAdminPage"
               component={CourseAdminPage}>
       </IndexRoute>
+
+      <Route  path="/admin/login"
+              name="loginPage"
+              component={LoginPage}>
+      </Route>
 
       <Route  path="/admin/course"
               name="courseAdminPage"

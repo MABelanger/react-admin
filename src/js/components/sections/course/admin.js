@@ -7,8 +7,6 @@ import Schedule                       from "./schedule/admin";
 import FreeDay                        from "./freeDay/admin";
 import BtnInfo                        from "../../commons/BtnInfo";
 
-import LoginForm                      from "../user/loginForm";
-
 // Flux CourseName
 import CourseNameStore                from '../../../stores/course/courseNameStore';
 import * as CourseNameActions         from '../../../actions/course/courseNameActions';
@@ -427,7 +425,6 @@ export default class CourseAdmin extends React.Component {
   render() {
     return (
       <div>
-        <LoginForm/>
         { this.renderCourseName() }
         { this.state.course._id ? this.renderTeacher() : '' }
         { this.state.teacher._id ? this.renderCourseDescription() : '' }
