@@ -71,7 +71,6 @@ export default class FreeDayAdmin extends React.Component {
   onError(){
     this._resetMsg();
     let errors = FreeDayStore.getErrors();
-    console.log('errors', errors)
     let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }

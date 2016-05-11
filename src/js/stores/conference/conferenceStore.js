@@ -66,7 +66,6 @@ class ConferenceStoreClass extends EventEmitter {
     this.removeListener(LIST_CONFERENCE_EVENT, cb);
   }
   emitList(){
-    console.log('LIST_CONFERENCE_EVENT', LIST_CONFERENCE_EVENT)
     this.emit(LIST_CONFERENCE_EVENT);
   }
 
@@ -151,11 +150,9 @@ const conferenceStore = new ConferenceStoreClass();
 // by changing the store's data and emitting a
 // change
 AppDispatcher.register((payload) => {
-  console.log('switch: payload.actionType', payload.actionType);
   switch (payload.actionType) {    
 
   case ConferenceConstants.LIST_CONFERENCE_EVENT:
-    console.log('inCase LIST_CONFERENCE_EVENT', LIST_CONFERENCE_EVENT)
     conferenceStore.setConferences(payload.conferences);
     conferenceStore.emitList();
     break;

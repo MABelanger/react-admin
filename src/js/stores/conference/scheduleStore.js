@@ -153,7 +153,6 @@ AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
   case ScheduleConstants.LIST_SCHEDULE_EVENT:
-    console.log(' ScheduleConstants.LIST_SCHEDULE_EVENT', payload.schedules)
     scheduleStore.setSchedules(payload.schedules);
     scheduleStore.emitList();
     break;

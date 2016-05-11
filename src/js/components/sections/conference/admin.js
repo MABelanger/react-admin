@@ -14,6 +14,7 @@ export default class ConferenceAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
     this.mounted = false;
     this.state = {
       conferences : [],
@@ -26,7 +27,6 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   componentDidMount() {
-
     this.mounted = true;
 
     // Conference
@@ -69,7 +69,6 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _setConferences(){
-    console.log('_setConferences.ConferenceStore.getConferences()')
     if(this.mounted){
       this.setState({'conferences': ConferenceStore.getConferences()});
     }
@@ -133,7 +132,9 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   setSchedules(schedules){
-    this.setState({'schedules': schedules});
+    if(this.mounted){
+      this.setState({'schedules': schedules});
+    }
   }
 
   renderSchedule(){

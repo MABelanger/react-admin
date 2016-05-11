@@ -1,13 +1,13 @@
 "use strict";
 
-import React                      from 'react/addons';
-import ReactMixin                 from 'react-mixin';
-import Request                    from "superagent";
+import React                          from 'react/addons';
+import ReactMixin                     from 'react-mixin';
+import Request                        from "superagent";
 
 // Flux User
-import UserStore                   from '../../../stores/user/userStore';
-import * as UserActions            from '../../../actions/user/userActions';
-import UserConstants               from '../../../constants/user/userConstants';
+import UserStore                      from '../../../stores/user/userStore';
+import * as UserActions               from '../../../actions/user/userActions';
+import UserConstants                  from '../../../constants/user/userConstants';
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
 

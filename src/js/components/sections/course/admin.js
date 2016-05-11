@@ -36,6 +36,8 @@ export default class CourseAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
+    this.mounted = false;
     this.state = {
       courses : [],
       course : {},
@@ -57,7 +59,8 @@ export default class CourseAdmin extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.mounted = true;
     // CourseName
     CourseNameStore.addListListener(this._setCourses.bind(this));
     CourseNameStore.addReadListener(this._getCourse.bind(this));
@@ -90,6 +93,7 @@ export default class CourseAdmin extends React.Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     // CourseName
     CourseNameStore.removeListListener(this._setCourses.bind(this));
     CourseNameStore.removeReadListener(this._getCourse.bind(this));
@@ -133,7 +137,9 @@ export default class CourseAdmin extends React.Component {
   }
 
   _setCourses(){
-    this.setState({'courses': CourseNameStore.getCourseNames()});
+    if(this.mounted){
+      this.setState({'courses': CourseNameStore.getCourseNames()});
+    }
   }
 
   setCourse(course){
