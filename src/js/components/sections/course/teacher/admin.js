@@ -5,9 +5,9 @@ import 'toastr/build/toastr.css';
 import TeacherSection             from "./section";
 
 // Flux Teacher
-import TeacherStore                from '../../../../stores/teacherStore';
-import * as TeacherActions         from '../../../../actions/teacherActions';
-import TeacherConstants            from '../../../../constants/teacherConstants';
+import TeacherStore                from '../../../../stores/course/teacherStore';
+import * as TeacherActions         from '../../../../actions/course/teacherActions';
+import TeacherConstants            from '../../../../constants/course/teacherConstants';
 
 
 

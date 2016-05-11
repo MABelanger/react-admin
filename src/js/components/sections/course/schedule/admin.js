@@ -4,9 +4,9 @@ import toastr                         from 'toastr';
 import ScheduleSection                from "./section";
 
 // Flux Schedule
-import ScheduleStore                  from '../../../../stores/scheduleStore';
-import * as ScheduleActions           from '../../../../actions/scheduleActions';
-import ScheduleConstants              from '../../../../constants/scheduleConstants';
+import ScheduleStore                  from '../../../../stores/course/scheduleStore';
+import * as ScheduleActions           from '../../../../actions/course/scheduleActions';
+import ScheduleConstants              from '../../../../constants/course/scheduleConstants';
 
 // CSS
 import 'toastr/build/toastr.css';

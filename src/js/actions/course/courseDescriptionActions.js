@@ -4,27 +4,26 @@
 import Request                        from "superagent";
 
 // Flux
-import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import TeacherConstants               from "../constants/teacherConstants";
+import ClientDispatcher               from "../../dispatcher/clientDispatcher";
+import CourseDescriptionConstants     from "../../constants/course/courseDescriptionConstants";
 // Flux (to get token)
-import UserStore                      from '../stores/userStore';
+import UserStore                      from '../../stores/user/userStore';
 
 const { BASE_URL,
-        LIST_TEACHER_EVENT,
-        CREATE_TEACHER_EVENT,
-        SAVED_TEACHER_EVENT,
-        READ_TEACHER_EVENT,
-        SAVE_TEACHER_EVENT,
-        DELETE_TEACHER_EVENT,
-        ERROR_SAVE_TEACHER_EVENT,
-        ERROR_DELETE_TEACHER_EVENT } = TeacherConstants;
-
+        GET_COURSE_DESCRIPTION_EVENT,
+        CREATE_COURSE_DESCRIPTION_EVENT,
+        SAVED_COURSE_DESCRIPTION_EVENT,
+        READ_COURSE_DESCRIPTION_EVENT,
+        SAVE_COURSE_DESCRIPTION_EVENT,
+        DELETE_COURSE_DESCRIPTION_EVENT,
+        ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
+        ERROR_DELETE_COURSE_DESCRIPTION_EVENT } = CourseDescriptionConstants;
 
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
     if (errors.hasOwnProperty(property)) {
-      // 'teachers.1.firstName' -> 'firstName'
+      // 'courseDescriptions.1.firstName' -> 'firstName'
       let newProperty = property.split('.').splice(-1);
       flatErrors[newProperty] = errors[ property ];
     }
@@ -32,43 +31,46 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
+function getUrl(courseId, teacherId){
+  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
+}
 
-export function getTeachers(courseId) {
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/';
+export function getCourseDescription(courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
   Request
   .get(url)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: LIST_TEACHER_EVENT,
-      teachers: res.body
+      actionType: GET_COURSE_DESCRIPTION_EVENT,
+      courseDescription: res.body
     });
   });
 }
 
-export function createTeacher(teacher, courseId) {
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/';
+export function createCourseDescription(courseDescription, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
   Request
     .post(url)
     .accept('application/json')
     .type('application/json')
-    .send(teacher)
+    .send(courseDescription)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_TEACHER_EVENT,
-          teacher: res.body
+          actionType: CREATE_COURSE_DESCRIPTION_EVENT,
+          courseDescription: res.body
         });
-        // trigger refresh all teachers
-        this.getTeachers(courseId);
+        // trigger refresh all courseDescriptions
+        //this.getCourseDescription(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_TEACHER_EVENT,
+            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -81,28 +83,28 @@ export function createTeacher(teacher, courseId) {
     });
 }
 
-export function saveTeacher(teacher, courseId) {
+export function saveCourseDescription(courseDescription, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/' + teacher._id;
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(teacher)
+    .send(courseDescription)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_TEACHER_EVENT,
-          teacher: res.body
+          actionType: SAVE_COURSE_DESCRIPTION_EVENT,
+          courseDescription: res.body
         });
-        // trigger refresh all teachers
-        this.getTeachers(courseId);
+        // trigger refresh all courseDescriptions
+        //this.getCourseDescription(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_TEACHER_EVENT,
+            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -115,9 +117,9 @@ export function saveTeacher(teacher, courseId) {
     });
 }
 
-export function deleteTeacher(teacher, courseId) {
+export function deleteCourseDescription(courseDescription, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/' + teacher._id;
   Request
     .del(url)
     .accept('application/json')
@@ -126,16 +128,16 @@ export function deleteTeacher(teacher, courseId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_TEACHER_EVENT,
-          teacher: res.body
+          actionType: DELETE_COURSE_DESCRIPTION_EVENT,
+          courseDescription: res.body
         });
-        // trigger refresh all teachers
-        this.getTeachers(courseId);
+        // trigger refresh all courseDescriptions
+        //this.getCourseDescription(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_TEACHER_EVENT,
+            actionType: ERROR_DELETE_COURSE_DESCRIPTION_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

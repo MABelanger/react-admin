@@ -10,28 +10,28 @@ import BtnInfo                        from "../../commons/BtnInfo";
 import LoginForm                      from "../../user/loginForm";
 
 // Flux CourseName
-import CourseNameStore                from '../../../stores/courseNameStore';
-import * as CourseNameActions         from '../../../actions/courseNameActions';
+import CourseNameStore                from '../../../stores/course/courseNameStore';
+import * as CourseNameActions         from '../../../actions/course/courseNameActions';
 
 // Flux Teacher
-import TeacherStore                   from '../../../stores/teacherStore';
-import * as TeacherActions            from '../../../actions/teacherActions';
+import TeacherStore                   from '../../../stores/course/teacherStore';
+import * as TeacherActions            from '../../../actions/course/teacherActions';
 
 // Flux CourseDescription
-import CourseDescriptionStore         from '../../../stores/courseDescriptionStore';
-import * as CourseDescriptionActions  from '../../../actions/courseDescriptionActions';
+import CourseDescriptionStore         from '../../../stores/course/courseDescriptionStore';
+import * as CourseDescriptionActions  from '../../../actions/course/courseDescriptionActions';
 
 // Flux CourseType
-import CourseTypeStore                from '../../../stores/courseTypeStore';
-import * as CourseTypeActions         from '../../../actions/courseTypeActions';
+import CourseTypeStore                from '../../../stores/course/courseTypeStore';
+import * as CourseTypeActions         from '../../../actions/course/courseTypeActions';
 
 // Flux Schedule
-import ScheduleStore                  from '../../../stores/scheduleStore';
-import * as ScheduleActions           from '../../../actions/scheduleActions';
+import ScheduleStore                  from '../../../stores/course/scheduleStore';
+import * as ScheduleActions           from '../../../actions/course/scheduleActions';
 
 // Flux FreeDay
-import FreeDayStore                  from '../../../stores/freeDayStore';
-import * as FreeDayActions           from '../../../actions/freeDayActions';
+import FreeDayStore                  from '../../../stores/course/freeDayStore';
+import * as FreeDayActions           from '../../../actions/course/freeDayActions';
 
 
 export default class CourseAdmin extends React.Component {

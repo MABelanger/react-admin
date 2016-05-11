@@ -4,8 +4,8 @@
 import Request                        from "superagent";
 
 // Project modules
-import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import userConstants                  from "../constants/userConstants";
+import ClientDispatcher               from "../../dispatcher/clientDispatcher";
+import userConstants                  from "../../constants/user/userConstants";
 
 // login('gonto', 'gonto');
 export function login(username, password){

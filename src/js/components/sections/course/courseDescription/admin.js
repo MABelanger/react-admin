@@ -5,9 +5,9 @@ import 'toastr/build/toastr.css';
 import CourseDescriptionSection              from "./section";
 
 // Flux CourseDescription
-import CourseDescriptionStore                from '../../../../stores/courseDescriptionStore';
-import * as CourseDescriptionActions         from '../../../../actions/courseDescriptionActions';
-import CourseDescriptionConstants            from '../../../../constants/courseDescriptionConstants';
+import CourseDescriptionStore                from '../../../../stores/course/courseDescriptionStore';
+import * as CourseDescriptionActions         from '../../../../actions/course/courseDescriptionActions';
+import CourseDescriptionConstants            from '../../../../constants/course/courseDescriptionConstants';
 
 
 

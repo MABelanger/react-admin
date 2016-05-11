@@ -2,8 +2,8 @@
 import jwt_decode                     from 'jwt-decode';
 
 // Flux CourseStore
-import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import UserConstants                  from '../constants/userConstants';
+import AppDispatcher                  from '../../dispatcher/clientDispatcher';
+import UserConstants                  from '../../constants/user/userConstants';
 import { EventEmitter }               from 'events';
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;

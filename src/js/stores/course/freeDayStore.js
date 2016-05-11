@@ -1,8 +1,8 @@
 "use strict";
 
 // Flux FreeDayStore
-import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import FreeDayConstants               from '../constants/freeDayConstants';
+import AppDispatcher                  from '../../dispatcher/clientDispatcher';
+import FreeDayConstants               from '../../constants/course/freeDayConstants';
 import { EventEmitter }               from 'events';
 
 const { LIST_FREE_DAY_EVENT,

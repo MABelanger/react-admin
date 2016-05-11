@@ -4,9 +4,9 @@ import toastr                         from 'toastr';
 import FreeDaySection                from "./section";
 
 // Flux FreeDay
-import FreeDayStore                  from '../../../../stores/freeDayStore';
-import * as FreeDayActions           from '../../../../actions/freeDayActions';
-import FreeDayConstants              from '../../../../constants/freeDayConstants';
+import FreeDayStore                  from '../../../../stores/course/freeDayStore';
+import * as FreeDayActions           from '../../../../actions/course/freeDayActions';
+import FreeDayConstants              from '../../../../constants/course/freeDayConstants';
 
 // CSS
 import 'toastr/build/toastr.css';

@@ -1,8 +1,8 @@
 "use strict";
 
 // Flux ScheduleStore
-import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import ScheduleConstants               from '../constants/scheduleConstants';
+import AppDispatcher                  from '../../dispatcher/clientDispatcher';
+import ScheduleConstants               from '../../constants/course/scheduleConstants';
 import { EventEmitter }               from 'events';
 
 const { LIST_SCHEDULE_EVENT,

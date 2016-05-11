@@ -4,9 +4,9 @@ import toastr                         from 'toastr';
 import CourseNameSection              from "./section";
 
 // Flux CourseName
-import CourseNameStore                from '../../../../stores/courseNameStore';
-import * as CourseNameActions         from '../../../../actions/courseNameActions';
-import CourseNameConstants            from '../../../../constants/courseNameConstants';
+import CourseNameStore                from '../../../../stores/course/courseNameStore';
+import * as CourseNameActions         from '../../../../actions/course/courseNameActions';
+import CourseNameConstants            from '../../../../constants/course/courseNameConstants';
 
 // CSS
 import 'toastr/build/toastr.css';

@@ -1,8 +1,8 @@
 "use strict";
 
 // Flux CourseNameStore
-import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import CourseNameConstants            from '../constants/courseNameConstants';
+import AppDispatcher                  from '../../dispatcher/clientDispatcher';
+import CourseNameConstants            from '../../constants/course/courseNameConstants';
 import { EventEmitter }               from 'events';
 
 const { LIST_COURSE_NAME_EVENT,

@@ -4,27 +4,27 @@
 import Request                        from "superagent";
 
 // Flux
-import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import ScheduleConstants            from "../constants/scheduleConstants";
+import ClientDispatcher               from "../../dispatcher/clientDispatcher";
+import CourseTypeConstants            from "../../constants/course/courseTypeConstants";
 // Flux (to get token)
-import UserStore                      from '../stores/userStore';
+import UserStore                      from '../../stores/user/userStore';
 
 const { BASE_URL,
-        LIST_SCHEDULE_EVENT,
-        CREATE_SCHEDULE_EVENT,
-        SAVED_SCHEDULE_EVENT,
-        READ_SCHEDULE_EVENT,
-        SAVE_SCHEDULE_EVENT,
-        DELETE_SCHEDULE_EVENT,
-        ERROR_SAVE_SCHEDULE_EVENT,
-        ERROR_DELETE_SCHEDULE_EVENT } = ScheduleConstants;
+        LIST_COURSE_TYPE_EVENT,
+        CREATE_COURSE_TYPE_EVENT,
+        SAVED_COURSE_TYPE_EVENT,
+        READ_COURSE_TYPE_EVENT,
+        SAVE_COURSE_TYPE_EVENT,
+        DELETE_COURSE_TYPE_EVENT,
+        ERROR_SAVE_COURSE_TYPE_EVENT,
+        ERROR_DELETE_COURSE_TYPE_EVENT } = CourseTypeConstants;
 
 
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
     if (errors.hasOwnProperty(property)) {
-      // 'schedules.1.firstName' -> 'firstName'
+      // 'courseTypes.1.firstName' -> 'firstName'
       let newProperty = property.split('.').splice(-1);
       flatErrors[newProperty] = errors[ property ];
     }
@@ -32,49 +32,46 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
-function getUrl(courseId, teacherId, courseTypeId){
-  return BASE_URL + 'courses/' + courseId 
-                  + '/teachers/' + teacherId 
-                  + '/course_description/course_types/' + courseTypeId
-                  + '/schedules';
+function getUrl(courseId, teacherId){
+  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description/course_types'
 }
 
-export function getSchedules(courseId, teacherId, courseTypeId) {
-  let url = getUrl(courseId, teacherId, courseTypeId);
+export function getCourseTypes(courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
   Request
   .get(url)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: LIST_SCHEDULE_EVENT,
-      schedules: res.body
+      actionType: LIST_COURSE_TYPE_EVENT,
+      courseTypes: res.body
     });
   });
 }
 
-export function createSchedule(schedule, courseId, teacherId, courseTypeId) {
-  let url = getUrl(courseId, teacherId, courseTypeId);
+export function createCourseType(courseType, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId);
   let token = UserStore.getToken();
   Request
     .post(url)
     .accept('application/json')
     .type('application/json')
-    .send(schedule)
+    .send(courseType)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_SCHEDULE_EVENT,
-          schedule: res.body
+          actionType: CREATE_COURSE_TYPE_EVENT,
+          courseType: res.body
         });
-        // trigger refresh all schedules
-        this.getSchedules(courseId, teacherId, courseTypeId);
+        // trigger refresh all courseTypes
+        this.getCourseTypes(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_SCHEDULE_EVENT,
+            actionType: ERROR_SAVE_COURSE_TYPE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -87,28 +84,28 @@ export function createSchedule(schedule, courseId, teacherId, courseTypeId) {
     });
 }
 
-export function saveSchedule(schedule, courseId, teacherId, courseTypeId) {
-  let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+export function saveCourseType(courseType, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId) + '/' + courseType._id;
   let token = UserStore.getToken();
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(schedule)
+    .send(courseType)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_SCHEDULE_EVENT,
-          schedule: res.body
+          actionType: SAVE_COURSE_TYPE_EVENT,
+          courseType: res.body
         });
-        // trigger refresh all schedules
-        this.getSchedules(courseId, teacherId, courseTypeId);
+        // trigger refresh all courseTypes
+        this.getCourseTypes(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_SCHEDULE_EVENT,
+            actionType: ERROR_SAVE_COURSE_TYPE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -121,8 +118,8 @@ export function saveSchedule(schedule, courseId, teacherId, courseTypeId) {
     });
 }
 
-export function deleteSchedule(schedule, courseId, teacherId, courseTypeId) {
-  let url = getUrl(courseId, teacherId, courseTypeId) + '/' + schedule._id;
+export function deleteCourseType(courseType, courseId, teacherId) {
+  let url = getUrl(courseId, teacherId) + '/' + courseType._id;
   let token = UserStore.getToken();
   Request
     .del(url)
@@ -132,16 +129,16 @@ export function deleteSchedule(schedule, courseId, teacherId, courseTypeId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_SCHEDULE_EVENT,
-          schedule: res.body
+          actionType: DELETE_COURSE_TYPE_EVENT,
+          courseType: res.body
         });
-        // trigger refresh all schedules
-        this.getSchedules(courseId, teacherId, courseTypeId);
+        // trigger refresh all courseTypes
+        this.getCourseTypes(courseId, teacherId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_SCHEDULE_EVENT,
+            actionType: ERROR_DELETE_COURSE_TYPE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

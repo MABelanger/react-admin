@@ -1,8 +1,8 @@
 "use strict";
 
 // Flux TeacherStore
-import AppDispatcher                  from '../dispatcher/clientDispatcher';
-import TeacherConstants               from '../constants/teacherConstants';
+import AppDispatcher                  from '../../dispatcher/clientDispatcher';
+import TeacherConstants               from '../../constants/course/teacherConstants';
 import { EventEmitter }               from 'events';
 
 const { LIST_TEACHER_EVENT,

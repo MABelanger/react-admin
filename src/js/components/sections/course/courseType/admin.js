@@ -5,9 +5,9 @@ import 'toastr/build/toastr.css';
 import CourseTypeSection              from "./section";
 
 // Flux CourseType
-import CourseTypeStore                from '../../../../stores/courseTypeStore';
-import * as CourseTypeActions         from '../../../../actions/courseTypeActions';
-import CourseTypeConstants            from '../../../../constants/courseTypeConstants';
+import CourseTypeStore                from '../../../../stores/course/courseTypeStore';
+import * as CourseTypeActions         from '../../../../actions/course/courseTypeActions';
+import CourseTypeConstants            from '../../../../constants/course/courseTypeConstants';
 
 
 
