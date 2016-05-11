@@ -5,9 +5,6 @@ import LoginForm                      from "../components/sections/user/loginFor
 
 export default class ConferenceAdminPage extends React.Component {
 
-  componentWillMount() {
-  }
-
   render(){
     return (
       <div className="container">

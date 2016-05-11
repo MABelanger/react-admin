@@ -14,6 +14,7 @@ export default class ConferenceAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.mounted = false;
     this.state = {
       conferences : [],
       conference : {},
@@ -24,7 +25,10 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+
+    this.mounted = true;
+
     // Conference
     ConferenceStore.addListListener(this._setConferences.bind(this));
     ConferenceStore.addReadListener(this._getConference.bind(this));
@@ -37,7 +41,10 @@ export default class ConferenceAdmin extends React.Component {
 
   }
 
+
   componentWillUnmount() {
+
+    this.mounted = false;
     // Conference
     ConferenceStore.removeListListener(this._setConferences.bind(this));
     ConferenceStore.removeReadListener(this._getConference.bind(this));
@@ -62,7 +69,10 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _setConferences(){
-    this.setState({'conferences': ConferenceStore.getConferences()});
+    console.log('_setConferences.ConferenceStore.getConferences()')
+    if(this.mounted){
+      this.setState({'conferences': ConferenceStore.getConferences()});
+    }
   }
 
   setConferences(conferences){

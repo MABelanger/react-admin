@@ -7,8 +7,7 @@ import * as ConferenceActions         from '../actions/conference/conferenceActi
 
 export default class ConferenceAdminPage extends React.Component {
 
-  componentWillMount() {
-    // trigger the first list of courseName.
+  componentDidMount() {
     ConferenceActions.getConferences();
   }
 
