@@ -99,7 +99,7 @@ export default class ConferenceAdmin extends React.Component {
   render() {
     return (
       <ConferenceSection
-        ref="conferenceNameSection"
+        ref="conferenceSection"
         conferences={this.props.conferences}
         conference={this.props.conference}
         onSelect={this.select.bind(this)}

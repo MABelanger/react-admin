@@ -1,10 +1,15 @@
-import React                      from "react";
-import toastr                     from 'toastr';
+import React                          from "react";
+import toastr                         from 'toastr';
+
+import ScheduleSection              from "./section";
+
+// Flux Schedule
+import ScheduleStore                from '../../../../stores/conference/scheduleStore';
+import * as ScheduleActions         from '../../../../actions/conference/scheduleActions';
+import ScheduleConstants            from '../../../../constants/conference/scheduleConstants';
+
+// CSS
 import 'toastr/build/toastr.css';
-
-import ScheduleSection             from "./section";
-
-var scheduleApi =                  require("./api");
 
 export default class ScheduleAdmin extends React.Component {
 
@@ -14,6 +19,18 @@ export default class ScheduleAdmin extends React.Component {
       toastrMsg: {},
       errors: {},
     };
+  }
+
+  componentWillMount() {
+    ScheduleStore.addSavedListener(this.onSaved.bind(this));
+    ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
+    ScheduleStore.addErrorListener(this.onError.bind(this));
+  }
+
+  componentWillUnmount() {
+    ScheduleStore.removeSavedListener(this.onSaved.bind(this));
+    ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
+    ScheduleStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){
@@ -33,79 +50,50 @@ export default class ScheduleAdmin extends React.Component {
     this._resetMsg();
   }
 
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La conférence à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.scheduleSection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La conférence à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.scheduleSection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = ScheduleStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
+
   /**
    * CRUD Operations
    **/
-
   // Create
   create(schedule){
-    let conferenceId = this.props.conferenceId;
-
-    scheduleApi.create(conferenceId, schedule)
-      .then( (schedule) => {
-        this._resetMsg();
-        this.props.setSchedule(schedule);
-        this.list(conferenceId);
-
-        let toastrMsg = { success : 'La schedule à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.scheduleSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    ScheduleActions.createSchedule(schedule);
   }
 
-
-  // Read
-  list(conferenceId){
-    scheduleApi.list(conferenceId)
-      .then( (schedules) => {
-        this.props.setSchedules(schedules);
-      }, (err) => {
-        console.log(err);
-      });
-  }
+  // Read is admin by the parent component.
 
   // Update
   save(schedule){
-    let conferenceId = this.props.conferenceId;
-
-    scheduleApi.save(conferenceId, schedule)
-      .then( (schedule) => {
-        this._resetMsg();
-        this.props.setSchedule(schedule);
-        this.list(conferenceId);
-
-        let toastrMsg = { success : 'La schedule à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.scheduleSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    ScheduleActions.saveSchedule(schedule);
   }
 
   // Delete
-  delete(schedule){
-    let conferenceId = this.props.conferenceId;
-
-    scheduleApi.delete(conferenceId, schedule)
-      .then( (msg) => {
-        this._resetMsg();
-        this.props.setSchedule({});
-        this.list(conferenceId);
-
-        let toastrMsg = { success : 'La schedule à été supprimé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.scheduleSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+  delete(){
+    ScheduleActions.deleteSchedule(this.props.schedule);  
   }
 
   render() {

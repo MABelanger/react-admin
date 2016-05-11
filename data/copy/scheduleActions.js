@@ -5,19 +5,19 @@ import Request                        from "superagent";
 
 // Flux
 import ClientDispatcher               from "../../dispatcher/clientDispatcher";
-import ConferenceConstants            from "../../constants/course/conferenceConstants";
+import ScheduleConstants              from "../../constants/course/scheduleConstants";
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
 const { URL,
-        LIST_CONFERENCE_EVENT,
-        CREATE_CONFERENCE_EVENT,
-        SAVED_CONFERENCE_EVENT,
-        READ_CONFERENCE_EVENT,
-        SAVE_CONFERENCE_EVENT,
-        DELETE_CONFERENCE_EVENT,
-        ERROR_SAVE_CONFERENCE_EVENT,
-        ERROR_DELETE_CONFERENCE_EVENT } = ConferenceConstants;
+        LIST_SCHEDULE_EVENT,
+        CREATE_SCHEDULE_EVENT,
+        SAVED_SCHEDULE_EVENT,
+        READ_SCHEDULE_EVENT,
+        SAVE_SCHEDULE_EVENT,
+        DELETE_SCHEDULE_EVENT,
+        ERROR_SAVE_SCHEDULE_EVENT,
+        ERROR_DELETE_SCHEDULE_EVENT } = ScheduleConstants;
 
 
 function getFlatErrors(errors){
@@ -33,40 +33,40 @@ function getFlatErrors(errors){
 }
 
 
-export function getConferences() {
+export function getSchedules() {
   let token = UserStore.getToken();
   Request
   .get(URL)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: LIST_CONFERENCE_EVENT,
-      conferences: res.body
+      actionType: LIST_SCHEDULE_EVENT,
+      schedules: res.body
     });
   });
 }
 
-export function createConference(conference) {
+export function createSchedule(schedule) {
   let token = UserStore.getToken();
   Request
     .post(URL)
     .accept('application/json')
     .type('application/json')
-    .send(conference)
+    .send(schedule)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_CONFERENCE_EVENT,
-          conference: res.body
+          actionType: CREATE_SCHEDULE_EVENT,
+          schedule: res.body
         });
-        // trigger refresh all conferences
-        this.getConferences();
+        // trigger refresh all schedules
+        this.getSchedules();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_CONFERENCE_EVENT,
+            actionType: ERROR_SAVE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -79,28 +79,28 @@ export function createConference(conference) {
     });
 }
 
-export function saveConference(conference) {
+export function saveSchedule(schedule) {
   let token = UserStore.getToken();
-  let url = URL + '/' + conference._id;
+  let url = URL + '/' + schedule._id;
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(conference)
+    .send(schedule)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_CONFERENCE_EVENT,
-          conference: res.body
+          actionType: SAVE_SCHEDULE_EVENT,
+          schedule: res.body
         });
-        // trigger refresh all conferences
-        this.getConferences();
+        // trigger refresh all schedules
+        this.getSchedules();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_CONFERENCE_EVENT,
+            actionType: ERROR_SAVE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -113,9 +113,9 @@ export function saveConference(conference) {
     });
 }
 
-export function deleteConference(conference) {
+export function deleteSchedule(schedule) {
   let token = UserStore.getToken();
-  let url = URL + '/' + conference._id;
+  let url = URL + '/' + schedule._id;
   Request
     .del(url)
     .accept('application/json')
@@ -124,16 +124,16 @@ export function deleteConference(conference) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_CONFERENCE_EVENT,
-          conference: res.body
+          actionType: DELETE_SCHEDULE_EVENT,
+          schedule: res.body
         });
-        // trigger refresh all conferences
-        this.getConferences();
+        // trigger refresh all schedules
+        this.getSchedules();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_CONFERENCE_EVENT,
+            actionType: ERROR_DELETE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

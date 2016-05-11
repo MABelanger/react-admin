@@ -2,9 +2,13 @@ import React                      from "react";
 import Conference                 from "./conference/admin";
 import Schedule                   from "./schedule/admin";
 
-// Flux Schedule
+// Flux Conference
 import ConferenceStore                from '../../../stores/conference/conferenceStore';
 import * as ConferenceActions         from '../../../actions/conference/conferenceActions';
+
+// Flux Schedule
+import ScheduleStore                from '../../../stores/conference/scheduleStore';
+import * as ScheduleActions         from '../../../actions/conference/scheduleActions';
 
 export default class ConferenceAdmin extends React.Component {
 
@@ -21,10 +25,15 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   componentWillMount() {
-    // Schedule
+    // Conference
     ConferenceStore.addListListener(this._setConferences.bind(this));
     ConferenceStore.addReadListener(this._getConference.bind(this));
     ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
+
+    // Schedule
+    ScheduleStore.addListListener(this._setSchedules.bind(this));
+    ScheduleStore.addReadListener(this._getSchedule.bind(this));
+    ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
 
   }
 
@@ -34,6 +43,10 @@ export default class ConferenceAdmin extends React.Component {
     ConferenceStore.removeReadListener(this._getConference.bind(this));
     ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
 
+    // Schedule
+    ScheduleStore.removeListListener(this._setSchedules.bind(this));
+    ScheduleStore.removeReadListener(this._getSchedule.bind(this));
+    ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
   }
 
 
@@ -85,10 +98,23 @@ export default class ConferenceAdmin extends React.Component {
   _resetSchedule(){
     this.setState({'schedule': {} }, function(){
       if (this.refs.scheduleAdmin) {
-        this.refs.scheduleAdmin.list(this.state.conference._id);
+        //this.refs.scheduleAdmin.list(this.state.conference._id);
+        ScheduleActions.getSchedules(this.state.conference._id);
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }
     });
+  }
+
+  _deletedSchedule(){
+    this._getSchedule();
+  }
+
+  _getSchedule(){
+    this.setSchedule(ScheduleStore.getSchedule());
+  }
+
+  _setSchedules(){
+    this.setState({'schedules': ScheduleStore.getSchedules()});
   }
 
   setSchedule(schedule){
