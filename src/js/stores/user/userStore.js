@@ -62,7 +62,6 @@ AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
   case UserConstants.DONE_LOGIN:
-    console.log('DONE_LOGIN');
     userStore.doneUser(payload.data);
     userStore.emit(CHANGE_EVENT);
     break;

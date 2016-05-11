@@ -87,7 +87,6 @@ export default class TeacherAdmin extends React.Component {
   onError(){
     this._resetMsg();
     let errors = TeacherStore.getErrors();
-    console.log('errors', errors)
     let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }

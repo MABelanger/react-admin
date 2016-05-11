@@ -6,6 +6,7 @@ import Request                        from "superagent";
 // Flux
 import ClientDispatcher               from "../../dispatcher/clientDispatcher";
 import ScheduleConstants              from "../../constants/conference/scheduleConstants";
+
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
@@ -18,9 +19,6 @@ const { URL,
         DELETE_SCHEDULE_EVENT,
         ERROR_SAVE_SCHEDULE_EVENT,
         ERROR_DELETE_SCHEDULE_EVENT } = ScheduleConstants;
-
-        console.log('URL', URL)
-
 
 function getFlatErrors(errors){
   let flatErrors = {};

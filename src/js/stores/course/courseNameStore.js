@@ -55,51 +55,6 @@ class CourseNameStoreClass extends EventEmitter {
   getErrors(){
     return this.errors;
   }
-  // new(){
-  //   return {
-  //     id: null,
-  //     title: null
-  //   }
-  // }
-
-  list(){
-    this.emitList();
-  }
-
-  /*
-   CRUD operations
-   */
-  create(todo) {
-    console.log("creating a todo");
-    todo.id = _todos.length + 1;
-    _todos.push(todo);
-    this.emitList(todo);
-  }
-
-  update(todo) {
-    var index = this.find(todo.id);
-    todo.id = parseInt(todo.id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos[index] = todo;
-    this.emitList();
-  }
-
-  delete(id) {
-    var index = this.find(id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos.splice(index, 1);
-    this.emitList();
-  }
-
-  find(id) {
-    var id = parseInt(id);
-    var found = undefined;
-    _todos.some(function(todo, i) {
-      if(todo.id === id) found = i;
-    });
-    return found;
-  }
-
 
   /*
    * LIST
@@ -210,7 +165,6 @@ AppDispatcher.register((payload) => {
   case CourseNameConstants.SAVE_COURSE_NAME_EVENT:
     courseNameStore.setCourseName(payload.courseName);
     courseNameStore.emitSaved();
-    console.log(' CourseNameConstants.SAVE_COURSE_NAME_EVENT', payload.courseName)
     break;
 
   case CourseNameConstants.DELETE_COURSE_NAME_EVENT:

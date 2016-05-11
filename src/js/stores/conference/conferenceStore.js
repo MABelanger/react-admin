@@ -55,51 +55,6 @@ class ConferenceStoreClass extends EventEmitter {
   getErrors(){
     return this.errors;
   }
-  // new(){
-  //   return {
-  //     id: null,
-  //     title: null
-  //   }
-  // }
-
-  list(){
-    this.emitList();
-  }
-
-  /*
-   CRUD operations
-   */
-  create(todo) {
-    console.log("creating a todo");
-    todo.id = _todos.length + 1;
-    _todos.push(todo);
-    this.emitList(todo);
-  }
-
-  update(todo) {
-    var index = this.find(todo.id);
-    todo.id = parseInt(todo.id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos[index] = todo;
-    this.emitList();
-  }
-
-  delete(id) {
-    var index = this.find(id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos.splice(index, 1);
-    this.emitList();
-  }
-
-  find(id) {
-    var id = parseInt(id);
-    var found = undefined;
-    _todos.some(function(todo, i) {
-      if(todo.id === id) found = i;
-    });
-    return found;
-  }
-
 
   /*
    * LIST
@@ -210,7 +165,6 @@ AppDispatcher.register((payload) => {
   case ConferenceConstants.SAVE_CONFERENCE_EVENT:
     conferenceStore.setConference(payload.conference);
     conferenceStore.emitSaved();
-    console.log(' ConferenceConstants.SAVE_CONFERENCE_EVENT', payload.conference)
     break;
 
   case ConferenceConstants.DELETE_CONFERENCE_EVENT:

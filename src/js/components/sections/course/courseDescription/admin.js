@@ -83,7 +83,6 @@ export default class CourseDescriptionAdmin extends React.Component {
   onError(){
     this._resetMsg();
     let errors = CourseDescriptionStore.getErrors();
-    console.log('errors', errors)
     let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }

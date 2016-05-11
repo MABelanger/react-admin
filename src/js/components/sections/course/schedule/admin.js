@@ -71,7 +71,6 @@ export default class ScheduleAdmin extends React.Component {
   onError(){
     this._resetMsg();
     let errors = ScheduleStore.getErrors();
-    console.log('errors', errors)
     let toastrMsg = { error : "Erreur.<br/>"};
     this.setState({ errors: errors, toastrMsg: toastrMsg });
   }
