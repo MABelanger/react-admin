@@ -2,6 +2,9 @@ import React                      from "react";
 import Conference                 from "./conference/admin";
 import Schedule                   from "./schedule/admin";
 
+// Flux Schedule
+import ConferenceStore                from '../../../stores/conference/conferenceStore';
+import * as ConferenceActions         from '../../../actions/conference/conferenceActions';
 
 export default class ConferenceAdmin extends React.Component {
 
@@ -17,19 +20,38 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentWillMount() {
+    // Schedule
+    ConferenceStore.addListListener(this._setConferences.bind(this));
+    ConferenceStore.addReadListener(this._getConference.bind(this));
+    ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
 
   }
 
-  componentWillMount(){
-    //this.list();
-    //this.refs.conferenceAdmin.list();
+  componentWillUnmount() {
+    // Conference
+    ConferenceStore.removeListListener(this._setConferences.bind(this));
+    ConferenceStore.removeReadListener(this._getConference.bind(this));
+    ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
+
   }
 
 
   /*
    * Conference
    */
+  _deletedConference(){
+    this._getConference();
+  }
+
+  _getConference(){
+    this.setConference(ConferenceStore.getConference());
+  }
+
+  _setConferences(){
+    this.setState({'conferences': ConferenceStore.getConferences()});
+  }
+
   setConferences(conferences){
     this.setState({'conferences': conferences});
   }

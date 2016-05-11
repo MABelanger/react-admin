@@ -1,16 +1,17 @@
-var conferencesApi =                  require("./api");
-import React                      from "react";
-import toastr                     from 'toastr';
+import React                          from "react";
+import toastr                         from 'toastr';
 
-import ConferenceNameSection          from "./section";
+import ConferenceSection              from "./section";
 
+// Flux Conference
+import ConferenceStore                from '../../../../stores/conference/conferenceStore';
+import * as ConferenceActions         from '../../../../actions/conference/conferenceActions';
+import ConferenceConstants            from '../../../../constants/conference/conferenceConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
 
-
-
-export default class ConferenceNameAdmin extends React.Component {
+export default class ConferenceAdmin extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,9 +21,16 @@ export default class ConferenceNameAdmin extends React.Component {
     };
   }
 
-  // TODO use FLUX
-  componentWillMount(){
-    this.list();
+  componentWillMount() {
+    ConferenceStore.addSavedListener(this.onSaved.bind(this));
+    ConferenceStore.addDeletedListener(this.onDeleted.bind(this));
+    ConferenceStore.addErrorListener(this.onError.bind(this));
+  }
+
+  componentWillUnmount() {
+    ConferenceStore.removeSavedListener(this.onSaved.bind(this));
+    ConferenceStore.removeDeletedListener(this.onDeleted.bind(this));
+    ConferenceStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){
@@ -42,74 +50,55 @@ export default class ConferenceNameAdmin extends React.Component {
     this._resetMsg();
   }
 
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La conférence à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.conferenceSection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La conférence à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.conferenceSection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = ConferenceStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
 
   /**
    * CRUD Operations
    **/
   // Create
   create(conference){
-    conferencesApi.create(conference)
-      .then( (conference) => {
-        this._resetMsg();
-        this.props.setConference(conference);
-        this.list();
-
-        let toastrMsg = { success : 'Le cours à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.conferenceNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    ConferenceActions.createConference(conference);
   }
 
-  // Read
-  list(){
-    conferencesApi.list(conferences => {
-      this.props.setConferences(conferences);
-    });
-  }
+  // Read is admin by the parent component.
 
   // Update
   save(conference){
-    conferencesApi.save(conference)
-      .then( (conference) => {
-        this._resetMsg();
-        this.props.setConference(conference);
-        this.list();
-
-        let toastrMsg = { success : 'Le cours à été Sauvegardé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.conferenceNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de sauvegarde.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    ConferenceActions.saveConference(conference);
   }
 
   // Delete
   delete(){
-    conferencesApi.delete(this.props.conference)
-      .then( (conference) => {
-        this._resetMsg();
-        this.props.setConference({});
-        this.list();
-
-        let toastrMsg = { success : 'Le cours à été supprimé.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.conferenceNameSection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    ConferenceActions.deleteConference(this.props.conference);  
   }
 
   render() {
     return (
-      <ConferenceNameSection
+      <ConferenceSection
         ref="conferenceNameSection"
         conferences={this.props.conferences}
         conference={this.props.conference}

@@ -1,10 +1,17 @@
 "use strict";
-import React from "react";
+import React                          from "react";
 
 //import Admin from "./components/sections/course/admin";
-import ConferenceAdmin from "../components/sections/conference/admin";
+import ConferenceAdmin                from "../components/sections/conference/admin";
+import * as ConferenceActions         from '../actions/conference/conferenceActions';
 
 export default class ConferenceAdminPage extends React.Component {
+
+  componentWillMount() {
+    // trigger the first list of courseName.
+    ConferenceActions.getConferences();
+  }
+
   render(){
     return (
       <div className="container">

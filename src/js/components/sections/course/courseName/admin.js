@@ -11,8 +11,6 @@ import CourseNameConstants            from '../../../../constants/course/courseN
 // CSS
 import 'toastr/build/toastr.css';
 
-const LIST_EVENT = CourseNameConstants.READ_EVENT;
-
 export default class CourseNameAdmin extends React.Component {
 
   constructor(props) {

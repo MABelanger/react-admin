@@ -4,27 +4,27 @@
 import Request                        from "superagent";
 
 // Flux
-import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import FreeDayConstants            from "../constants/freeDayConstants";
+import ClientDispatcher               from "../../dispatcher/clientDispatcher";
+import ConferenceConstants            from "../../constants/course/conferenceConstants";
 // Flux (to get token)
-import UserStore                      from '../stores/userStore';
+import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
-        LIST_FREE_DAY_EVENT,
-        CREATE_FREE_DAY_EVENT,
-        SAVED_FREE_DAY_EVENT,
-        READ_FREE_DAY_EVENT,
-        SAVE_FREE_DAY_EVENT,
-        DELETE_FREE_DAY_EVENT,
-        ERROR_SAVE_FREE_DAY_EVENT,
-        ERROR_DELETE_FREE_DAY_EVENT } = FreeDayConstants;
+const { URL,
+        LIST_CONFERENCE_EVENT,
+        CREATE_CONFERENCE_EVENT,
+        SAVED_CONFERENCE_EVENT,
+        READ_CONFERENCE_EVENT,
+        SAVE_CONFERENCE_EVENT,
+        DELETE_CONFERENCE_EVENT,
+        ERROR_SAVE_CONFERENCE_EVENT,
+        ERROR_DELETE_CONFERENCE_EVENT } = ConferenceConstants;
 
 
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
     if (errors.hasOwnProperty(property)) {
-      // 'freeDays.1.firstName' -> 'firstName'
+      // 'teachers.1.firstName' -> 'firstName'
       let newProperty = property.split('.').splice(-1);
       flatErrors[newProperty] = errors[ property ];
     }
@@ -32,46 +32,41 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
-function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description/course_types'
-}
 
-export function getFreeDays(courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function getConferences() {
   let token = UserStore.getToken();
   Request
-  .get(url)
+  .get(URL)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: LIST_FREE_DAY_EVENT,
-      freeDays: res.body
+      actionType: LIST_CONFERENCE_EVENT,
+      conferences: res.body
     });
   });
 }
 
-export function createFreeDay(freeDay, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function createConference(conference) {
   let token = UserStore.getToken();
   Request
-    .post(url)
+    .post(URL)
     .accept('application/json')
     .type('application/json')
-    .send(freeDay)
+    .send(conference)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_FREE_DAY_EVENT,
-          freeDay: res.body
+          actionType: CREATE_CONFERENCE_EVENT,
+          conference: res.body
         });
-        // trigger refresh all freeDays
-        this.getFreeDays(courseId, teacherId);
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_FREE_DAY_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -84,28 +79,28 @@ export function createFreeDay(freeDay, courseId, teacherId) {
     });
 }
 
-export function saveFreeDay(freeDay, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId) + '/' + freeDay._id;
+export function saveConference(conference) {
   let token = UserStore.getToken();
+  let url = URL + '/' + conference._id;
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(freeDay)
+    .send(conference)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_FREE_DAY_EVENT,
-          freeDay: res.body
+          actionType: SAVE_CONFERENCE_EVENT,
+          conference: res.body
         });
-        // trigger refresh all freeDays
-        this.getFreeDays(courseId, teacherId);
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_FREE_DAY_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -118,9 +113,9 @@ export function saveFreeDay(freeDay, courseId, teacherId) {
     });
 }
 
-export function deleteFreeDay(freeDay, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId) + '/' + freeDay._id;
+export function deleteConference(conference) {
   let token = UserStore.getToken();
+  let url = URL + '/' + conference._id;
   Request
     .del(url)
     .accept('application/json')
@@ -129,16 +124,16 @@ export function deleteFreeDay(freeDay, courseId, teacherId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_FREE_DAY_EVENT,
-          freeDay: res.body
+          actionType: DELETE_CONFERENCE_EVENT,
+          conference: res.body
         });
-        // trigger refresh all freeDays
-        this.getFreeDays(courseId, teacherId);
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_FREE_DAY_EVENT,
+            actionType: ERROR_DELETE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

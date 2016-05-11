@@ -89,7 +89,6 @@ export default class CourseAdmin extends React.Component {
     FreeDayStore.addReadListener(this._getFreeDay.bind(this));
     FreeDayStore.addDeletedListener(this._deletedFreeDay.bind(this));
 
-    CourseNameActions.getCourseNames();
   }
 
   componentWillUnmount() {

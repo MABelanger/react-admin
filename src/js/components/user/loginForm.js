@@ -2,7 +2,6 @@ import React                      from 'react/addons';
 import ReactMixin                 from 'react-mixin';
 import Request                    from "superagent";
 
-
 // Flux User
 import UserStore                   from '../../stores/user/userStore';
 import * as UserActions            from '../../actions/user/userActions';
@@ -13,11 +12,7 @@ import CourseNameStore             from '../../stores/course/courseNameStore';
 import * as CourseNameActions      from '../../actions/course/courseNameActions';
 import CourseNameConstants         from '../../constants/course/courseNameConstants';
 
-// Add bearer to superagent prototype
-require('superagent-auth-bearer')(Request);
-
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
-const LIST_EVENT = CourseNameConstants.LIST_EVENT;
 
 export default class Login extends React.Component {
 
@@ -31,12 +26,10 @@ export default class Login extends React.Component {
 
   componentWillMount() {
     UserStore.on(CHANGE_EVENT, this.getUser);
-    UserStore.on(LIST_EVENT, this.printCourseNames);
   }
 
   componentWillUnmount() {
     UserStore.removeListener(CHANGE_EVENT, this.getUser);
-    UserStore.removeListener(LIST_EVENT, this.printCourseNames);
   }
 
   getUser() {
@@ -47,10 +40,6 @@ export default class Login extends React.Component {
     CourseNameActions.getCourseNames();
   }
 
-  printCourseNames(){
-    console.log('CourseNameStore.getCourseNames()', CourseNameStore.getCourseNames())
-  }
-
   login(e) {
     e.preventDefault();
     UserActions.login(this.state.user, this.state.password);
@@ -58,20 +47,6 @@ export default class Login extends React.Component {
       //   alert("There's an error logging in");
       //   console.log("Error logging in", err);
       // });
-  }
-
-  getSecureData(){
-//.set('Authorization', `bearer ${JWT_KEY}`)
-    let token = UserStore.getToken();
-    console.log('token', token)
-    Request
-      .get('http://localhost:3000/api/sessions/private')
-      .accept('application/json')
-      .type('application/json')
-      .authBearer(token)
-      .end((err, res) => {
-        console.log('res', res);
-      });
   }
 
   render() {
@@ -89,7 +64,6 @@ export default class Login extends React.Component {
         </div>
         <button type="submit" className="btn btn-default" onClick={this.login.bind(this)}>Submit</button>
       </form>
-      <button className="btn btn-default" onClick={this.getSecureData.bind(this)}>getSecureData</button>
     </div>
     );
   }

@@ -5,25 +5,26 @@ import Request                        from "superagent";
 
 // Flux
 import ClientDispatcher               from "../../dispatcher/clientDispatcher";
-import CourseDescriptionConstants     from "../../constants/course/courseDescriptionConstants";
+import ConferenceConstants            from "../../constants/conference/conferenceConstants";
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
-        GET_COURSE_DESCRIPTION_EVENT,
-        CREATE_COURSE_DESCRIPTION_EVENT,
-        SAVED_COURSE_DESCRIPTION_EVENT,
-        READ_COURSE_DESCRIPTION_EVENT,
-        SAVE_COURSE_DESCRIPTION_EVENT,
-        DELETE_COURSE_DESCRIPTION_EVENT,
-        ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
-        ERROR_DELETE_COURSE_DESCRIPTION_EVENT } = CourseDescriptionConstants;
+const { URL,
+        LIST_CONFERENCE_EVENT,
+        CREATE_CONFERENCE_EVENT,
+        SAVED_CONFERENCE_EVENT,
+        READ_CONFERENCE_EVENT,
+        SAVE_CONFERENCE_EVENT,
+        DELETE_CONFERENCE_EVENT,
+        ERROR_SAVE_CONFERENCE_EVENT,
+        ERROR_DELETE_CONFERENCE_EVENT } = ConferenceConstants;
+
 
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
     if (errors.hasOwnProperty(property)) {
-      // 'courseDescriptions.1.firstName' -> 'firstName'
+      // 'teachers.1.firstName' -> 'firstName'
       let newProperty = property.split('.').splice(-1);
       flatErrors[newProperty] = errors[ property ];
     }
@@ -31,44 +32,41 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
-function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
-}
 
-export function getCourseDescription(courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function getConferences() {
   let token = UserStore.getToken();
   Request
-  .get(url)
+  .get(URL)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: GET_COURSE_DESCRIPTION_EVENT,
-      courseDescription: res.body
+      actionType: LIST_CONFERENCE_EVENT,
+      conferences: res.body
     });
   });
 }
 
-export function createCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function createConference(conference) {
   let token = UserStore.getToken();
   Request
-    .post(url)
+    .post(URL)
     .accept('application/json')
     .type('application/json')
-    .send(courseDescription)
+    .send(conference)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: CREATE_CONFERENCE_EVENT,
+          conference: res.body
         });
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -81,26 +79,28 @@ export function createCourseDescription(courseDescription, courseId, teacherId) 
     });
 }
 
-export function saveCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function saveConference(conference) {
   let token = UserStore.getToken();
+  let url = URL + '/' + conference._id;
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(courseDescription)
+    .send(conference)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: SAVE_CONFERENCE_EVENT,
+          conference: res.body
         });
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -113,9 +113,9 @@ export function saveCourseDescription(courseDescription, courseId, teacherId) {
     });
 }
 
-export function deleteCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function deleteConference(conference) {
   let token = UserStore.getToken();
+  let url = URL + '/' + conference._id;
   Request
     .del(url)
     .accept('application/json')
@@ -124,14 +124,16 @@ export function deleteCourseDescription(courseDescription, courseId, teacherId) 
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: DELETE_CONFERENCE_EVENT,
+          conference: res.body
         });
+        // trigger refresh all conferences
+        this.getConferences();
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_DELETE_CONFERENCE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
