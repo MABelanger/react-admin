@@ -5,25 +5,27 @@ import Request                        from "superagent";
 
 // Flux
 import ClientDispatcher               from "../dispatcher/clientDispatcher";
-import CourseDescriptionConstants     from "../constants/courseDescriptionConstants";
+import FreeDayConstants               from "../constants/freeDayConstants";
+
 // Flux (to get token)
 import UserStore                      from '../stores/userStore';
 
 const { BASE_URL,
-        GET_COURSE_DESCRIPTION_EVENT,
-        CREATE_COURSE_DESCRIPTION_EVENT,
-        SAVED_COURSE_DESCRIPTION_EVENT,
-        READ_COURSE_DESCRIPTION_EVENT,
-        SAVE_COURSE_DESCRIPTION_EVENT,
-        DELETE_COURSE_DESCRIPTION_EVENT,
-        ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
-        ERROR_DELETE_COURSE_DESCRIPTION_EVENT } = CourseDescriptionConstants;
+        LIST_FREE_DAY_EVENT,
+        CREATE_FREE_DAY_EVENT,
+        SAVED_FREE_DAY_EVENT,
+        READ_FREE_DAY_EVENT,
+        SAVE_FREE_DAY_EVENT,
+        DELETE_FREE_DAY_EVENT,
+        ERROR_SAVE_FREE_DAY_EVENT,
+        ERROR_DELETE_FREE_DAY_EVENT } = FreeDayConstants;
+
 
 function getFlatErrors(errors){
   let flatErrors = {};
   for (var property in errors) {
     if (errors.hasOwnProperty(property)) {
-      // 'courseDescriptions.1.firstName' -> 'firstName'
+      // 'freeDays.1.firstName' -> 'firstName'
       let newProperty = property.split('.').splice(-1);
       flatErrors[newProperty] = errors[ property ];
     }
@@ -31,46 +33,50 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
-function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
+function getUrl(courseId, teacherId, courseTypeId, scheduleId){
+  return BASE_URL + 'courses/' + courseId 
+                  + '/teachers/' + teacherId 
+                  + '/course_description/course_types/' + courseTypeId
+                  + '/schedules/' + scheduleId
+                  + '/free_days';
 }
 
-export function getCourseDescription(courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function getFreeDays(courseId, teacherId, courseTypeId, scheduleId) {
+  let url = getUrl(courseId, teacherId, courseTypeId, scheduleId);
   let token = UserStore.getToken();
   Request
   .get(url)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: GET_COURSE_DESCRIPTION_EVENT,
-      courseDescription: res.body
+      actionType: LIST_FREE_DAY_EVENT,
+      freeDays: res.body
     });
   });
 }
 
-export function createCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function createFreeDay(freeDay, courseId, teacherId, courseTypeId, scheduleId) {
+  let url = getUrl(courseId, teacherId, courseTypeId, scheduleId);
   let token = UserStore.getToken();
   Request
     .post(url)
     .accept('application/json')
     .type('application/json')
-    .send(courseDescription)
+    .send(freeDay)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: CREATE_FREE_DAY_EVENT,
+          freeDay: res.body
         });
-        // trigger refresh all courseDescriptions
-        //this.getCourseDescription(courseId, teacherId);
+        // trigger refresh all freeDays
+        this.getFreeDays(courseId, teacherId, courseTypeId, scheduleId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_SAVE_FREE_DAY_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -83,28 +89,28 @@ export function createCourseDescription(courseDescription, courseId, teacherId) 
     });
 }
 
-export function saveCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function saveFreeDay(freeDay, courseId, teacherId, courseTypeId, scheduleId) {
+  let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + freeDay._id;
   let token = UserStore.getToken();
   Request
     .put(url)
     .accept('application/json')
     .type('application/json')
-    .send(courseDescription)
+    .send(freeDay)
     .set('Authorization', 'Bearer ' + token)
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: SAVE_FREE_DAY_EVENT,
+          freeDay: res.body
         });
-        // trigger refresh all courseDescriptions
-        //this.getCourseDescription(courseId, teacherId);
+        // trigger refresh all freeDays
+        this.getFreeDays(courseId, teacherId, courseTypeId, scheduleId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_SAVE_FREE_DAY_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -117,8 +123,8 @@ export function saveCourseDescription(courseDescription, courseId, teacherId) {
     });
 }
 
-export function deleteCourseDescription(courseDescription, courseId, teacherId) {
-  let url = getUrl(courseId, teacherId);
+export function deleteFreeDay(freeDay, courseId, teacherId, courseTypeId, scheduleId) {
+  let url = getUrl(courseId, teacherId, courseTypeId, scheduleId) + '/' + freeDay._id;
   let token = UserStore.getToken();
   Request
     .del(url)
@@ -128,16 +134,16 @@ export function deleteCourseDescription(courseDescription, courseId, teacherId) 
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_COURSE_DESCRIPTION_EVENT,
-          courseDescription: res.body
+          actionType: DELETE_FREE_DAY_EVENT,
+          freeDay: res.body
         });
-        // trigger refresh all courseDescriptions
-        //this.getCourseDescription(courseId, teacherId);
+        // trigger refresh all freeDays
+        this.getFreeDays(courseId, teacherId, courseTypeId, scheduleId);
       }
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_COURSE_DESCRIPTION_EVENT,
+            actionType: ERROR_DELETE_FREE_DAY_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

@@ -91,7 +91,7 @@ class ScheduleStoreClass extends EventEmitter {
     this.on(READ_SCHEDULE_EVENT, cb);
   }
   removeReadListener(cb) {
-    this.removeReadListener(READ_SCHEDULE_EVENT, cb);
+    this.removeListener(READ_SCHEDULE_EVENT, cb);
   }
   emitRead(){
     this.emit(READ_SCHEDULE_EVENT);
@@ -104,7 +104,7 @@ class ScheduleStoreClass extends EventEmitter {
     this.on(SAVED_SCHEDULE_EVENT, cb);
   }
   removeSavedListener(cb) {
-    this.removeReadListener(SAVED_SCHEDULE_EVENT, cb);
+    this.removeListener(SAVED_SCHEDULE_EVENT, cb);
   }
   emitSaved(){
     this.emit(SAVED_SCHEDULE_EVENT);
@@ -117,7 +117,7 @@ class ScheduleStoreClass extends EventEmitter {
     this.on(DELETED_SCHEDULE_EVENT, cb);
   }
   removeDeletedListener(cb) {
-    this.removeReadListener(DELETED_SCHEDULE_EVENT, cb);
+    this.removeListener(DELETED_SCHEDULE_EVENT, cb);
   }
   emitDeleted(){
     this.emit(DELETED_SCHEDULE_EVENT);
@@ -130,7 +130,7 @@ class ScheduleStoreClass extends EventEmitter {
     this.on(ERROR_SAVE_SCHEDULE_EVENT, cb);
   }
   removeErrorListener(cb) {
-    this.removeReadListener(ERROR_SAVE_SCHEDULE_EVENT, cb);
+    this.removeListener(ERROR_SAVE_SCHEDULE_EVENT, cb);
   }
   emitError(){
     this.emit(ERROR_SAVE_SCHEDULE_EVENT);

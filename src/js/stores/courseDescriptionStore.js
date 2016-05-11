@@ -74,7 +74,7 @@ class CourseDescriptionStoreClass extends EventEmitter {
     this.on(GET_COURSE_DESCRIPTION_EVENT, cb);
   }
   removeReadListener(cb) {
-    this.removeReadListener(GET_COURSE_DESCRIPTION_EVENT, cb);
+    this.removeListener(GET_COURSE_DESCRIPTION_EVENT, cb);
   }
   emitRead(){
     this.emit(GET_COURSE_DESCRIPTION_EVENT);
@@ -87,7 +87,7 @@ class CourseDescriptionStoreClass extends EventEmitter {
     this.on(SAVED_COURSE_DESCRIPTION_EVENT, cb);
   }
   removeSavedListener(cb) {
-    this.removeReadListener(SAVED_COURSE_DESCRIPTION_EVENT, cb);
+    this.removeListener(SAVED_COURSE_DESCRIPTION_EVENT, cb);
   }
   emitSaved(){
     this.emit(SAVED_COURSE_DESCRIPTION_EVENT);
@@ -100,7 +100,7 @@ class CourseDescriptionStoreClass extends EventEmitter {
     this.on(DELETED_COURSE_DESCRIPTION_EVENT, cb);
   }
   removeDeletedListener(cb) {
-    this.removeReadListener(DELETED_COURSE_DESCRIPTION_EVENT, cb);
+    this.removeListener(DELETED_COURSE_DESCRIPTION_EVENT, cb);
   }
   emitDeleted(){
     this.emit(DELETED_COURSE_DESCRIPTION_EVENT);
@@ -113,7 +113,7 @@ class CourseDescriptionStoreClass extends EventEmitter {
     this.on(ERROR_SAVE_COURSE_DESCRIPTION_EVENT, cb);
   }
   removeErrorListener(cb) {
-    this.removeReadListener(ERROR_SAVE_COURSE_DESCRIPTION_EVENT, cb);
+    this.removeListener(ERROR_SAVE_COURSE_DESCRIPTION_EVENT, cb);
   }
   emitError(){
     this.emit(ERROR_SAVE_COURSE_DESCRIPTION_EVENT);
@@ -134,7 +134,6 @@ AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
   case CourseDescriptionConstants.GET_COURSE_DESCRIPTION_EVENT:
-    console.log('payload.courseDescription', payload.courseDescription);
     courseDescriptionStore.setCourseDescription(payload.courseDescription);
     courseDescriptionStore.emitRead();
     break;

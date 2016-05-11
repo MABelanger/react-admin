@@ -29,6 +29,9 @@ import * as CourseTypeActions         from '../../../actions/courseTypeActions';
 import ScheduleStore                  from '../../../stores/scheduleStore';
 import * as ScheduleActions           from '../../../actions/scheduleActions';
 
+// Flux FreeDay
+import FreeDayStore                  from '../../../stores/freeDayStore';
+import * as FreeDayActions           from '../../../actions/freeDayActions';
 
 
 export default class CourseAdmin extends React.Component {
@@ -81,6 +84,11 @@ export default class CourseAdmin extends React.Component {
     ScheduleStore.addReadListener(this._getSchedule.bind(this));
     ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
 
+    // FreeDay
+    FreeDayStore.addListListener(this._setFreeDays.bind(this));
+    FreeDayStore.addReadListener(this._getFreeDay.bind(this));
+    FreeDayStore.addDeletedListener(this._deletedFreeDay.bind(this));
+
     CourseNameActions.getCourseNames();
   }
 
@@ -108,6 +116,11 @@ export default class CourseAdmin extends React.Component {
     ScheduleStore.removeListListener(this._setSchedules.bind(this));
     ScheduleStore.removeReadListener(this._getSchedule.bind(this));
     ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
+
+    // FreeDay
+    FreeDayStore.removeListListener(this._setFreeDays.bind(this));
+    FreeDayStore.removeReadListener(this._getFreeDay.bind(this));
+    FreeDayStore.removeDeletedListener(this._deletedFreeDay.bind(this));
   }
 
   /*
@@ -215,7 +228,6 @@ export default class CourseAdmin extends React.Component {
   }
 
   _getCourseDescription(){
-    console.log('CourseDescriptionStore.getCourseDescription()', CourseDescriptionStore.getCourseDescription())
     this.setCourseDescription(CourseDescriptionStore.getCourseDescription());
   }
 
@@ -302,8 +314,11 @@ export default class CourseAdmin extends React.Component {
   _resetSchedule(){
     this.setState({'schedule': {} }, function(){
       if (this.refs.scheduleAdmin) {
-        ScheduleActions.getSchedules(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
-        //this.refs.scheduleAdmin.list(this.state.course._id, this.state.teacher._id, this.state.courseType._id);
+        ScheduleActions.getSchedules(
+            this.state.course._id,
+            this.state.teacher._id,
+            this.state.courseType._id
+        );
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }
       this._resetFreeDay();
@@ -357,15 +372,27 @@ export default class CourseAdmin extends React.Component {
   _resetFreeDay(){
     this.setState({'freeDay': {} }, function(){
       if (this.refs.freeDayAdmin) {
-        this.refs.freeDayAdmin.list(
+        FreeDayActions.getFreeDays(
             this.state.course._id,
             this.state.teacher._id,
             this.state.courseType._id,
-            this.state.schedule._id,
-        );
+            this.state.schedule._id
+          );
         this.refs.freeDayAdmin.refs.freeDaySection.hideSection();
       }
     });
+  }
+
+  _deletedFreeDay(){
+    this._getFreeDay();
+  }
+
+  _getFreeDay(){
+    this.setFreeDay(FreeDayStore.getFreeDay());
+  }
+
+  _setFreeDays(){
+    this.setState( {'freeDays': FreeDayStore.getFreeDays()} );
   }
 
   setFreeDay(freeDay){

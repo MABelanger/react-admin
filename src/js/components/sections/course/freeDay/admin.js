@@ -1,12 +1,17 @@
-import React                      from "react";
-import toastr                     from 'toastr';
+import React                          from "react";
+import toastr                         from 'toastr';
+
+import FreeDaySection                from "./section";
+
+// Flux FreeDay
+import FreeDayStore                  from '../../../../stores/freeDayStore';
+import * as FreeDayActions           from '../../../../actions/freeDayActions';
+import FreeDayConstants              from '../../../../constants/freeDayConstants';
+
+// CSS
 import 'toastr/build/toastr.css';
 
-import FreeDaySection             from "./section";
-
-var freeDayApi =                  require("./api");
-
-export default class ScheduleAdmin extends React.Component {
+export default class FreeDayAdmin extends React.Component {
 
   constructor(props) {
     super(props);
@@ -15,7 +20,19 @@ export default class ScheduleAdmin extends React.Component {
       errors: {},
     };
   }
-  
+
+  componentWillMount() {
+    FreeDayStore.addSavedListener(this.onSaved.bind(this));
+    FreeDayStore.addDeletedListener(this.onDeleted.bind(this));
+    FreeDayStore.addErrorListener(this.onError.bind(this));
+  }
+
+  componentWillUnmount() {
+    FreeDayStore.removeSavedListener(this.onSaved.bind(this));
+    FreeDayStore.removeDeletedListener(this.onDeleted.bind(this));
+    FreeDayStore.removeErrorListener(this.onError.bind(this));
+  }
+
   _resetMsg(){
     this.setState({
       toastrMsg: {},
@@ -33,43 +50,45 @@ export default class ScheduleAdmin extends React.Component {
     this._resetMsg();
   }
 
+  /*
+   * listener called by the store
+   */
+
+  onSaved(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La freeDay à été sauvegardé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.freeDaySection.hideSection();
+  }
+
+  onDeleted(){
+    this._resetMsg();
+    let toastrMsg = { success : 'La freeDay à été supprimé.'};
+    this.setState({ toastrMsg: toastrMsg });
+    this.refs.freeDaySection.hideSection();
+  }
+
+  onError(){
+    this._resetMsg();
+    let errors = FreeDayStore.getErrors();
+    console.log('errors', errors)
+    let toastrMsg = { error : "Erreur.<br/>"};
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
+  }
+
   /**
    * CRUD Operations
    **/
-
   // Create
   create(freeDay){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
     let courseTypeId = this.props.courseTypeId;
     let scheduleId = this.props.scheduleId;
-
-    freeDayApi.create(courseId, teacherId, courseTypeId, scheduleId, freeDay)
-      .then( (freeDay) => {
-        this._resetMsg();
-        this.props.setFreeDay(freeDay);
-        this.list(courseId, teacherId, courseTypeId, scheduleId);
-
-        let toastrMsg = { success : 'Le jours d\'essaie à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.freeDaySection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    FreeDayActions.createFreeDay(freeDay, courseId, teacherId, courseTypeId, scheduleId);
   }
 
-
-  // Read
-  list(courseId, teacherId, courseTypeId, scheduleId){
-    freeDayApi.list(courseId, teacherId, courseTypeId, scheduleId)
-      .then( (freeDays) => {
-        this.props.setFreeDays(freeDays);
-      }, (err) => {
-        console.log(err);
-      });
-  }
+  // Read is admin by the parent component.
 
   // Update
   save(freeDay){
@@ -77,44 +96,16 @@ export default class ScheduleAdmin extends React.Component {
     let teacherId = this.props.teacherId;
     let courseTypeId = this.props.courseTypeId;
     let scheduleId = this.props.scheduleId;
-
-    freeDayApi.save(courseId, teacherId, courseTypeId, scheduleId, freeDay)
-      .then( (freeDay) => {
-        this._resetMsg();
-        this.props.setFreeDay(freeDay);
-        this.list(courseId, teacherId, courseTypeId, scheduleId);
-
-        let toastrMsg = { success : 'Le jours d\'essaie à été crée.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.freeDaySection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de création.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    FreeDayActions.saveFreeDay(freeDay, courseId, teacherId, courseTypeId, scheduleId);
   }
 
   // Delete
-  delete(freeDay){
+  delete(){
     let courseId = this.props.courseId;
     let teacherId = this.props.teacherId;
     let courseTypeId = this.props.courseTypeId;
     let scheduleId = this.props.scheduleId;
-
-    freeDayApi.delete(courseId, teacherId, courseTypeId, scheduleId, freeDay)
-      .then( (msg) => {
-        this._resetMsg();
-        this.props.setFreeDay({});
-        this.list(courseId, teacherId, courseTypeId, scheduleId);
-
-        let toastrMsg = { success : 'Le jours d\'essaie à été supprimer.'};
-        this.setState({ toastrMsg: toastrMsg });
-
-        this.refs.freeDaySection.hideSection();
-      }, (errors) => {
-        let toastrMsg = { error : "Erreur de supression.<br/>"};
-        this.setState({ errors: errors, toastrMsg: toastrMsg });
-      });
+    FreeDayActions.deleteFreeDay(this.props.freeDay, courseId, teacherId, courseTypeId, scheduleId);  
   }
 
   render() {

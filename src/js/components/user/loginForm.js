@@ -45,8 +45,6 @@ export default class Login extends React.Component {
 
     // action the courseNames
     CourseNameActions.getCourseNames();
-
-    console.log('user', user);
   }
 
   printCourseNames(){

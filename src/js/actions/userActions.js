@@ -13,7 +13,6 @@ export function login(username, password){
     username: username,
     password: password
   }
-  console.log('userConstants.LOGIN_URL', userConstants.LOGIN_URL)
   Request
     .post(userConstants.LOGIN_URL)
     .accept('application/json')

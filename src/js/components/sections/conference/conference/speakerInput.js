@@ -39,7 +39,6 @@ export default class ConferenceNameCtrlInput extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     let {firstName, lastName} = this._getNames(nextProps.speaker)
-    console.log('componentWillReceiveProps.firstName', nextProps)
     this.setState({
       firstName : firstName,
       lastName : lastName

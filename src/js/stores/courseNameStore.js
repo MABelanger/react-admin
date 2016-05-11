@@ -136,7 +136,7 @@ class CourseNameStoreClass extends EventEmitter {
     this.on(READ_COURSE_NAME_EVENT, cb);
   }
   removeReadListener(cb) {
-    this.removeReadListener(READ_COURSE_NAME_EVENT, cb);
+    this.removeListener(READ_COURSE_NAME_EVENT, cb);
   }
   emitRead(){
     this.emit(READ_COURSE_NAME_EVENT);
@@ -151,7 +151,7 @@ class CourseNameStoreClass extends EventEmitter {
     this.on(SAVED_COURSE_NAME_EVENT, cb);
   }
   removeSavedListener(cb) {
-    this.removeReadListener(SAVED_COURSE_NAME_EVENT, cb);
+    this.removeListener(SAVED_COURSE_NAME_EVENT, cb);
   }
   emitSaved(){
     this.emit(SAVED_COURSE_NAME_EVENT);
@@ -164,7 +164,7 @@ class CourseNameStoreClass extends EventEmitter {
     this.on(DELETED_COURSE_NAME_EVENT, cb);
   }
   removeDeletedListener(cb) {
-    this.removeReadListener(DELETED_COURSE_NAME_EVENT, cb);
+    this.removeListener(DELETED_COURSE_NAME_EVENT, cb);
   }
   emitDeleted(){
     this.emit(DELETED_COURSE_NAME_EVENT);
@@ -177,7 +177,7 @@ class CourseNameStoreClass extends EventEmitter {
     this.on(ERROR_SAVE_COURSE_NAME_EVENT, cb);
   }
   removeErrorListener(cb) {
-    this.removeReadListener(ERROR_SAVE_COURSE_NAME_EVENT, cb);
+    this.removeListener(ERROR_SAVE_COURSE_NAME_EVENT, cb);
   }
   emitError(){
     this.emit(ERROR_SAVE_COURSE_NAME_EVENT);

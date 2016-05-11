@@ -57,7 +57,6 @@ export default class CourseNameAdmin extends React.Component {
    */
 
   onSaved(){
-    console.log('courseName.onSaved')
     this._resetMsg();
     let toastrMsg = { success : 'Le cours à été sauvegardé.'};
     this.setState({ toastrMsg: toastrMsg });
