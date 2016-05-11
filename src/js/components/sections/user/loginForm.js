@@ -3,14 +3,14 @@ import ReactMixin                 from 'react-mixin';
 import Request                    from "superagent";
 
 // Flux User
-import UserStore                   from '../../stores/user/userStore';
-import * as UserActions            from '../../actions/user/userActions';
-import UserConstants               from '../../constants/user/userConstants';
+import UserStore                   from '../../../stores/user/userStore';
+import * as UserActions            from '../../../actions/user/userActions';
+import UserConstants               from '../../../constants/user/userConstants';
 
 // Flux CourseName
-import CourseNameStore             from '../../stores/course/courseNameStore';
-import * as CourseNameActions      from '../../actions/course/courseNameActions';
-import CourseNameConstants         from '../../constants/course/courseNameConstants';
+import CourseNameStore             from '../../../stores/course/courseNameStore';
+import * as CourseNameActions      from '../../../actions/course/courseNameActions';
+import CourseNameConstants         from '../../../constants/course/courseNameConstants';
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
 
