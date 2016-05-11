@@ -55,51 +55,6 @@ class ScheduleStoreClass extends EventEmitter {
   getErrors(){
     return this.errors;
   }
-  // new(){
-  //   return {
-  //     id: null,
-  //     title: null
-  //   }
-  // }
-
-  list(){
-    this.emitList();
-  }
-
-  /*
-   CRUD operations
-   */
-  create(todo) {
-    console.log("creating a todo");
-    todo.id = _todos.length + 1;
-    _todos.push(todo);
-    this.emitList(todo);
-  }
-
-  update(todo) {
-    var index = this.find(todo.id);
-    todo.id = parseInt(todo.id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos[index] = todo;
-    this.emitList();
-  }
-
-  delete(id) {
-    var index = this.find(id);
-    if(index === undefined) return this.triggerFailToTakeAction();
-    _todos.splice(index, 1);
-    this.emitList();
-  }
-
-  find(id) {
-    var id = parseInt(id);
-    var found = undefined;
-    _todos.some(function(todo, i) {
-      if(todo.id === id) found = i;
-    });
-    return found;
-  }
-
 
   /*
    * LIST
@@ -198,6 +153,7 @@ AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
   case ScheduleConstants.LIST_SCHEDULE_EVENT:
+    console.log(' ScheduleConstants.LIST_SCHEDULE_EVENT', payload.schedules)
     scheduleStore.setSchedules(payload.schedules);
     scheduleStore.emitList();
     break;
@@ -210,7 +166,6 @@ AppDispatcher.register((payload) => {
   case ScheduleConstants.SAVE_SCHEDULE_EVENT:
     scheduleStore.setSchedule(payload.schedule);
     scheduleStore.emitSaved();
-    console.log(' ScheduleConstants.SAVE_SCHEDULE_EVENT', payload.schedule)
     break;
 
   case ScheduleConstants.DELETE_SCHEDULE_EVENT:

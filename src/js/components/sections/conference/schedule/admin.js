@@ -81,19 +81,19 @@ export default class ScheduleAdmin extends React.Component {
    **/
   // Create
   create(schedule){
-    ScheduleActions.createSchedule(schedule);
+    ScheduleActions.createSchedule(schedule, this.props.conferenceId);
   }
 
   // Read is admin by the parent component.
 
   // Update
   save(schedule){
-    ScheduleActions.saveSchedule(schedule);
+    ScheduleActions.saveSchedule(schedule, this.props.conferenceId);
   }
 
   // Delete
   delete(){
-    ScheduleActions.deleteSchedule(this.props.schedule);  
+    ScheduleActions.deleteSchedule(this.props.schedule, this.props.conferenceId);  
   }
 
   render() {

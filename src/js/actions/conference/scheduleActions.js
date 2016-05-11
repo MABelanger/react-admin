@@ -69,7 +69,7 @@ export function createSchedule(schedule, conferenceId) {
           schedule: res.body
         });
         // trigger refresh all schedules
-        this.getSchedules();
+        this.getSchedules(conferenceId);
       }
       else {
         if(res) {
@@ -103,7 +103,7 @@ export function saveSchedule(schedule, conferenceId) {
           schedule: res.body
         });
         // trigger refresh all schedules
-        this.getSchedules();
+        this.getSchedules(conferenceId);
       }
       else {
         if(res) {
@@ -136,7 +136,7 @@ export function deleteSchedule(schedule, conferenceId) {
           schedule: res.body
         });
         // trigger refresh all schedules
-        this.getSchedules();
+        this.getSchedules(conferenceId);
       }
       else {
         if(res) {
