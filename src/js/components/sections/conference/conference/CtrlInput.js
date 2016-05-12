@@ -7,10 +7,6 @@ import * as sectionHelper         from "../../helper";
 
 
 export default class ConferenceNameCtrlInput extends React.Component {
-
-// Visible, Titre, Téléphone, Lien Nom, Lien URL, Image
-// Résumé Description Côut Note
-
   constructor(props) {
     super(props);
     this.state = {
@@ -42,8 +38,7 @@ export default class ConferenceNameCtrlInput extends React.Component {
     }
   }
 
-
-  componentWillMount(){
+  componentDidMount(){
     let {firstName, lastName} = this._getNames(this.props.conference.speaker);
     this.setState({
       isVisible: this.props.conference.isVisible,
@@ -111,35 +106,6 @@ export default class ConferenceNameCtrlInput extends React.Component {
       note: this.state.note
     };
   }
-
-/*
-{
-  "slug": "String",
-  "speaker": {
-    "slug": "String",
-    "firstName": "String",
-    "lastName": "String"
-  },
-  "title": "String",
-  "tel": "String",
-  "isVisible": true,
-  "note": "String",
-  "price": "String",
-  "schoolName": "String",
-  "schoolUrl": "String",
-  "description": "String",
-  "abstract": "String",
-  "schedules": [
-    {
-      "isFull": false,
-      "dayStart": "2016-04-01T11:00:00.000Z",
-      "dayEnd": "2016-04-01T12:00:00.000Z",
-    }
-  ]
-}
-*/
-
-
 
   render() {
     return (
@@ -224,7 +190,6 @@ export default class ConferenceNameCtrlInput extends React.Component {
           value={this.state.note}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
-
         <ReactQuill
           name="description"
           label="Description"

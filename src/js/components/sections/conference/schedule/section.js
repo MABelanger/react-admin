@@ -76,11 +76,27 @@ export default class ScheduleSection extends React.Component {
     this.props.onSave(schedule);
   }
 
+
+  _fixDayEnd(schedule){
+    let dayStart = moment(schedule.dayStart).utcOffset("+00:00");
+    let dayEnd = moment(schedule.dayEnd).utcOffset("+00:00");
+
+    dayEnd =  dayStart.set({
+               'hour' : dayEnd.get('hour'),
+               'minute'  : dayEnd.get('minute')
+              });
+
+    schedule.dayEnd = dayEnd;
+    return schedule;
+  }
+
+
   // Save button click
   onCtrlSave(e){
 
     // Get the new values fields
     let scheduleInput = this.refs.ctrlInput.getFields();
+    scheduleInput = this._fixDayEnd(scheduleInput);
     let schedule = this.props.schedule;
 
     schedule = sectionHelper.overwriteAttrs(scheduleInput, schedule);

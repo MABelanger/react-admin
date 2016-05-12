@@ -2,18 +2,20 @@
 
 // Flux ScheduleStore
 import AppDispatcher                  from '../../dispatcher/clientDispatcher';
-import ScheduleConstants              from '../../constants/course/scheduleConstants';
+import ScheduleConstants              from '../../constants/conference/scheduleConstants';
 import { EventEmitter }               from 'events';
 
-const { LIST_SCHEDULE_EVENT,
-        CREATE_SCHEDULE_EVENT,
-        SAVED_SCHEDULE_EVENT,
-        READ_SCHEDULE_EVENT,
-        SAVE_SCHEDULE_EVENT,
+const { LIST_CONFERENCE_SCHEDULE_EVENT,
+        CREATE_CONFERENCE_SCHEDULE_EVENT,
+        SAVED_CONFERENCE_SCHEDULE_EVENT,
+        READ_CONFERENCE_SCHEDULE_EVENT,
+        SAVE_CONFERENCE_SCHEDULE_EVENT,
 
-        DELETED_SCHEDULE_EVENT,
-        ERROR_SAVE_SCHEDULE_EVENT,
-        ERROR_DELETE_SCHEDULE_EVENT } = ScheduleConstants;
+        DELETED_CONFERENCE_SCHEDULE_EVENT,
+        ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT,
+        ERROR_DELETE_CONFERENCE_SCHEDULE_EVENT } = ScheduleConstants;
+
+console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
 
 
 
@@ -60,13 +62,15 @@ class ScheduleStoreClass extends EventEmitter {
    * LIST
    */
   addListListener(cb) {
-    this.on(LIST_SCHEDULE_EVENT, cb);
+    console.log('cb', cb.prototype)
+    this.on(LIST_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeListListener(cb) {
-    this.removeListener(LIST_SCHEDULE_EVENT, cb);
+    this.removeListener(LIST_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitList(){
-    this.emit(LIST_SCHEDULE_EVENT);
+    console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
+    this.emit(LIST_CONFERENCE_SCHEDULE_EVENT);
   }
 
 
@@ -74,13 +78,13 @@ class ScheduleStoreClass extends EventEmitter {
    * Create
    */
   addCreateListener(cb) {
-    this.on(CREATE_SCHEDULE_EVENT, cb);
+    this.on(CREATE_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeCreateListener(cb) {
-    this.removeCreateListener(CREATE_SCHEDULE_EVENT, cb);
+    this.removeCreateListener(CREATE_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitCreate(){
-    this.emit(CREATE_SCHEDULE_EVENT);
+    this.emit(CREATE_CONFERENCE_SCHEDULE_EVENT);
   }
 
 
@@ -88,13 +92,13 @@ class ScheduleStoreClass extends EventEmitter {
    * Read
    */
   addReadListener(cb) {
-    this.on(READ_SCHEDULE_EVENT, cb);
+    this.on(READ_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeReadListener(cb) {
-    this.removeListener(READ_SCHEDULE_EVENT, cb);
+    this.removeListener(READ_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitRead(){
-    this.emit(READ_SCHEDULE_EVENT);
+    this.emit(READ_CONFERENCE_SCHEDULE_EVENT);
   }
 
 
@@ -103,39 +107,39 @@ class ScheduleStoreClass extends EventEmitter {
    * Saved
    */
   addSavedListener(cb) {
-    this.on(SAVED_SCHEDULE_EVENT, cb);
+    this.on(SAVED_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeSavedListener(cb) {
-    this.removeListener(SAVED_SCHEDULE_EVENT, cb);
+    this.removeListener(SAVED_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitSaved(){
-    this.emit(SAVED_SCHEDULE_EVENT);
+    this.emit(SAVED_CONFERENCE_SCHEDULE_EVENT);
   }
 
   /*
    * Deleted
    */
   addDeletedListener(cb) {
-    this.on(DELETED_SCHEDULE_EVENT, cb);
+    this.on(DELETED_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeDeletedListener(cb) {
-    this.removeListener(DELETED_SCHEDULE_EVENT, cb);
+    this.removeListener(DELETED_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitDeleted(){
-    this.emit(DELETED_SCHEDULE_EVENT);
+    this.emit(DELETED_CONFERENCE_SCHEDULE_EVENT);
   }
 
   /*
    * Error
    */
   addErrorListener(cb) {
-    this.on(ERROR_SAVE_SCHEDULE_EVENT, cb);
+    this.on(ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeErrorListener(cb) {
-    this.removeListener(ERROR_SAVE_SCHEDULE_EVENT, cb);
+    this.removeListener(ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitError(){
-    this.emit(ERROR_SAVE_SCHEDULE_EVENT);
+    this.emit(ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT);
   }
 
 }
@@ -152,27 +156,27 @@ const scheduleStore = new ScheduleStoreClass();
 AppDispatcher.register((payload) => {
   switch (payload.actionType) {
 
-  case ScheduleConstants.LIST_SCHEDULE_EVENT:
+  case ScheduleConstants.LIST_CONFERENCE_SCHEDULE_EVENT:
     scheduleStore.setSchedules(payload.schedules);
     scheduleStore.emitList();
     break;
 
-  case ScheduleConstants.CREATE_SCHEDULE_EVENT:
+  case ScheduleConstants.CREATE_CONFERENCE_SCHEDULE_EVENT:
     scheduleStore.setSchedule(payload.schedule);
     scheduleStore.emitSaved();
     break;
 
-  case ScheduleConstants.SAVE_SCHEDULE_EVENT:
+  case ScheduleConstants.SAVE_CONFERENCE_SCHEDULE_EVENT:
     scheduleStore.setSchedule(payload.schedule);
     scheduleStore.emitSaved();
     break;
 
-  case ScheduleConstants.DELETE_SCHEDULE_EVENT:
+  case ScheduleConstants.DELETE_CONFERENCE_SCHEDULE_EVENT:
     scheduleStore.setSchedule({});
     scheduleStore.emitDeleted();
     break;
 
-  case ScheduleConstants.ERROR_SAVE_SCHEDULE_EVENT:
+  case ScheduleConstants.ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT:
     scheduleStore.setErrors(payload.errors);
     scheduleStore.emitError();
     break;

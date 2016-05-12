@@ -1,14 +1,14 @@
-import React                      from "react";
-import Conference                 from "./conference/admin";
-import Schedule                   from "./schedule/admin";
+import React                          from "react";
+import Conference                     from "./conference/admin";
+import Schedule                       from "./schedule/admin";
 
 // Flux Conference
 import ConferenceStore                from '../../../stores/conference/conferenceStore';
 import * as ConferenceActions         from '../../../actions/conference/conferenceActions';
 
 // Flux Schedule
-import ScheduleStore                from '../../../stores/conference/scheduleStore';
-import * as ScheduleActions         from '../../../actions/conference/scheduleActions';
+import ScheduleStore                  from '../../../stores/conference/scheduleStore';
+import * as ScheduleActions           from '../../../actions/conference/scheduleActions';
 
 export default class ConferenceAdmin extends React.Component {
 
@@ -26,11 +26,19 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
+  checkMounted(cb, _this){
+    console.log('this.mounted', _this.mounted)
+    if(_this.mounted || true){
+      cb(_this);
+    }
+  }
+
   componentDidMount() {
     this.mounted = true;
 
     // Conference
-    ConferenceStore.addListListener(this._setConferences.bind(this));
+    let conferenceListListener = function(){ return this.checkMounted(this._setConferences, this); }
+    ConferenceStore.addListListener( conferenceListListener.bind(this) );
     ConferenceStore.addReadListener(this._getConference.bind(this));
     ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
 
@@ -38,13 +46,11 @@ export default class ConferenceAdmin extends React.Component {
     ScheduleStore.addListListener(this._setSchedules.bind(this));
     ScheduleStore.addReadListener(this._getSchedule.bind(this));
     ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
-
   }
 
-
   componentWillUnmount() {
-
     this.mounted = false;
+
     // Conference
     ConferenceStore.removeListListener(this._setConferences.bind(this));
     ConferenceStore.removeReadListener(this._getConference.bind(this));
@@ -55,7 +61,6 @@ export default class ConferenceAdmin extends React.Component {
     ScheduleStore.removeReadListener(this._getSchedule.bind(this));
     ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
   }
-
 
   /*
    * Conference
@@ -68,21 +73,25 @@ export default class ConferenceAdmin extends React.Component {
     this.setConference(ConferenceStore.getConference());
   }
 
-  _setConferences(){
-    if(this.mounted){
-      this.setState({'conferences': ConferenceStore.getConferences()});
+  _setConferences(_this){
+    if(_this.mounted || true){
+      _this.setState({'conferences': ConferenceStore.getConferences()});
     }
   }
 
   setConferences(conferences){
-    this.setState({'conferences': conferences});
+    if(this.mounted || true){
+      this.setState({'conferences': conferences});
+    }
   }
 
 
   setConference(conference){
-    this.setState({'conference': conference}, function(){
-      this._resetSchedule();
-    });
+    if(this.mounted || true){
+      this.setState({'conference': conference}, function(){
+        this._resetSchedule();
+      });
+    }
   }
 
   renderConference(){
@@ -100,17 +109,19 @@ export default class ConferenceAdmin extends React.Component {
     );
   }
 
-
   /*
    * Schedule
    */
   _resetSchedule(){
-    this.setState({'schedule': {} }, function(){
-      if (this.refs.scheduleAdmin) {
-        ScheduleActions.getSchedules(this.state.conference._id);
-        this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
-      }
-    });
+    if(this.mounted || true){
+      this.setState({'schedule': {} }, function(){
+        if (this.refs.scheduleAdmin) {
+          console.log('ScheduleActions.getSchedules()')
+          ScheduleActions.getSchedules(this.state.conference._id);
+          this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
+        }
+      });
+    }
   }
 
   _deletedSchedule(){
@@ -122,17 +133,21 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _setSchedules(){
-    this.setState({'schedules': ScheduleStore.getSchedules()});
+    if(this.mounted || true){
+      this.setState({'schedules': ScheduleStore.getSchedules()});
+    }
   }
 
   setSchedule(schedule){
-    this.setState({'schedule': schedule}, function(){
-      
-    });
+    if(this.mounted || true){
+      this.setState({'schedule': schedule}, function(){
+        
+      });
+    }
   }
 
   setSchedules(schedules){
-    if(this.mounted){
+    if(this.mounted || true){
       this.setState({'schedules': schedules});
     }
   }
@@ -153,10 +168,8 @@ export default class ConferenceAdmin extends React.Component {
     );
   }
 
-
   /*
    * Render all sections
-   
    */
   render() {
     return (
@@ -167,4 +180,3 @@ export default class ConferenceAdmin extends React.Component {
     );
   }
 }
-

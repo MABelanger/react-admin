@@ -15,29 +15,35 @@ export default class ScheduleAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
+    this.mounted = false;
     this.state = {
       toastrMsg: {},
       errors: {},
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.mounted = true;
     ScheduleStore.addSavedListener(this.onSaved.bind(this));
     ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
     ScheduleStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     ScheduleStore.removeSavedListener(this.onSaved.bind(this));
     ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
     ScheduleStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){
-    this.setState({
-      toastrMsg: {},
-      errors: {}
-    });
+    if(this.mounted){
+      this.setState({
+        toastrMsg: {},
+        errors: {}
+      });
+    }
   }
 
   select(schedule){
@@ -57,14 +63,18 @@ export default class ScheduleAdmin extends React.Component {
   onSaved(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été sauvegardé.'};
-    this.setState({ toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ toastrMsg: toastrMsg });
+    }
     this.refs.scheduleSection.hideSection();
   }
 
   onDeleted(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été supprimé.'};
-    this.setState({ toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ toastrMsg: toastrMsg });
+    }
     this.refs.scheduleSection.hideSection();
   }
 
@@ -72,7 +82,9 @@ export default class ScheduleAdmin extends React.Component {
     this._resetMsg();
     let errors = ScheduleStore.getErrors();
     let toastrMsg = { error : "Erreur.<br/>"};
-    this.setState({ errors: errors, toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ errors: errors, toastrMsg: toastrMsg });
+    }
   }
 
   /**

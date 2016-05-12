@@ -11,14 +11,14 @@ import ScheduleConstants              from "../../constants/conference/scheduleC
 import UserStore                      from '../../stores/user/userStore';
 
 const { URL,
-        LIST_SCHEDULE_EVENT,
-        CREATE_SCHEDULE_EVENT,
-        SAVED_SCHEDULE_EVENT,
-        READ_SCHEDULE_EVENT,
-        SAVE_SCHEDULE_EVENT,
-        DELETE_SCHEDULE_EVENT,
-        ERROR_SAVE_SCHEDULE_EVENT,
-        ERROR_DELETE_SCHEDULE_EVENT } = ScheduleConstants;
+        LIST_CONFERENCE_SCHEDULE_EVENT,
+        CREATE_CONFERENCE_SCHEDULE_EVENT,
+        SAVED_CONFERENCE_SCHEDULE_EVENT,
+        READ_CONFERENCE_SCHEDULE_EVENT,
+        SAVE_CONFERENCE_SCHEDULE_EVENT,
+        DELETE_CONFERENCE_SCHEDULE_EVENT,
+        ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT,
+        ERROR_DELETE_CONFERENCE_SCHEDULE_EVENT } = ScheduleConstants;
 
 function getFlatErrors(errors){
   let flatErrors = {};
@@ -38,6 +38,7 @@ function getUrl(conferenceId){
 }
 
 export function getSchedules(conferenceId) {
+  console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
   let url = getUrl(conferenceId);
   let token = UserStore.getToken();
   Request
@@ -45,7 +46,7 @@ export function getSchedules(conferenceId) {
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
-      actionType: LIST_SCHEDULE_EVENT,
+      actionType: LIST_CONFERENCE_SCHEDULE_EVENT,
       schedules: res.body
     });
   });
@@ -63,7 +64,7 @@ export function createSchedule(schedule, conferenceId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: CREATE_SCHEDULE_EVENT,
+          actionType: CREATE_CONFERENCE_SCHEDULE_EVENT,
           schedule: res.body
         });
         // trigger refresh all schedules
@@ -72,7 +73,7 @@ export function createSchedule(schedule, conferenceId) {
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_SCHEDULE_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -97,7 +98,7 @@ export function saveSchedule(schedule, conferenceId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: SAVE_SCHEDULE_EVENT,
+          actionType: SAVE_CONFERENCE_SCHEDULE_EVENT,
           schedule: res.body
         });
         // trigger refresh all schedules
@@ -106,7 +107,7 @@ export function saveSchedule(schedule, conferenceId) {
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_SAVE_SCHEDULE_EVENT,
+            actionType: ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }
@@ -130,7 +131,7 @@ export function deleteSchedule(schedule, conferenceId) {
     .end((err, res) => {
       if (! err ) {
         ClientDispatcher.dispatch({
-          actionType: DELETE_SCHEDULE_EVENT,
+          actionType: DELETE_CONFERENCE_SCHEDULE_EVENT,
           schedule: res.body
         });
         // trigger refresh all schedules
@@ -139,7 +140,7 @@ export function deleteSchedule(schedule, conferenceId) {
       else {
         if(res) {
           ClientDispatcher.dispatch({
-            actionType: ERROR_DELETE_SCHEDULE_EVENT,
+            actionType: ERROR_DELETE_CONFERENCE_SCHEDULE_EVENT,
             errors: getFlatErrors(res.body.errors)
           });
         }

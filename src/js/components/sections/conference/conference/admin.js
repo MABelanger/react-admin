@@ -21,6 +21,8 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
+
+
   componentWillMount() {
     ConferenceStore.addSavedListener(this.onSaved.bind(this));
     ConferenceStore.addDeletedListener(this.onDeleted.bind(this));
@@ -34,10 +36,12 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _resetMsg(){
-    this.setState({
-      toastrMsg: {},
-      errors: {}
-    });
+    if(this.mounted){
+      this.setState({
+        toastrMsg: {},
+        errors: {}
+      });
+    }
   }
 
   select(conference){
@@ -57,14 +61,18 @@ export default class ConferenceAdmin extends React.Component {
   onSaved(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été sauvegardé.'};
-    this.setState({ toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ toastrMsg: toastrMsg });
+    }
     this.refs.conferenceSection.hideSection();
   }
 
   onDeleted(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été supprimé.'};
-    this.setState({ toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ toastrMsg: toastrMsg });
+    }
     this.refs.conferenceSection.hideSection();
   }
 
@@ -72,7 +80,9 @@ export default class ConferenceAdmin extends React.Component {
     this._resetMsg();
     let errors = ConferenceStore.getErrors();
     let toastrMsg = { error : "Erreur.<br/>"};
-    this.setState({ errors: errors, toastrMsg: toastrMsg });
+    if(this.mounted){
+      this.setState({ errors: errors, toastrMsg: toastrMsg });
+    }
   }
 
   /**

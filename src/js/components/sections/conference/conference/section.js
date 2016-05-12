@@ -10,11 +10,8 @@ import CtrlSaveDel                from "../../../commons/ctrl/CtrlSaveDel";
 import CtrlInput                  from "./CtrlInput";
 import * as sectionHelper         from "../../helper";
 
-
 // Styles
 import sectionStyles              from "../styles.scss"
-
-
 
 export default class ConferenceNameSection extends React.Component {
 
@@ -24,7 +21,6 @@ export default class ConferenceNameSection extends React.Component {
       showSection: false,
     };
   }
-
 
   componentWillReceiveProps(nextProps) {
     let toastrMsg = nextProps.toastrMsg;
@@ -77,7 +73,6 @@ export default class ConferenceNameSection extends React.Component {
     this.refs.modalBootstrap.open();
   } 
 
-
   // Show all property section fields
   showSection(){
     this.setState({'showSection': true});
@@ -112,8 +107,6 @@ export default class ConferenceNameSection extends React.Component {
     this.props.onDelete();
   }
 
-
-
  /* 
   * custum cb for CtrlSelect
   */
@@ -136,7 +129,6 @@ export default class ConferenceNameSection extends React.Component {
 
   // render the component
   render() {
-
     let cx = classNames.bind(sectionStyles);
     this.sectionClasses = cx({
       'section-transition' : true,
