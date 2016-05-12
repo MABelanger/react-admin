@@ -62,7 +62,6 @@ class ScheduleStoreClass extends EventEmitter {
    * LIST
    */
   addListListener(cb) {
-    console.log('cb', cb.prototype)
     this.on(LIST_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   removeListListener(cb) {

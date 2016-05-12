@@ -78,3 +78,27 @@ export function isScheduleExpired(schedules){
   }
   return isExpired;
 }
+
+
+function checkMounted(cb, _this){
+  if(_this.mounted){
+    cb();
+  }
+}
+
+export function AddListeners(store, listnerNames, sectionName, _this){
+  for(let i=0; i < listnerNames.length; i++){
+    let listnerName = listnerNames[i];
+
+    let addName = 'add' + listnerName;
+    let fctName = '__'  + listnerName + sectionName;
+    
+    let fctListner = 
+      function(){
+        return checkMounted( _this[ fctName ].bind(_this), _this);
+      }.bind(_this)
+
+    //store[ addName ]( _this[ fctName ].bind(_this) );
+    store[ addName ]( fctListner );
+  }
+}

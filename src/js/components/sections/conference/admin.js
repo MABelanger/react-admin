@@ -2,6 +2,8 @@ import React                          from "react";
 import Conference                     from "./conference/admin";
 import Schedule                       from "./schedule/admin";
 
+import * as sectionHelper             from "../helper";
+
 // Flux Conference
 import ConferenceStore                from '../../../stores/conference/conferenceStore';
 import * as ConferenceActions         from '../../../actions/conference/conferenceActions';
@@ -26,19 +28,18 @@ export default class ConferenceAdmin extends React.Component {
     };
   }
 
-  checkMounted(cb, _this){
-    console.log('this.mounted', _this.mounted)
-    if(_this.mounted || true){
-      cb(_this);
-    }
-  }
+
 
   componentDidMount() {
     this.mounted = true;
 
+
+    let listnerNames = ['ListListener' ]; //'ReadListener', 'DeletedListener'
+    let sectionName = 'Conference';
+    sectionHelper.AddListeners(ConferenceStore, listnerNames, sectionName, this);
     // Conference
-    let conferenceListListener = function(){ return this.checkMounted(this._setConferences, this); }
-    ConferenceStore.addListListener( conferenceListListener.bind(this) );
+    //let conferenceListListener = function(){ return this.checkMounted(this._setConferences, this); }
+    
     ConferenceStore.addReadListener(this._getConference.bind(this));
     ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
 
@@ -52,7 +53,7 @@ export default class ConferenceAdmin extends React.Component {
     this.mounted = false;
 
     // Conference
-    ConferenceStore.removeListListener(this._setConferences.bind(this));
+    //ConferenceStore.removeListListener(this.ListListener.bind(this));
     ConferenceStore.removeReadListener(this._getConference.bind(this));
     ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
 
@@ -66,32 +67,30 @@ export default class ConferenceAdmin extends React.Component {
    * Conference
    */
   _deletedConference(){
-    this._getConference();
+    if(this.mounted){
+      this._getConference();
+    }
   }
 
   _getConference(){
-    this.setConference(ConferenceStore.getConference());
+    if(this.mounted){
+      this.setConference(ConferenceStore.getConference());
+    }
   }
 
-  _setConferences(_this){
-    if(_this.mounted || true){
-      _this.setState({'conferences': ConferenceStore.getConferences()});
-    }
+  __ListListenerConference(){
+    this.setState({'conferences': ConferenceStore.getConferences()});
   }
 
   setConferences(conferences){
-    if(this.mounted || true){
-      this.setState({'conferences': conferences});
-    }
+    this.setState({'conferences': conferences});
   }
 
 
   setConference(conference){
-    if(this.mounted || true){
-      this.setState({'conference': conference}, function(){
-        this._resetSchedule();
-      });
-    }
+    this.setState({'conference': conference}, function(){
+      this._resetSchedule();
+    });
   }
 
   renderConference(){
