@@ -1,49 +1,74 @@
 import React                          from "react";
 import toastr                         from 'toastr';
 
-import ScheduleSection              from "./section";
+import ScheduleSection                from "./section";
+
+import * as sectionHelper             from "../../helper";
 
 // Flux Schedule
-import ScheduleStore                from '../../../../stores/conference/scheduleStore';
-import * as ScheduleActions         from '../../../../actions/conference/scheduleActions';
-import ScheduleConstants            from '../../../../constants/conference/scheduleConstants';
+import ScheduleStore                  from '../../../../stores/conference/scheduleStore';
+import * as ScheduleActions           from '../../../../actions/conference/scheduleActions';
+import ScheduleConstants              from '../../../../constants/conference/scheduleConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
+
+const SCHEDULE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
 
 export default class ScheduleAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
-    this.mounted = false;
+    this.scheduleListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.mounted = true;
-    ScheduleStore.addSavedListener(this.onSaved.bind(this));
-    ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
-    ScheduleStore.addErrorListener(this.onError.bind(this));
+
+    // Schedule
+    this.scheduleListnerFctRemoveNames = 
+      sectionHelper.addListeners(ScheduleStore, SCHEDULE_LISTNER_FCT_NAMES, this);
+
+    // ScheduleStore.addSavedListener(this.onSaved.bind(this));
+    // ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
+    // ScheduleStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
     this.mounted = false;
-    ScheduleStore.removeSavedListener(this.onSaved.bind(this));
-    ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
-    ScheduleStore.removeErrorListener(this.onError.bind(this));
-  }
 
+    // Schedule
+    sectionHelper.removeListeners(ScheduleStore, this.scheduleListnerFctRemoveNames);
+
+    // ScheduleStore.removeSavedListener(this.onSaved.bind(this));
+    // ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
+    // ScheduleStore.removeErrorListener(this.onError.bind(this));
+  }
   _resetMsg(){
-    if(this.mounted){
-      this.setState({
-        toastrMsg: {},
-        errors: {}
-      });
-    }
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
   }
 
   select(schedule){
@@ -63,18 +88,16 @@ export default class ScheduleAdmin extends React.Component {
   onSaved(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été sauvegardé.'};
-    if(this.mounted){
-      this.setState({ toastrMsg: toastrMsg });
-    }
+
+    this.setState({ toastrMsg: toastrMsg });
     this.refs.scheduleSection.hideSection();
   }
 
   onDeleted(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été supprimé.'};
-    if(this.mounted){
-      this.setState({ toastrMsg: toastrMsg });
-    }
+
+    this.setState({ toastrMsg: toastrMsg });
     this.refs.scheduleSection.hideSection();
   }
 
@@ -82,9 +105,8 @@ export default class ScheduleAdmin extends React.Component {
     this._resetMsg();
     let errors = ScheduleStore.getErrors();
     let toastrMsg = { error : "Erreur.<br/>"};
-    if(this.mounted){
-      this.setState({ errors: errors, toastrMsg: toastrMsg });
-    }
+
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
   }
 
   /**

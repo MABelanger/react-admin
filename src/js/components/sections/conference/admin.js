@@ -12,88 +12,91 @@ import * as ConferenceActions         from '../../../actions/conference/conferen
 import ScheduleStore                  from '../../../stores/conference/scheduleStore';
 import * as ScheduleActions           from '../../../actions/conference/scheduleActions';
 
+const CONFERENCE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setConferences'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getConference'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedConference'
+  },
+];
+
+const SCHEDULE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setSchedules'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getSchedule'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedSchedule'
+  },
+];
+
 export default class ConferenceAdmin extends React.Component {
 
   constructor(props) {
     super(props);
     // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
     this.mounted = false;
-    this.ConferenceListnerFctRemoveNames = null;
+    this.conferenceListnerFctRemoveNames = null;
+    this.scheduleListnerFctRemoveNames = null;
     this.state = {
       conferences : [],
       conference : {},
 
       schedules: [],
       schedule : {},
-
     };
   }
-
-
 
   componentDidMount() {
     this.mounted = true;
 
-
-    let listnerFctNames = [
-      { 
-        storeFctAdd:'addListListener',
-        storeFctRemove:'removeListListener',
-        listenerFct: '_setConferences'
-      },
-      { 
-        storeFctAdd:'addReadListener',
-        storeFctRemove:'removeReadListener',
-        listenerFct: '_getConference'
-      },
-      {
-        storeFctAdd:'addDeletedListener',
-        storeFctRemove:'removeDeletedListener',
-        listenerFct: '_deletedConference'
-      },
-    ];
-
-    this.ConferenceListnerFctRemoveNames = sectionHelper.addListeners(ConferenceStore, listnerFctNames, this);
-
-    // Conference    
-    // ConferenceStore.addListListener(this._setConferences.bind(this));
-    // ConferenceStore.addReadListener(this._getConference.bind(this));
-    // ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
+    // Conference
+    this.conferenceListnerFctRemoveNames = 
+      sectionHelper.addListeners(ConferenceStore, CONFERENCE_LISTNER_FCT_NAMES, this);
 
     // Schedule
-    ScheduleStore.addListListener(this._setSchedules.bind(this));
-    ScheduleStore.addReadListener(this._getSchedule.bind(this));
-    ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
+    this.scheduleListnerFctRemoveNames = 
+      sectionHelper.addListeners(ScheduleStore, SCHEDULE_LISTNER_FCT_NAMES, this);
+
   }
 
   componentWillUnmount() {
     this.mounted = false;
 
     // Conference
-    //ConferenceStore.removeListListener(this.ListListener.bind(this));
-    //ConferenceStore.removeReadListener(this._getConference.bind(this));
-    //ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
-    sectionHelper.removeListeners(ConferenceStore, this.ConferenceListnerFctRemoveNames);
+    sectionHelper.removeListeners(ConferenceStore, this.conferenceListnerFctRemoveNames);
 
     // Schedule
-    ScheduleStore.removeListListener(this._setSchedules.bind(this));
-    ScheduleStore.removeReadListener(this._getSchedule.bind(this));
-    ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
+    sectionHelper.removeListeners(ScheduleStore, this.scheduleListnerFctRemoveNames);
   }
 
   /*
    * Conference
    */
   _deletedConference(){
-    if(this.mounted){
       this._getConference();
-    }
   }
 
   _getConference(){
-    if(this.mounted){
       this.setConference(ConferenceStore.getConference());
-    }
   }
 
   _setConferences(){
@@ -130,15 +133,13 @@ export default class ConferenceAdmin extends React.Component {
    * Schedule
    */
   _resetSchedule(){
-    if(this.mounted || true){
-      this.setState({'schedule': {} }, function(){
-        if (this.refs.scheduleAdmin) {
-          console.log('ScheduleActions.getSchedules()')
-          ScheduleActions.getSchedules(this.state.conference._id);
-          this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
-        }
-      });
-    }
+    this.setState({'schedule': {} }, function(){
+      if (this.refs.scheduleAdmin) {
+        console.log('ScheduleActions.getSchedules()')
+        ScheduleActions.getSchedules(this.state.conference._id);
+        this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
+      }
+    });
   }
 
   _deletedSchedule(){
@@ -150,23 +151,17 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _setSchedules(){
-    if(this.mounted || true){
-      this.setState({'schedules': ScheduleStore.getSchedules()});
-    }
+    this.setState({'schedules': ScheduleStore.getSchedules()});
   }
 
   setSchedule(schedule){
-    if(this.mounted || true){
-      this.setState({'schedule': schedule}, function(){
-        
-      });
-    }
+    this.setState({'schedule': schedule}, function(){
+      
+    });
   }
 
   setSchedules(schedules){
-    if(this.mounted || true){
-      this.setState({'schedules': schedules});
-    }
+    this.setState({'schedules': schedules});
   }
 
   renderSchedule(){

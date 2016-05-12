@@ -3,6 +3,8 @@ import toastr                         from 'toastr';
 
 import ConferenceSection              from "./section";
 
+import * as sectionHelper             from "../../helper";
+
 // Flux Conference
 import ConferenceStore                from '../../../../stores/conference/conferenceStore';
 import * as ConferenceActions         from '../../../../actions/conference/conferenceActions';
@@ -11,37 +13,63 @@ import ConferenceConstants            from '../../../../constants/conference/con
 // CSS
 import 'toastr/build/toastr.css';
 
+const CONFERENCE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
+
 export default class ConferenceAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.conferenceListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
     };
   }
 
-
-
   componentWillMount() {
-    ConferenceStore.addSavedListener(this.onSaved.bind(this));
-    ConferenceStore.addDeletedListener(this.onDeleted.bind(this));
-    ConferenceStore.addErrorListener(this.onError.bind(this));
+    this.mounted = true;
+
+    // Conference
+    this.conferenceListnerFctRemoveNames = 
+      sectionHelper.addListeners(ConferenceStore, CONFERENCE_LISTNER_FCT_NAMES, this);
+
+    // ConferenceStore.addSavedListener(this.onSaved.bind(this));
+    // ConferenceStore.addDeletedListener(this.onDeleted.bind(this));
+    // ConferenceStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
-    ConferenceStore.removeSavedListener(this.onSaved.bind(this));
-    ConferenceStore.removeDeletedListener(this.onDeleted.bind(this));
-    ConferenceStore.removeErrorListener(this.onError.bind(this));
+    this.mounted = false;
+
+    // Conference
+    sectionHelper.removeListeners(ConferenceStore, this.conferenceListnerFctRemoveNames);
+
+    // ConferenceStore.removeSavedListener(this.onSaved.bind(this));
+    // ConferenceStore.removeDeletedListener(this.onDeleted.bind(this));
+    // ConferenceStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){
-    if(this.mounted){
-      this.setState({
-        toastrMsg: {},
-        errors: {}
-      });
-    }
+    this.setState({
+      toastrMsg: {},
+      errors: {}
+    });
   }
 
   select(conference){
@@ -61,18 +89,16 @@ export default class ConferenceAdmin extends React.Component {
   onSaved(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été sauvegardé.'};
-    if(this.mounted){
-      this.setState({ toastrMsg: toastrMsg });
-    }
+
+    this.setState({ toastrMsg: toastrMsg });
     this.refs.conferenceSection.hideSection();
   }
 
   onDeleted(){
     this._resetMsg();
     let toastrMsg = { success : 'La conférence à été supprimé.'};
-    if(this.mounted){
-      this.setState({ toastrMsg: toastrMsg });
-    }
+
+    this.setState({ toastrMsg: toastrMsg });
     this.refs.conferenceSection.hideSection();
   }
 
@@ -80,9 +106,8 @@ export default class ConferenceAdmin extends React.Component {
     this._resetMsg();
     let errors = ConferenceStore.getErrors();
     let toastrMsg = { error : "Erreur.<br/>"};
-    if(this.mounted){
-      this.setState({ errors: errors, toastrMsg: toastrMsg });
-    }
+
+    this.setState({ errors: errors, toastrMsg: toastrMsg });
   }
 
   /**

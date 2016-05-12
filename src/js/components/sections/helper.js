@@ -80,13 +80,13 @@ export function isScheduleExpired(schedules){
 }
 
 
-function checkMounted(cb, _this){
+function _checkMounted(cb, _this){
   if(_this.mounted){
     cb();
   }
 }
 
-// function(){ return this.checkMounted(this._setConferences, this); }
+// function(){ return this._checkMounted(this._setConferences, this); }
 export function addListeners(store, listnerFctNames, _this){
   let listnerFctRemoveNames = [];
   for(let i=0; i < listnerFctNames.length; i++){
@@ -98,7 +98,7 @@ export function addListeners(store, listnerFctNames, _this){
 
     let listenerWrapFct = 
       function(){
-        return checkMounted( _this[ listenerFct ].bind(_this), _this);
+        return _checkMounted( _this[ listenerFct ].bind(_this), _this);
       }.bind(_this)
 
     //store[ addName ]( _this[ fctName ].bind(_this) );
@@ -110,17 +110,16 @@ export function addListeners(store, listnerFctNames, _this){
     }
 
     listnerFctRemoveNames.push(
-      listnerFctRemoveName);
+      listnerFctRemoveName
+    );
   }
   return listnerFctRemoveNames;
 }
 
 export function removeListeners(store, listnerFctRemoveNames){
 
-  console.log('listnerFctRemoveNames', listnerFctRemoveNames)
   for(let i=0; i < listnerFctRemoveNames.length; i++){
     let storeFctRemove = listnerFctRemoveNames[i].storeFctRemove;
-    console.log('storeFctRemove', store[ storeFctRemove ])
     let listenerWrapFct = listnerFctRemoveNames[i].listenerWrapFct;
 
     store[ storeFctRemove ]( listenerWrapFct );
