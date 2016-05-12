@@ -86,19 +86,44 @@ function checkMounted(cb, _this){
   }
 }
 
-export function AddListeners(store, listnerNames, sectionName, _this){
-  for(let i=0; i < listnerNames.length; i++){
-    let listnerName = listnerNames[i];
+// function(){ return this.checkMounted(this._setConferences, this); }
+export function addListeners(store, listnerFctNames, _this){
+  let listnerFctRemoveNames = [];
+  for(let i=0; i < listnerFctNames.length; i++){
+    let listnerFctName = listnerFctNames[i];
 
-    let addName = 'add' + listnerName;
-    let fctName = '__'  + listnerName + sectionName;
-    
-    let fctListner = 
+    let storeFctAdd = listnerFctName.storeFctAdd;
+    let listenerFct = listnerFctName.listenerFct;
+    let storeFctRemove = listnerFctName.storeFctRemove;
+
+    let listenerWrapFct = 
       function(){
-        return checkMounted( _this[ fctName ].bind(_this), _this);
+        return checkMounted( _this[ listenerFct ].bind(_this), _this);
       }.bind(_this)
 
     //store[ addName ]( _this[ fctName ].bind(_this) );
-    store[ addName ]( fctListner );
+    store[ storeFctAdd ]( listenerWrapFct );
+
+    let listnerFctRemoveName = {
+      storeFctRemove: storeFctRemove,
+      listenerWrapFct: listenerWrapFct
+    }
+
+    listnerFctRemoveNames.push(
+      listnerFctRemoveName);
   }
+  return listnerFctRemoveNames;
+}
+
+export function removeListeners(store, listnerFctRemoveNames){
+
+  console.log('listnerFctRemoveNames', listnerFctRemoveNames)
+  for(let i=0; i < listnerFctRemoveNames.length; i++){
+    let storeFctRemove = listnerFctRemoveNames[i].storeFctRemove;
+    console.log('storeFctRemove', store[ storeFctRemove ])
+    let listenerWrapFct = listnerFctRemoveNames[i].listenerWrapFct;
+
+    store[ storeFctRemove ]( listenerWrapFct );
+  }
+
 }

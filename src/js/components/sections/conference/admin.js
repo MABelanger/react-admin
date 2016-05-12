@@ -18,6 +18,7 @@ export default class ConferenceAdmin extends React.Component {
     super(props);
     // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
     this.mounted = false;
+    this.ConferenceListnerFctRemoveNames = null;
     this.state = {
       conferences : [],
       conference : {},
@@ -34,14 +35,30 @@ export default class ConferenceAdmin extends React.Component {
     this.mounted = true;
 
 
-    let listnerNames = ['ListListener' ]; //'ReadListener', 'DeletedListener'
-    let sectionName = 'Conference';
-    sectionHelper.AddListeners(ConferenceStore, listnerNames, sectionName, this);
-    // Conference
-    //let conferenceListListener = function(){ return this.checkMounted(this._setConferences, this); }
-    
-    ConferenceStore.addReadListener(this._getConference.bind(this));
-    ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
+    let listnerFctNames = [
+      { 
+        storeFctAdd:'addListListener',
+        storeFctRemove:'removeListListener',
+        listenerFct: '_setConferences'
+      },
+      { 
+        storeFctAdd:'addReadListener',
+        storeFctRemove:'removeReadListener',
+        listenerFct: '_getConference'
+      },
+      {
+        storeFctAdd:'addDeletedListener',
+        storeFctRemove:'removeDeletedListener',
+        listenerFct: '_deletedConference'
+      },
+    ];
+
+    this.ConferenceListnerFctRemoveNames = sectionHelper.addListeners(ConferenceStore, listnerFctNames, this);
+
+    // Conference    
+    // ConferenceStore.addListListener(this._setConferences.bind(this));
+    // ConferenceStore.addReadListener(this._getConference.bind(this));
+    // ConferenceStore.addDeletedListener(this._deletedConference.bind(this));
 
     // Schedule
     ScheduleStore.addListListener(this._setSchedules.bind(this));
@@ -54,8 +71,9 @@ export default class ConferenceAdmin extends React.Component {
 
     // Conference
     //ConferenceStore.removeListListener(this.ListListener.bind(this));
-    ConferenceStore.removeReadListener(this._getConference.bind(this));
-    ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
+    //ConferenceStore.removeReadListener(this._getConference.bind(this));
+    //ConferenceStore.removeDeletedListener(this._deletedConference.bind(this));
+    sectionHelper.removeListeners(ConferenceStore, this.ConferenceListnerFctRemoveNames);
 
     // Schedule
     ScheduleStore.removeListListener(this._setSchedules.bind(this));
@@ -78,7 +96,7 @@ export default class ConferenceAdmin extends React.Component {
     }
   }
 
-  __ListListenerConference(){
+  _setConferences(){
     this.setState({'conferences': ConferenceStore.getConferences()});
   }
 
