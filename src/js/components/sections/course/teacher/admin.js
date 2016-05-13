@@ -21,22 +21,6 @@ export default class TeacherAdmin extends React.Component {
     };
   }
 
-  _resetMsg(){
-    this.setState({
-      toastrMsg: {},
-      errors: {}
-    });
-  }
-
-  select(teacher){
-    this.props.setTeacher(teacher);
-    this._resetMsg();
-  }
-
-  new(){
-    this.props.setTeacher({});
-    this._resetMsg();
-  }
   componentWillMount() {
     TeacherStore.addSavedListener(this.onSaved.bind(this));
     TeacherStore.addDeletedListener(this.onDeleted.bind(this));

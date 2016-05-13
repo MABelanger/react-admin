@@ -48,10 +48,6 @@ export default class ConferenceAdmin extends React.Component {
     // Conference
     this.conferenceListnerFctRemoveNames = 
       sectionHelper.addListeners(ConferenceStore, CONFERENCE_LISTNER_FCT_NAMES, this);
-
-    // ConferenceStore.addSavedListener(this.onSaved.bind(this));
-    // ConferenceStore.addDeletedListener(this.onDeleted.bind(this));
-    // ConferenceStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
@@ -59,10 +55,6 @@ export default class ConferenceAdmin extends React.Component {
 
     // Conference
     sectionHelper.removeListeners(ConferenceStore, this.conferenceListnerFctRemoveNames);
-
-    // ConferenceStore.removeSavedListener(this.onSaved.bind(this));
-    // ConferenceStore.removeDeletedListener(this.onDeleted.bind(this));
-    // ConferenceStore.removeErrorListener(this.onError.bind(this));
   }
 
   _resetMsg(){

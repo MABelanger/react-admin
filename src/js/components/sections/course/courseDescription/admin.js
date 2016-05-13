@@ -21,22 +21,6 @@ export default class CourseDescriptionAdmin extends React.Component {
     };
   }
 
-  _resetMsg(){
-    this.setState({
-      toastrMsg: {},
-      errors: {}
-    });
-  }
-
-  select(courseDescription){
-    this.props.setCourseDescription(courseDescription);
-    this._resetMsg();
-  }
-
-  new(){
-    this.props.setCourseDescription({});
-    this._resetMsg();
-  }
   componentWillMount() {
     CourseDescriptionStore.addSavedListener(this.onSaved.bind(this));
     CourseDescriptionStore.addDeletedListener(this.onDeleted.bind(this));
@@ -56,6 +40,10 @@ export default class CourseDescriptionAdmin extends React.Component {
     });
   }
 
+  select(courseDescription){
+    this.props.setCourseDescription(courseDescription);
+    this._resetMsg();
+  }
 
   new(){
     this.props.setCourseDescription({});

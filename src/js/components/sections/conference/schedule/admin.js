@@ -48,10 +48,6 @@ export default class ScheduleAdmin extends React.Component {
     // Schedule
     this.scheduleListnerFctRemoveNames = 
       sectionHelper.addListeners(ScheduleStore, SCHEDULE_LISTNER_FCT_NAMES, this);
-
-    // ScheduleStore.addSavedListener(this.onSaved.bind(this));
-    // ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
-    // ScheduleStore.addErrorListener(this.onError.bind(this));
   }
 
   componentWillUnmount() {
@@ -59,10 +55,6 @@ export default class ScheduleAdmin extends React.Component {
 
     // Schedule
     sectionHelper.removeListeners(ScheduleStore, this.scheduleListnerFctRemoveNames);
-
-    // ScheduleStore.removeSavedListener(this.onSaved.bind(this));
-    // ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
-    // ScheduleStore.removeErrorListener(this.onError.bind(this));
   }
   _resetMsg(){
     this.setState({

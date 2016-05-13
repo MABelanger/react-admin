@@ -7,6 +7,8 @@ import Schedule                       from "./schedule/admin";
 import FreeDay                        from "./freeDay/admin";
 import BtnInfo                        from "../../commons/BtnInfo";
 
+import * as sectionHelper             from "../helper";
+
 // Flux CourseName
 import CourseNameStore                from '../../../stores/course/courseNameStore';
 import * as CourseNameActions         from '../../../actions/course/courseNameActions';
@@ -31,13 +33,121 @@ import * as ScheduleActions           from '../../../actions/course/scheduleActi
 import FreeDayStore                  from '../../../stores/course/freeDayStore';
 import * as FreeDayActions           from '../../../actions/course/freeDayActions';
 
+const COURSE_NAME_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setCourseNames'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getCourseName'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedCourseName'
+  },
+];
+
+const TEACHER_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setTeachers'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getTeacher'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedTeacher'
+  },
+];
+
+const COURSE_DESCRIPTION_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getCourseDescription'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedCourseDescription'
+  },
+];
+
+const COURSE_TYPE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setCourseTypes'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getCourseType'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedCourseType'
+  },
+];
+
+const SCHEDULE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setSchedules'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getSchedule'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedSchedule'
+  },
+];
+
+const FREE_DAY_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addListListener',
+    storeFctRemove:'removeListListener',
+    listenerFct: '_setFreeDays'
+  },
+  { 
+    storeFctAdd:'addReadListener',
+    storeFctRemove:'removeReadListener',
+    listenerFct: '_getFreeDay'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: '_deletedFreeDay'
+  },
+];
 
 export default class CourseAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    // hack isMounted() : http://jaketrent.com/post/set-state-in-callbacks-in-react/
     this.mounted = false;
+    this.courseNameListnerFctRemoveNames = null;
+    this.teacherListnerFctRemoveNames = null;
+    this.courseDescriptionListnerFctRemoveNames = null;
+    this.courseTypeListnerFctRemoveNames = null;
+    this.scheduleListnerFctRemoveNames = null;
+    this.freeDayListnerFctRemoveNames = null;
+
     this.state = {
       courses : [],
       course : {},
@@ -62,84 +172,66 @@ export default class CourseAdmin extends React.Component {
   componentDidMount() {
     this.mounted = true;
     // CourseName
-    CourseNameStore.addListListener(this._setCourses.bind(this));
-    CourseNameStore.addReadListener(this._getCourse.bind(this));
-    CourseNameStore.addDeletedListener(this._deletedCourse.bind(this));
+    this.courseNameListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseNameStore, COURSE_NAME_LISTNER_FCT_NAMES, this);
 
     // Teacher
-    TeacherStore.addListListener(this._setTeachers.bind(this));
-    TeacherStore.addReadListener(this._getTeacher.bind(this));
-    TeacherStore.addDeletedListener(this._deletedTeacher.bind(this));
+    this.teacherListnerFctRemoveNames = 
+      sectionHelper.addListeners(TeacherStore, TEACHER_LISTNER_FCT_NAMES, this);
 
     // CourseDescription
-    CourseDescriptionStore.addReadListener(this._getCourseDescription.bind(this));
-    CourseDescriptionStore.addDeletedListener(this._deletedCourseDescription.bind(this));
+    this.courseDescriptionListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseDescriptionStore, COURSE_DESCRIPTION_LISTNER_FCT_NAMES, this);
 
     // CourseType
-    CourseTypeStore.addListListener(this._setCourseTypes.bind(this));
-    CourseTypeStore.addReadListener(this._getCourseType.bind(this));
-    CourseTypeStore.addDeletedListener(this._deletedCourseType.bind(this));
+    this.courseTypeListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseTypeStore, COURSE_TYPE_LISTNER_FCT_NAMES, this);
 
     // Schedule
-    ScheduleStore.addListListener(this._setSchedules.bind(this));
-    ScheduleStore.addReadListener(this._getSchedule.bind(this));
-    ScheduleStore.addDeletedListener(this._deletedSchedule.bind(this));
+    this.scheduleListnerFctRemoveNames = 
+      sectionHelper.addListeners(ScheduleStore, SCHEDULE_LISTNER_FCT_NAMES, this);
 
     // FreeDay
-    FreeDayStore.addListListener(this._setFreeDays.bind(this));
-    FreeDayStore.addReadListener(this._getFreeDay.bind(this));
-    FreeDayStore.addDeletedListener(this._deletedFreeDay.bind(this));
+    this.freeDayListnerFctRemoveNames = 
+      sectionHelper.addListeners(FreeDayStore, FREE_DAY_LISTNER_FCT_NAMES, this);
 
   }
 
   componentWillUnmount() {
     this.mounted = false;
     // CourseName
-    CourseNameStore.removeListListener(this._setCourses.bind(this));
-    CourseNameStore.removeReadListener(this._getCourse.bind(this));
-    CourseNameStore.removeDeletedListener(this._deletedCourse.bind(this));
+    sectionHelper.removeListeners(CourseNameStore, this.courseNameListnerFctRemoveNames);
 
     // Teacher
-    TeacherStore.removeListListener(this._setTeachers.bind(this));
-    TeacherStore.removeReadListener(this._getTeacher.bind(this));
-    TeacherStore.removeDeletedListener(this._deletedTeacher.bind(this));
+    sectionHelper.removeListeners(TeacherStore, this.teacherListnerFctRemoveNames);
 
     // CourseDescription
-    CourseDescriptionStore.removeReadListener(this._getCourseDescription.bind(this));
-    CourseDescriptionStore.removeDeletedListener(this._deletedCourseDescription.bind(this));
+    sectionHelper.removeListeners(CourseDescriptionStore, this.courseDescriptionListnerFctRemoveNames);
 
     // CourseType
-    CourseTypeStore.removeListListener(this._setCourseTypes.bind(this));
-    CourseTypeStore.removeReadListener(this._getCourseType.bind(this));
-    CourseTypeStore.removeDeletedListener(this._deletedCourseType.bind(this));
+    sectionHelper.removeListeners(CourseTypeStore, this.courseTypeListnerFctRemoveNames);
 
     // Schedule
-    ScheduleStore.removeListListener(this._setSchedules.bind(this));
-    ScheduleStore.removeReadListener(this._getSchedule.bind(this));
-    ScheduleStore.removeDeletedListener(this._deletedSchedule.bind(this));
+    sectionHelper.removeListeners(ScheduleStore, this.scheduleListnerFctRemoveNames);
 
     // FreeDay
-    FreeDayStore.removeListListener(this._setFreeDays.bind(this));
-    FreeDayStore.removeReadListener(this._getFreeDay.bind(this));
-    FreeDayStore.removeDeletedListener(this._deletedFreeDay.bind(this));
+    sectionHelper.removeListeners(FreeDayStore, this.freeDayListnerFctRemoveNames);
   }
 
   /*
    * Course
    */
 
-  _deletedCourse(){
+  _deletedCourseName(){
     this._getCourse();
   }
 
-  _getCourse(){
+  _getCourseName(){
     this.setCourse(CourseNameStore.getCourseName());
   }
 
-  _setCourses(){
-    if(this.mounted){
-      this.setState({'courses': CourseNameStore.getCourseNames()});
-    }
+  _setCourseNames(){
+    this.setState({'courses': CourseNameStore.getCourseNames()});
   }
 
   setCourse(course){

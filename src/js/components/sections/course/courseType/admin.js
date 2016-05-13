@@ -21,22 +21,6 @@ export default class CourseTypeAdmin extends React.Component {
     };
   }
 
-  _resetMsg(){
-    this.setState({
-      toastrMsg: {},
-      errors: {}
-    });
-  }
-
-  select(courseType){
-    this.props.setCourseType(courseType);
-    this._resetMsg();
-  }
-
-  new(){
-    this.props.setCourseType({});
-    this._resetMsg();
-  }
   componentWillMount() {
     CourseTypeStore.addSavedListener(this.onSaved.bind(this));
     CourseTypeStore.addDeletedListener(this.onDeleted.bind(this));
@@ -48,7 +32,7 @@ export default class CourseTypeAdmin extends React.Component {
     CourseTypeStore.removeDeletedListener(this.onDeleted.bind(this));
     CourseTypeStore.removeErrorListener(this.onError.bind(this));
   }
-
+  
   _resetMsg(){
     this.setState({
       toastrMsg: {},
