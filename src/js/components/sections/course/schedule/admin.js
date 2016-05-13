@@ -1,20 +1,41 @@
 import React                          from "react";
 import toastr                         from 'toastr';
 
-import ScheduleSection                from "./section";
+import ScheduleSection              from "./section";
+
+import * as sectionHelper             from "../../helper";
 
 // Flux Schedule
-import ScheduleStore                  from '../../../../stores/course/scheduleStore';
-import * as ScheduleActions           from '../../../../actions/course/scheduleActions';
-import ScheduleConstants              from '../../../../constants/course/scheduleConstants';
+import ScheduleStore                from '../../../../stores/course/scheduleStore';
+import * as ScheduleActions         from '../../../../actions/course/scheduleActions';
+import ScheduleConstants            from '../../../../constants/course/scheduleConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
+
+const SCHEDULE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
 
 export default class ScheduleAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.scheduleListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -22,15 +43,18 @@ export default class ScheduleAdmin extends React.Component {
   }
 
   componentWillMount() {
-    ScheduleStore.addSavedListener(this.onSaved.bind(this));
-    ScheduleStore.addDeletedListener(this.onDeleted.bind(this));
-    ScheduleStore.addErrorListener(this.onError.bind(this));
+    this.mounted = true;
+
+    // Schedule
+    this.scheduleListnerFctRemoveNames = 
+      sectionHelper.addListeners(ScheduleStore, SCHEDULE_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
-    ScheduleStore.removeSavedListener(this.onSaved.bind(this));
-    ScheduleStore.removeDeletedListener(this.onDeleted.bind(this));
-    ScheduleStore.removeErrorListener(this.onError.bind(this));
+    this.mounted = false;
+
+    // Schedule
+    sectionHelper.removeListeners(ScheduleStore, this.scheduleListnerFctRemoveNames);
   }
 
   _resetMsg(){

@@ -1,20 +1,41 @@
 import React                          from "react";
 import toastr                         from 'toastr';
-import 'toastr/build/toastr.css';
 
 import CourseDescriptionSection              from "./section";
+
+import * as sectionHelper             from "../../helper";
 
 // Flux CourseDescription
 import CourseDescriptionStore                from '../../../../stores/course/courseDescriptionStore';
 import * as CourseDescriptionActions         from '../../../../actions/course/courseDescriptionActions';
 import CourseDescriptionConstants            from '../../../../constants/course/courseDescriptionConstants';
 
+// CSS
+import 'toastr/build/toastr.css';
 
+const COURSE_DESCRIPTION_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
 
 export default class CourseDescriptionAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.courseDescriptionListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -22,17 +43,19 @@ export default class CourseDescriptionAdmin extends React.Component {
   }
 
   componentWillMount() {
-    CourseDescriptionStore.addSavedListener(this.onSaved.bind(this));
-    CourseDescriptionStore.addDeletedListener(this.onDeleted.bind(this));
-    CourseDescriptionStore.addErrorListener(this.onError.bind(this));
+    this.mounted = true;
+
+    // CourseDescription
+    this.courseDescriptionListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseDescriptionStore, COURSE_DESCRIPTION_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
-    CourseDescriptionStore.removeSavedListener(this.onSaved.bind(this));
-    CourseDescriptionStore.removeDeletedListener(this.onDeleted.bind(this));
-    CourseDescriptionStore.removeErrorListener(this.onError.bind(this));
-  }
+    this.mounted = false;
 
+    // CourseDescription
+    sectionHelper.removeListeners(CourseDescriptionStore, this.courseDescriptionListnerFctRemoveNames);
+  }
   _resetMsg(){
     this.setState({
       toastrMsg: {},

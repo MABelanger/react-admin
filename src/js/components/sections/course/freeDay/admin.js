@@ -1,20 +1,41 @@
 import React                          from "react";
 import toastr                         from 'toastr';
 
-import FreeDaySection                from "./section";
+import FreeDaySection              from "./section";
+
+import * as sectionHelper             from "../../helper";
 
 // Flux FreeDay
-import FreeDayStore                  from '../../../../stores/course/freeDayStore';
-import * as FreeDayActions           from '../../../../actions/course/freeDayActions';
-import FreeDayConstants              from '../../../../constants/course/freeDayConstants';
+import FreeDayStore                from '../../../../stores/course/freeDayStore';
+import * as FreeDayActions         from '../../../../actions/course/freeDayActions';
+import FreeDayConstants            from '../../../../constants/course/freeDayConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
+
+const FREE_DAY_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
 
 export default class FreeDayAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.freeDayListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -22,15 +43,18 @@ export default class FreeDayAdmin extends React.Component {
   }
 
   componentWillMount() {
-    FreeDayStore.addSavedListener(this.onSaved.bind(this));
-    FreeDayStore.addDeletedListener(this.onDeleted.bind(this));
-    FreeDayStore.addErrorListener(this.onError.bind(this));
+    this.mounted = true;
+
+    // FreeDay
+    this.freeDayListnerFctRemoveNames = 
+      sectionHelper.addListeners(FreeDayStore, FREE_DAY_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
-    FreeDayStore.removeSavedListener(this.onSaved.bind(this));
-    FreeDayStore.removeDeletedListener(this.onDeleted.bind(this));
-    FreeDayStore.removeErrorListener(this.onError.bind(this));
+    this.mounted = false;
+
+    // FreeDay
+    sectionHelper.removeListeners(FreeDayStore, this.freeDayListnerFctRemoveNames);
   }
 
   _resetMsg(){

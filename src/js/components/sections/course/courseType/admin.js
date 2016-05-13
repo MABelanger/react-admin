@@ -1,20 +1,41 @@
 import React                          from "react";
 import toastr                         from 'toastr';
-import 'toastr/build/toastr.css';
 
 import CourseTypeSection              from "./section";
+
+import * as sectionHelper             from "../../helper";
 
 // Flux CourseType
 import CourseTypeStore                from '../../../../stores/course/courseTypeStore';
 import * as CourseTypeActions         from '../../../../actions/course/courseTypeActions';
 import CourseTypeConstants            from '../../../../constants/course/courseTypeConstants';
 
+// CSS
+import 'toastr/build/toastr.css';
 
+const COURSE_TYPE_LISTNER_FCT_NAMES = [
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: 'onSaved'
+  },
+  {
+    storeFctAdd:'addDeletedListener',
+    storeFctRemove:'removeDeletedListener',
+    listenerFct: 'onDeleted'
+  },
+  { 
+    storeFctAdd:'addErrorListener',
+    storeFctRemove:'removeErrorListener',
+    listenerFct: 'onError'
+  }
+];
 
 export default class CourseTypeAdmin extends React.Component {
 
   constructor(props) {
     super(props);
+    this.courseTypeListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -22,17 +43,20 @@ export default class CourseTypeAdmin extends React.Component {
   }
 
   componentWillMount() {
-    CourseTypeStore.addSavedListener(this.onSaved.bind(this));
-    CourseTypeStore.addDeletedListener(this.onDeleted.bind(this));
-    CourseTypeStore.addErrorListener(this.onError.bind(this));
+    this.mounted = true;
+
+    // CourseType
+    this.courseTypeListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseTypeStore, COURSE_TYPE_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
-    CourseTypeStore.removeSavedListener(this.onSaved.bind(this));
-    CourseTypeStore.removeDeletedListener(this.onDeleted.bind(this));
-    CourseTypeStore.removeErrorListener(this.onError.bind(this));
+    this.mounted = false;
+
+    // CourseType
+    sectionHelper.removeListeners(CourseTypeStore, this.courseTypeListnerFctRemoveNames);
   }
-  
+
   _resetMsg(){
     this.setState({
       toastrMsg: {},

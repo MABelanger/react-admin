@@ -1,19 +1,19 @@
 import React                          from "react";
 import toastr                         from 'toastr';
 
-import ConferenceSection              from "./section";
+import CourseNameSection              from "./section";
 
 import * as sectionHelper             from "../../helper";
 
-// Flux Conference
-import ConferenceStore                from '../../../../stores/conference/conferenceStore';
-import * as ConferenceActions         from '../../../../actions/conference/conferenceActions';
-import ConferenceConstants            from '../../../../constants/conference/conferenceConstants';
+// Flux CourseName
+import CourseNameStore                from '../../../../stores/course/courseNameStore';
+import * as CourseNameActions         from '../../../../actions/course/courseNameActions';
+import CourseNameConstants            from '../../../../constants/course/courseNameConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
 
-const CONFERENCE_LISTNER_FCT_NAMES = [
+const COURSE_NAME_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
@@ -31,11 +31,11 @@ const CONFERENCE_LISTNER_FCT_NAMES = [
   }
 ];
 
-export default class ConferenceAdmin extends React.Component {
+export default class CourseNameAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.conferenceListnerFctRemoveNames = null;
+    this.courseNameListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -45,16 +45,16 @@ export default class ConferenceAdmin extends React.Component {
   componentWillMount() {
     this.mounted = true;
 
-    // Conference
-    this.conferenceListnerFctRemoveNames = 
-      sectionHelper.addListeners(ConferenceStore, CONFERENCE_LISTNER_FCT_NAMES, this);
+    // CourseName
+    this.courseNameListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseNameStore, COURSE_NAME_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
     this.mounted = false;
 
-    // Conference
-    sectionHelper.removeListeners(ConferenceStore, this.conferenceListnerFctRemoveNames);
+    // CourseName
+    sectionHelper.removeListeners(CourseNameStore, this.courseNameListnerFctRemoveNames);
   }
 
   _resetMsg(){
