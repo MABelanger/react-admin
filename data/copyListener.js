@@ -1,19 +1,19 @@
 import React                          from "react";
 import toastr                         from 'toastr';
 
-import TeacherSection              from "./section";
+import CourseNameSection              from "./section";
 
 import * as sectionHelper             from "../../helper";
 
-// Flux Teacher
-import TeacherStore                from '../../../../stores/course/teacherStore';
-import * as TeacherActions         from '../../../../actions/course/teacherActions';
-import TeacherConstants            from '../../../../constants/course/teacherConstants';
+// Flux CourseName
+import CourseNameStore                from '../../../../stores/course/courseNameStore';
+import * as CourseNameActions         from '../../../../actions/course/courseNameActions';
+import CourseNameConstants            from '../../../../constants/course/courseNameConstants';
 
 // CSS
 import 'toastr/build/toastr.css';
 
-const TEACHER_LISTNER_FCT_NAMES = [
+const COURSE_NAME_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
@@ -31,11 +31,11 @@ const TEACHER_LISTNER_FCT_NAMES = [
   }
 ];
 
-export default class TeacherAdmin extends React.Component {
+export default class CourseNameAdmin extends React.Component {
 
   constructor(props) {
     super(props);
-    this.teacherListnerFctRemoveNames = null;
+    this.courseNameListnerFctRemoveNames = null;
     this.state = {
       toastrMsg: {},
       errors: {},
@@ -45,14 +45,14 @@ export default class TeacherAdmin extends React.Component {
   componentWillMount() {
     this.mounted = true;
 
-    // Teacher
-    this.teacherListnerFctRemoveNames = 
-      sectionHelper.addListeners(TeacherStore, TEACHER_LISTNER_FCT_NAMES, this);
+    // CourseName
+    this.courseNameListnerFctRemoveNames = 
+      sectionHelper.addListeners(CourseNameStore, COURSE_NAME_LISTNER_FCT_NAMES, this);
   }
 
   componentWillUnmount() {
     this.mounted = false;
 
-    // Teacher
-    sectionHelper.removeListeners(TeacherStore, this.teacherListnerFctRemoveNames);
+    // CourseName
+    sectionHelper.removeListeners(CourseNameStore, this.courseNameListnerFctRemoveNames);
   }
