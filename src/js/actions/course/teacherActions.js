@@ -9,7 +9,7 @@ import TeacherConstants               from "../../constants/course/teacherConsta
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
+const { URL_API,
         LIST_TEACHER_EVENT,
         CREATE_TEACHER_EVENT,
         SAVED_TEACHER_EVENT,
@@ -34,7 +34,7 @@ function getFlatErrors(errors){
 
 
 export function getTeachers(courseId) {
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/';
+  let url = URL_API + '/courses/' + courseId + '/teachers/';
   let token = UserStore.getToken();
   Request
   .get(url)
@@ -48,7 +48,7 @@ export function getTeachers(courseId) {
 }
 
 export function createTeacher(teacher, courseId) {
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/';
+  let url = URL_API + 'courses/' + courseId + '/teachers/';
   let token = UserStore.getToken();
   Request
     .post(url)
@@ -83,7 +83,7 @@ export function createTeacher(teacher, courseId) {
 
 export function saveTeacher(teacher, courseId) {
   let token = UserStore.getToken();
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/' + teacher._id;
+  let url = URL_API + 'courses/' + courseId + '/teachers/' + teacher._id;
   Request
     .put(url)
     .accept('application/json')
@@ -117,7 +117,7 @@ export function saveTeacher(teacher, courseId) {
 
 export function deleteTeacher(teacher, courseId) {
   let token = UserStore.getToken();
-  let url = BASE_URL + 'courses/' + courseId + '/teachers/' + teacher._id;
+  let url = URL_API + 'courses/' + courseId + '/teachers/' + teacher._id;
   Request
     .del(url)
     .accept('application/json')

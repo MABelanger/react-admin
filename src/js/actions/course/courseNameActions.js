@@ -9,7 +9,7 @@ import CourseNameConstants            from "../../constants/course/courseNameCon
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { URL,
+const { URL_API,
         LIST_COURSE_NAME_EVENT,
         CREATE_COURSE_NAME_EVENT,
         SAVED_COURSE_NAME_EVENT,
@@ -36,7 +36,7 @@ function getFlatErrors(errors){
 export function getCourseNames() {
   let token = UserStore.getToken();
   Request
-  .get(URL)
+  .get(URL_API + '/courses')
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
@@ -49,7 +49,7 @@ export function getCourseNames() {
 export function createCourseName(courseName) {
   let token = UserStore.getToken();
   Request
-    .post(URL)
+    .post(URL_API + '/courses')
     .accept('application/json')
     .type('application/json')
     .send(courseName)
@@ -81,7 +81,7 @@ export function createCourseName(courseName) {
 
 export function saveCourseName(courseName) {
   let token = UserStore.getToken();
-  let url = URL + '/' + courseName._id;
+  let url = URL_API + '/courses/' + courseName._id;
   Request
     .put(url)
     .accept('application/json')
@@ -115,7 +115,7 @@ export function saveCourseName(courseName) {
 
 export function deleteCourseName(courseName) {
   let token = UserStore.getToken();
-  let url = URL + '/' + courseName._id;
+  let url = URL_API + '/courses/' + courseName._id;
   Request
     .del(url)
     .accept('application/json')

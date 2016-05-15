@@ -1,13 +1,12 @@
 'use strict';
 
-import keyMirror from 'keymirror';
+import CommonConstants                from '../commonConstants';
 
-var BASE_URL = 'http://localhost:3000/';
-// User constants
 export default {
-  BASE_URL: BASE_URL,
-  LOGIN_URL: BASE_URL + 'public/api/sessions/authentication',
+  URL_API : CommonConstants.BASE_URL_API,
+  LOGIN_URL: CommonConstants.BASE_URL_PUBLIC_API + '/sessions/authentication',
   SEND_LOGIN: 'SEND_LOGIN',
+  LOGOUT:'LOGOUT',
   DONE_LOGIN: 'DONE_LOGIN',
   CHANGE_EVENT: 'CHANGE_EVENT'
 };

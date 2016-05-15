@@ -26,3 +26,9 @@ export function login(username, password){
     });
 }
 
+export function logout(){
+  ClientDispatcher.dispatch({
+    actionType: userConstants.LOGOUT,
+  });
+}
+

@@ -8,6 +8,7 @@ import { EventEmitter }               from 'events';
 
 const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
 
+
 // Define the public event listeners and getters that
 // the views will use to listen for changes and retrieve
 // the store
@@ -36,7 +37,20 @@ class UserStoreClass extends EventEmitter {
     this.data = data;
     this.token = data.id_token;
     this.user = jwt_decode(data.id_token);
+
+    // save token into local storage
+    localStorage.setItem('token', this.token)
+
   }
+
+  logout(){
+    this.data = null;
+    this.user = null;
+    this.token = null;
+    // remove token into local storage
+    localStorage.removeItem('token');
+  }
+
 
   getData(){
     return this.data;
@@ -46,8 +60,19 @@ class UserStoreClass extends EventEmitter {
     return this.user;
   }
 
+  _getToken(){
+    if(!!localStorage.getItem('token')){
+      return localStorage.getItem('token');
+    }
+    else{
+      return this.token;
+    }
+  }
   getToken(){
-    return this.token;
+    return this._getToken();
+  }
+  isLoggedIn(){
+    return !!this._getToken();
   }
 }
 
@@ -63,6 +88,11 @@ AppDispatcher.register((payload) => {
 
   case UserConstants.DONE_LOGIN:
     userStore.doneUser(payload.data);
+    userStore.emit(CHANGE_EVENT);
+    break;
+
+  case UserConstants.LOGOUT:
+    userStore.logout();
     userStore.emit(CHANGE_EVENT);
     break;
 

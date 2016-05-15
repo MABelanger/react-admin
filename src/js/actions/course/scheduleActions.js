@@ -9,7 +9,7 @@ import ScheduleConstants            from "../../constants/course/scheduleConstan
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
+const { URL_API,
         LIST_SCHEDULE_EVENT,
         CREATE_SCHEDULE_EVENT,
         SAVED_SCHEDULE_EVENT,
@@ -33,7 +33,7 @@ function getFlatErrors(errors){
 }
 
 function getUrl(courseId, teacherId, courseTypeId){
-  return BASE_URL + 'courses/' + courseId 
+  return URL_API + '/courses/' + courseId 
                   + '/teachers/' + teacherId 
                   + '/course_description/course_types/' + courseTypeId
                   + '/schedules';

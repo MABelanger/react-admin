@@ -10,7 +10,7 @@ import ScheduleConstants              from "../../constants/conference/scheduleC
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { URL,
+const { URL_API,
         LIST_CONFERENCE_SCHEDULE_EVENT,
         CREATE_CONFERENCE_SCHEDULE_EVENT,
         SAVED_CONFERENCE_SCHEDULE_EVENT,
@@ -33,7 +33,7 @@ function getFlatErrors(errors){
 }
 
 function getUrl(conferenceId){
-  return URL  + '/' + conferenceId 
+  return URL_API + '/conferences/' + conferenceId 
               + '/schedules';
 }
 

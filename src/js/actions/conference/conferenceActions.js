@@ -9,7 +9,7 @@ import ConferenceConstants            from "../../constants/conference/conferenc
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { URL,
+const { URL_API,
         LIST_CONFERENCE_EVENT,
         CREATE_CONFERENCE_EVENT,
         SAVED_CONFERENCE_EVENT,
@@ -36,7 +36,7 @@ function getFlatErrors(errors){
 export function getConferences() {
   let token = UserStore.getToken();
   Request
-  .get(URL)
+  .get(URL_API + '/conferences' )
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
@@ -49,7 +49,7 @@ export function getConferences() {
 export function createConference(conference) {
   let token = UserStore.getToken();
   Request
-    .post(URL)
+    .post(URL_API + '/conferences' )
     .accept('application/json')
     .type('application/json')
     .send(conference)
@@ -81,7 +81,7 @@ export function createConference(conference) {
 
 export function saveConference(conference) {
   let token = UserStore.getToken();
-  let url = URL + '/' + conference._id;
+  let url = URL_API + '/conferences/' + conference._id;
   Request
     .put(url)
     .accept('application/json')
@@ -115,7 +115,7 @@ export function saveConference(conference) {
 
 export function deleteConference(conference) {
   let token = UserStore.getToken();
-  let url = URL + '/' + conference._id;
+  let url = URL_API + '/conferences/' + conference._id;
   Request
     .del(url)
     .accept('application/json')

@@ -5,6 +5,8 @@ import React                          from 'react';
 import moment                         from 'moment';
 import { Link }                       from "react-router";
 
+import UserStore                      from '../stores/user/userStore';
+
 // Project modules
 import Footer                         from "../components/layout/Footer";
 import Nav                            from "../components/layout/Nav";
@@ -20,7 +22,10 @@ export default class Layout extends React.Component {
     };
     return (
       <div>
-        <Nav location={location} />
+        <Nav
+          location={location}
+          isLoggedIn={UserStore.isLoggedIn()}
+        />
         <div className="container" style={containerStyle}>
           {this.props.children}
           <Footer/>

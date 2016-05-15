@@ -9,7 +9,7 @@ import CourseDescriptionConstants     from "../../constants/course/courseDescrip
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
+const { URL_API,
         GET_COURSE_DESCRIPTION_EVENT,
         CREATE_COURSE_DESCRIPTION_EVENT,
         SAVED_COURSE_DESCRIPTION_EVENT,
@@ -32,7 +32,7 @@ function getFlatErrors(errors){
 }
 
 function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description'
+  return URL_API + '/courses/' + courseId + '/teachers/' + teacherId + '/course_description'
 }
 
 export function getCourseDescription(courseId, teacherId) {

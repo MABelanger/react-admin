@@ -10,7 +10,7 @@ import FreeDayConstants               from "../../constants/course/freeDayConsta
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
+const { URL_API,
         LIST_FREE_DAY_EVENT,
         CREATE_FREE_DAY_EVENT,
         SAVED_FREE_DAY_EVENT,
@@ -34,7 +34,7 @@ function getFlatErrors(errors){
 }
 
 function getUrl(courseId, teacherId, courseTypeId, scheduleId){
-  return BASE_URL + 'courses/' + courseId 
+  return URL_API + '/courses/' + courseId 
                   + '/teachers/' + teacherId 
                   + '/course_description/course_types/' + courseTypeId
                   + '/schedules/' + scheduleId

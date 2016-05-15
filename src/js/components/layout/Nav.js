@@ -4,6 +4,8 @@
 import React                          from "react";
 import { IndexLink, Link }            from "react-router";
 
+
+
 export default class Nav extends React.Component {
   constructor() {
     super()
@@ -20,8 +22,8 @@ export default class Nav extends React.Component {
   render() {
     const { location } = this.props;
     const { collapsed } = this.state;
-    const courseAdminClass = (location.pathname === "/admin/course" || location.pathname === "/") ? "active" : "";
-    const conferenceAdminClass = location.pathname === "/admin/conference" ? "active" : "";
+    const courseAdminClass = (location.pathname === "/admin/courses" || location.pathname === "/") ? "active" : "";
+    const conferenceAdminClass = location.pathname === "/admin/conferences" ? "active" : "";
     const loginClass = location.pathname === "/admin/login" ? "active" : "";
     const navClass = collapsed ? "collapse" : "";
 
@@ -44,13 +46,17 @@ export default class Nav extends React.Component {
                 </a>
               </li>
               <li className={courseAdminClass}>
-                <IndexLink to="/admin/course" onClick={this.toggleCollapse.bind(this)}>CALENDRIER DES COURS</IndexLink>
+                <IndexLink to="/admin/courses" onClick={this.toggleCollapse.bind(this)}>CALENDRIER DES COURS</IndexLink>
               </li>
               <li className={conferenceAdminClass}>
-                <Link to="/admin/conference" onClick={this.toggleCollapse.bind(this)}>CONFÉRENCES ET ATELIERS</Link>
+                <Link to="/admin/conferences" onClick={this.toggleCollapse.bind(this)}>CONFÉRENCES ET ATELIERS</Link>
               </li>
               <li className={loginClass}>
-                <Link to="/admin/login" onClick={this.toggleCollapse.bind(this)}>LOGIN</Link>
+                {this.props.isLoggedIn ? (
+                  <Link to="/admin/logout" onClick={this.toggleCollapse.bind(this)}>Log out</Link>
+                ) : (
+                  <Link to="/admin/login" onClick={this.toggleCollapse.bind(this)}>Sign in</Link>
+                )}
               </li>
             </ul>
           </div>

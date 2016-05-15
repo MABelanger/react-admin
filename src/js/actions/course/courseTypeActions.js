@@ -9,7 +9,7 @@ import CourseTypeConstants            from "../../constants/course/courseTypeCon
 // Flux (to get token)
 import UserStore                      from '../../stores/user/userStore';
 
-const { BASE_URL,
+const { URL_API,
         LIST_COURSE_TYPE_EVENT,
         CREATE_COURSE_TYPE_EVENT,
         SAVED_COURSE_TYPE_EVENT,
@@ -33,7 +33,7 @@ function getFlatErrors(errors){
 }
 
 function getUrl(courseId, teacherId){
-  return BASE_URL + 'courses/' + courseId + '/teachers/' + teacherId + '/course_description/course_types'
+  return URL_API + '/courses/' + courseId + '/teachers/' + teacherId + '/course_description/course_types'
 }
 
 export function getCourseTypes(courseId, teacherId) {

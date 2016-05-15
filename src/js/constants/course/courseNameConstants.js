@@ -1,9 +1,10 @@
 'use strict';
 
-let BASE_URL = 'http://localhost:3000/';
+import CommonConstants                from '../commonConstants';
 
 export default {
-  URL: BASE_URL + 'api/courses',
+  URL_API : CommonConstants.BASE_URL_API,
+  URL_IMAGE : CommonConstants.BASE_URL_IMAGE,
   CREATE_COURSE_NAME_EVENT: 'CREATE_COURSE_NAME_EVENT',
   READ_COURSE_NAME_EVENT: 'READ_COURSE_NAME_EVENT',
   SAVE_COURSE_NAME_EVENT: 'SAVE_COURSE_NAME_EVENT',
