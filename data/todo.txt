@@ -1,1 +1,6 @@
 use flux instead of api on each sections.
+6285 ma
+6293 ma
+6271 ma
+6306 ma
+95% 10h remainding.

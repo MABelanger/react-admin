@@ -15,10 +15,6 @@ const { LIST_CONFERENCE_SCHEDULE_EVENT,
         ERROR_SAVE_CONFERENCE_SCHEDULE_EVENT,
         ERROR_DELETE_CONFERENCE_SCHEDULE_EVENT } = ScheduleConstants;
 
-console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
-
-
-
 // Define the public event listeners and getters that
 // the views will use to listen for changes and retrieve
 // the store
@@ -68,7 +64,6 @@ class ScheduleStoreClass extends EventEmitter {
     this.removeListener(LIST_CONFERENCE_SCHEDULE_EVENT, cb);
   }
   emitList(){
-    console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
     this.emit(LIST_CONFERENCE_SCHEDULE_EVENT);
   }
 

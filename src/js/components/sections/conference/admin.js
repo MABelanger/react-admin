@@ -135,7 +135,6 @@ export default class ConferenceAdmin extends React.Component {
   _resetSchedule(){
     this.setState({'schedule': {} }, function(){
       if (this.refs.scheduleAdmin) {
-        console.log('ScheduleActions.getSchedules()')
         ScheduleActions.getSchedules(this.state.conference._id);
         this.refs.scheduleAdmin.refs.scheduleSection.hideSection();
       }

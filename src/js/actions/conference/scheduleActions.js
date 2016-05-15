@@ -38,7 +38,6 @@ function getUrl(conferenceId){
 }
 
 export function getSchedules(conferenceId) {
-  console.log('LIST_CONFERENCE_SCHEDULE_EVENT', LIST_CONFERENCE_SCHEDULE_EVENT)
   let url = getUrl(conferenceId);
   let token = UserStore.getToken();
   Request
