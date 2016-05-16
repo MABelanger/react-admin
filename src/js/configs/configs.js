@@ -3,6 +3,8 @@
 import { useRouterHistory } from 'react-router'
 import { createHistory, createHashHistory } from 'history'
 
+const PORT = 9000;
+
 export function isProduction() {
   console.log('window.location.hostname', window.location.hostname);
   return    window.location.hostname == 'ec2-54-235-235-7.compute-1.amazonaws.com'
@@ -14,7 +16,7 @@ export function getBaseUrlApi() {
   if( isProduction() ){
     return 'http://admin.blackandrouge.com/api';
   } else {
-    return 'http://localhost:3000/api';
+    return 'http://localhost:' + PORT + '/api';
   }
 }
 
@@ -22,7 +24,7 @@ export function getBaseUrlImage() {
   if( isProduction() ){
     return 'http://www.blackandrouge.com';
   } else {
-    return 'http://localhost:3000';
+    return 'http://localhost:' + PORT;
   }
 }
 
@@ -30,7 +32,7 @@ export function getUrlPublicApi() {
   if( isProduction() ){
     return 'http://admin.blackandrouge.com/public/api';
   } else {
-    return 'http://localhost:3000/public/api';
+    return 'http://localhost:' + PORT + '/public/api';
   }
 }
 

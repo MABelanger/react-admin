@@ -9,21 +9,21 @@ export default class CourseNameCtrlInput extends React.Component {
     super(props);
     this.state = {
         name : "",
-        svg : ""
+//        svg : ""
     };
   }
 
   componentWillMount(){
     this.setState({
       name : this.props.course.name,
-      svg : this.props.course.svg,
+//      svg : this.props.course.svg,
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       name : nextProps.course.name,
-      svg : nextProps.course.svg,
+//      svg : nextProps.course.svg,
     });
   }
 
@@ -44,12 +44,19 @@ export default class CourseNameCtrlInput extends React.Component {
   getFields(){
     return {
       name : this.state.name,
-      svg : this.state.svg,
+//      svg : this.state.svg,
     };
   }
 
 /*
-
+  <TextInput
+    name="svg"
+    label="Svg"
+    ref="svg"
+    error={sectionHelper.getError("svg", this.props.errors)}
+    value={this.state.svg}
+    changeValue={ (name, value) => { this.changeValue(name, value); } }
+  />
 */
 
   render() {
@@ -61,14 +68,6 @@ export default class CourseNameCtrlInput extends React.Component {
           ref="name"
           error={sectionHelper.getError("name", this.props.errors)}
           value={this.state.name}
-          changeValue={ (name, value) => { this.changeValue(name, value); } }
-        />
-        <TextInput
-          name="svg"
-          label="Svg"
-          ref="svg"
-          error={sectionHelper.getError("svg", this.props.errors)}
-          value={this.state.svg}
           changeValue={ (name, value) => { this.changeValue(name, value); } }
         />
       </div>
