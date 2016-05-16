@@ -3,6 +3,7 @@ import React                      from "react";
 import "./style.css"
 
 import BtnInfo                    from "../commons/BtnInfo";
+import commonConstants            from "../../constants/commonConstants";
 
 export default class ImageUpload extends React.Component {
 
@@ -63,7 +64,7 @@ export default class ImageUpload extends React.Component {
 
     if (this.props.value) {
       if (this.props.value.url) {
-        imgSrc = 'http://localhost:3000/' + this.props.value.url;
+        imgSrc = commonConstants.BASE_URL_IMAGE + '/' + this.props.value.url;
         fileName = this._getFileNameUrl(this.props.value.url);
 
       } else if (this.props.value.dataUri) {
