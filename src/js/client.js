@@ -39,28 +39,27 @@ ReactDOM.render(
     <Route  path="/"
             component={Layout}>
 
-
-      <Route  path="/admin/login"
+      <Route  path="admin/login"
               name="loginPage"
               component={LoginPage}>
       </Route>
 
-      <Route  path="/admin/logout"
+      <Route  path="admin/logout"
               name="logoutPage"
               component={LogoutPage}>
       </Route>
 
-      <Route  path="/admin/courses"
+      <Route  path="admin/courses"
               name="courseAdminPage"
               component={CourseAdminPage}
               onEnter={requireAuth}>
       </Route>
 
-      <Route  path="/admin/conferences"
+      <Route  path="admin/conferences"
               name="conferenceAdminPage"
               component={ConferenceAdminPage}
               onEnter={requireAuth}>
       </Route>
-
+      <Redirect from="*" to="admin/courses" />
     </Route>
   </Router>,APP);
