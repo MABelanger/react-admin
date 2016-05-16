@@ -32,11 +32,15 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
+function getUrl(){
+  return URL_API + '/courses';
+}
 
 export function getCourseNames() {
+  let url = getUrl();
   let token = UserStore.getToken();
   Request
-  .get(URL_API + '/courses')
+  .get(url)
   .set('Authorization', 'Bearer ' + token)
   .end(function(err, res){
     ClientDispatcher.dispatch({
@@ -47,9 +51,10 @@ export function getCourseNames() {
 }
 
 export function createCourseName(courseName) {
+  let url = getUrl();
   let token = UserStore.getToken();
   Request
-    .post(URL_API + '/courses')
+    .post(url)
     .accept('application/json')
     .type('application/json')
     .send(courseName)
@@ -81,7 +86,7 @@ export function createCourseName(courseName) {
 
 export function saveCourseName(courseName) {
   let token = UserStore.getToken();
-  let url = URL_API + '/courses/' + courseName._id;
+  let url =  getUrl() + '/' + courseName._id;
   Request
     .put(url)
     .accept('application/json')
@@ -115,7 +120,7 @@ export function saveCourseName(courseName) {
 
 export function deleteCourseName(courseName) {
   let token = UserStore.getToken();
-  let url = URL_API + '/courses/' + courseName._id;
+  let url =  getUrl() + '/' + courseName._id;
   Request
     .del(url)
     .accept('application/json')

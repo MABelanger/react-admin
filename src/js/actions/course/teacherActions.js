@@ -32,9 +32,13 @@ function getFlatErrors(errors){
   return flatErrors;
 }
 
+function getUrl(courseId){
+  return URL_API + '/courses/' + courseId 
+                  + '/teachers';
+}
 
 export function getTeachers(courseId) {
-  let url = URL_API + '/courses/' + courseId + '/teachers/';
+  let url = getUrl(courseId);
   let token = UserStore.getToken();
   Request
   .get(url)
@@ -48,7 +52,7 @@ export function getTeachers(courseId) {
 }
 
 export function createTeacher(teacher, courseId) {
-  let url = URL_API + 'courses/' + courseId + '/teachers/';
+  let url = getUrl(courseId);
   let token = UserStore.getToken();
   Request
     .post(url)
@@ -83,7 +87,7 @@ export function createTeacher(teacher, courseId) {
 
 export function saveTeacher(teacher, courseId) {
   let token = UserStore.getToken();
-  let url = URL_API + 'courses/' + courseId + '/teachers/' + teacher._id;
+  let url = getUrl(courseId) + '/' + teacher._id;
   Request
     .put(url)
     .accept('application/json')
@@ -117,7 +121,7 @@ export function saveTeacher(teacher, courseId) {
 
 export function deleteTeacher(teacher, courseId) {
   let token = UserStore.getToken();
-  let url = URL_API + 'courses/' + courseId + '/teachers/' + teacher._id;
+  let url = getUrl(courseId) + '/' + teacher._id;
   Request
     .del(url)
     .accept('application/json')
