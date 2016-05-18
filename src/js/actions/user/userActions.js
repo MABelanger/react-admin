@@ -19,10 +19,17 @@ export function login(username, password){
     .type('application/json')
     .send(data)
     .end((err, res) => {
-      ClientDispatcher.dispatch({
-        actionType: userConstants.DONE_LOGIN,
-        data: res.body
-      });
+      if(res.body.hasError){
+        ClientDispatcher.dispatch({
+          actionType: userConstants.ERROR_LOGIN,
+          data: res.body
+        });
+      } else {
+        ClientDispatcher.dispatch({
+          actionType: userConstants.DONE_LOGIN,
+          data: res.body
+        });
+      }
     });
 }
 

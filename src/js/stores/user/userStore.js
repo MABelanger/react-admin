@@ -6,7 +6,7 @@ import AppDispatcher                  from '../../dispatcher/clientDispatcher';
 import UserConstants                  from '../../constants/user/userConstants';
 import { EventEmitter }               from 'events';
 
-const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
+const {CHANGE_EVENT, ERROR_EVENT} = UserConstants;
 
 
 // Define the public event listeners and getters that
@@ -40,7 +40,10 @@ class UserStoreClass extends EventEmitter {
 
     // save token into local storage
     localStorage.setItem('token', this.token)
+  }
 
+  errorUser(data){
+    this.data = data;
   }
 
   logout(){
@@ -89,6 +92,11 @@ AppDispatcher.register((payload) => {
   case UserConstants.DONE_LOGIN:
     userStore.doneUser(payload.data);
     userStore.emit(CHANGE_EVENT);
+    break;
+
+  case UserConstants.ERROR_LOGIN:
+    userStore.errorUser(payload.data);
+    userStore.emit(ERROR_EVENT);
     break;
 
   case UserConstants.LOGOUT:

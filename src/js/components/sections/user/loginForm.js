@@ -12,7 +12,7 @@ import UserStore                      from '../../../stores/user/userStore';
 import * as UserActions               from '../../../actions/user/userActions';
 import UserConstants                  from '../../../constants/user/userConstants';
 
-const CHANGE_EVENT = UserConstants.CHANGE_EVENT;
+const {CHANGE_EVENT, ERROR_EVENT} = UserConstants;
 
 export default class Login extends React.Component {
 
@@ -24,16 +24,19 @@ export default class Login extends React.Component {
     super()
     this.state = {
       user: '',
-      password: ''
+      password: '',
+      errors: ''
     };
   }
 
   componentWillMount() {
     UserStore.on(CHANGE_EVENT, this.getUser.bind(this));
+    UserStore.on(ERROR_EVENT, this.errorUser.bind(this));
   }
 
   componentWillUnmount() {
     UserStore.removeListener(CHANGE_EVENT, this.getUser.bind(this));
+    UserStore.removeListener(ERROR_EVENT, this.errorUser.bind(this));
   }
 
   changeValue(name, value) {
@@ -42,7 +45,18 @@ export default class Login extends React.Component {
     this.setState(newState);
   }
 
+  errorUser(){
+    let data = UserStore.getData();
+    if(data.hasError){
+      this.setState({
+        errors: data.errors
+      });
+    }
+    console.log('data', data)
+  }
+
   getUser() {
+    console.log('getUser');
     //let data = UserStore.getData();
     let user = UserStore.getUser();
     // redirect to admin/courses
@@ -72,30 +86,46 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <div className="login jumbotron center-block">
-        <h1>Login</h1>
-        <form role="form">
+      <div>
+        <div className="row">
+          <div className="col-sm-offset-2 col-sm-10">
+            <h1>Connection</h1>
+          </div>
+        </div>
+          <div className="row">
+            <form role="form">
 
-          <TextInput
-            name="user"
-            label="User"
-            ref="user"
-            error={sectionHelper.getError("user", this.props.errors)}
-            value={this.state.name}
-            changeValue={ (name, value) => { this.changeValue(name, value); } }
-          />
+              <TextInput
+                name="user"
+                label="Utilisateur"
+                ref="user"
+                error={sectionHelper.getError("user", this.state.errors)}
+                value={this.state.name}
+                changeValue={ (name, value) => { this.changeValue(name, value); } }
+              />
 
-          <TextInput
-            name="password"
-            label="Password"
-            ref="password"
-            error={sectionHelper.getError("password", this.props.errors)}
-            value={this.state.name}
-            changeValue={ (name, value) => { this.changeValue(name, value); } }
-          />
-          <button type="submit" className="btn btn-default" onClick={this.login.bind(this)}>Submit</button>
-        </form>
-      </div>
+              <TextInput
+                name="password"
+                label="Mot de passe"
+                ref="password"
+                error={sectionHelper.getError("password", this.state.errors)}
+                value={this.state.name}
+                changeValue={ (name, value) => { this.changeValue(name, value); } }
+              />
+
+            <div className="form-horizontal">
+              <div className="form-group no-margin">
+                <div className="col-sm-offset-2 col-sm-3">
+                  <button type="submit" className="btn btn-default" onClick={this.login.bind(this)}>Connection</button>
+                </div>
+              </div>
+            </div>
+
+            </form>
+          </div>
+
+        </div>
+
     );
   }
 }
