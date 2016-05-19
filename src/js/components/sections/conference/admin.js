@@ -21,12 +21,12 @@ const CONFERENCE_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getConference'
+    listenerFct: '_setConference'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getConference'
+    listenerFct: '_setConference'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -44,7 +44,7 @@ const SCHEDULE_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getSchedule'
+    listenerFct: '_setSchedule'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -97,10 +97,10 @@ export default class ConferenceAdmin extends React.Component {
    * Conference
    */
   _deletedConference(){
-      this._getConference();
+      this._setConference();
   }
 
-  _getConference(){
+  _setConference(){
       this.setConference(ConferenceStore.getConference());
   }
 
@@ -147,10 +147,10 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _deletedSchedule(){
-    this._getSchedule();
+    this._setSchedule();
   }
 
-  _getSchedule(){
+  _setSchedule(){
     this.setSchedule(ScheduleStore.getSchedule());
   }
 

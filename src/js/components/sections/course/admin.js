@@ -42,12 +42,12 @@ const COURSE_NAME_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getCourseName'
+    listenerFct: '_setCourseName'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getCourseName'
+    listenerFct: '_setCourseName'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -65,12 +65,12 @@ const TEACHER_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getTeacher'
+    listenerFct: '_setTeacher'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getTeacher'
+    listenerFct: '_setTeacher'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -83,12 +83,12 @@ const COURSE_DESCRIPTION_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getCourseDescription'
+    listenerFct: '_setCourseDescription'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getCourseDescription'
+    listenerFct: '_setCourseDescription'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -106,12 +106,12 @@ const COURSE_TYPE_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getCourseType'
+    listenerFct: '_setCourseType'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getCourseType'
+    listenerFct: '_setCourseType'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -129,12 +129,12 @@ const SCHEDULE_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getSchedule'
+    listenerFct: '_setSchedule'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getSchedule'
+    listenerFct: '_setSchedule'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -152,12 +152,12 @@ const FREE_DAY_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
-    listenerFct: '_getFreeDay'
+    listenerFct: '_setFreeDay'
   },
   { 
     storeFctAdd:'addSavedListener',
     storeFctRemove:'removeSavedListener',
-    listenerFct: '_getFreeDay'
+    listenerFct: '_setFreeDay'
   },
   {
     storeFctAdd:'addDeletedListener',
@@ -256,7 +256,7 @@ export default class CourseAdmin extends React.Component {
     this._getCourse();
   }
 
-  _getCourseName(){
+  _setCourseName(){
     this.setCourse(CourseNameStore.getCourseName());
   }
 
@@ -299,10 +299,10 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedTeacher(){
-    this._getTeacher();
+    this._setTeacher();
   }
 
-  _getTeacher(){
+  _setTeacher(){
     this.setTeacher(TeacherStore.getTeacher());
   }
 
@@ -349,10 +349,10 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedCourseDescription(){
-    this._getCourseDescription();
+    this._setCourseDescription();
   }
 
-  _getCourseDescription(){
+  _setCourseDescription(){
     this.setCourseDescription(CourseDescriptionStore.getCourseDescription());
   }
 
@@ -394,10 +394,10 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedCourseType(){
-    this._getCourseType();
+    this._setCourseType();
   }
 
-  _getCourseType(){
+  _setCourseType(){
     this.setCourseType(CourseTypeStore.getCourseType());
   }
 
@@ -451,10 +451,10 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedSchedule(){
-    this._getSchedule();
+    this._setSchedule();
   }
 
-  _getSchedule(){
+  _setSchedule(){
     this.setSchedule(ScheduleStore.getSchedule());
   }
 
@@ -509,10 +509,10 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedFreeDay(){
-    this._getFreeDay();
+    this._setFreeDay();
   }
 
-  _getFreeDay(){
+  _setFreeDay(){
     this.setFreeDay(FreeDayStore.getFreeDay());
   }
 
