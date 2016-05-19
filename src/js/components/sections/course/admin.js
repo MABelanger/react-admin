@@ -44,6 +44,11 @@ const COURSE_NAME_LISTNER_FCT_NAMES = [
     storeFctRemove:'removeReadListener',
     listenerFct: '_getCourseName'
   },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: '_getCourseName'
+  },
   {
     storeFctAdd:'addDeletedListener',
     storeFctRemove:'removeDeletedListener',
@@ -62,6 +67,11 @@ const TEACHER_LISTNER_FCT_NAMES = [
     storeFctRemove:'removeReadListener',
     listenerFct: '_getTeacher'
   },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: '_getTeacher'
+  },
   {
     storeFctAdd:'addDeletedListener',
     storeFctRemove:'removeDeletedListener',
@@ -73,6 +83,11 @@ const COURSE_DESCRIPTION_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
+    listenerFct: '_getCourseDescription'
+  },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
     listenerFct: '_getCourseDescription'
   },
   {
@@ -93,6 +108,11 @@ const COURSE_TYPE_LISTNER_FCT_NAMES = [
     storeFctRemove:'removeReadListener',
     listenerFct: '_getCourseType'
   },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: '_getCourseType'
+  },
   {
     storeFctAdd:'addDeletedListener',
     storeFctRemove:'removeDeletedListener',
@@ -111,6 +131,11 @@ const SCHEDULE_LISTNER_FCT_NAMES = [
     storeFctRemove:'removeReadListener',
     listenerFct: '_getSchedule'
   },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: '_getSchedule'
+  },
   {
     storeFctAdd:'addDeletedListener',
     storeFctRemove:'removeDeletedListener',
@@ -127,6 +152,11 @@ const FREE_DAY_LISTNER_FCT_NAMES = [
   { 
     storeFctAdd:'addReadListener',
     storeFctRemove:'removeReadListener',
+    listenerFct: '_getFreeDay'
+  },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
     listenerFct: '_getFreeDay'
   },
   {

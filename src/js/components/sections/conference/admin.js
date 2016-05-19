@@ -23,6 +23,11 @@ const CONFERENCE_LISTNER_FCT_NAMES = [
     storeFctRemove:'removeReadListener',
     listenerFct: '_getConference'
   },
+  { 
+    storeFctAdd:'addSavedListener',
+    storeFctRemove:'removeSavedListener',
+    listenerFct: '_getConference'
+  },
   {
     storeFctAdd:'addDeletedListener',
     storeFctRemove:'removeDeletedListener',
