@@ -97,6 +97,7 @@ export default class ConferenceAdmin extends React.Component {
    * Conference
    */
   _deletedConference(){
+      this._setConferences();
       this._setConference();
   }
 
@@ -147,6 +148,7 @@ export default class ConferenceAdmin extends React.Component {
   }
 
   _deletedSchedule(){
+    this._setSchedules();
     this._setSchedule();
   }
 

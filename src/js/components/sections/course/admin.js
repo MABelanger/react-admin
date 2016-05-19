@@ -253,7 +253,8 @@ export default class CourseAdmin extends React.Component {
    */
 
   _deletedCourseName(){
-    this._getCourse();
+    this._setCourseNames();
+    this._setCourseName();
   }
 
   _setCourseName(){
@@ -299,6 +300,7 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedTeacher(){
+    this._setTeachers();
     this._setTeacher();
   }
 
@@ -394,6 +396,7 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedCourseType(){
+    this._setCourseTypes();
     this._setCourseType();
   }
 
@@ -451,6 +454,7 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedSchedule(){
+    this._setSchedules();
     this._setSchedule();
   }
 
@@ -509,6 +513,7 @@ export default class CourseAdmin extends React.Component {
   }
 
   _deletedFreeDay(){
+    this._setFreeDays();
     this._setFreeDay();
   }
 
