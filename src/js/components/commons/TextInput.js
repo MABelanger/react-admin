@@ -11,6 +11,12 @@ export default class TextInput extends React.Component {
 
   render() {
     var wrapperClass = 'form-group no-margin';
+    let type = "text";
+    // by default the type is text but overwrite type if is password
+    if(this.props.type == 'password'){
+      type = 'password';
+    }
+
     if (this.props.error && this.props.error.length > 0) {
       wrapperClass += " " + 'has-error';
     }
@@ -22,7 +28,8 @@ export default class TextInput extends React.Component {
           </label>
           <div className="col-sm-3">
             <div className="input">{this.props.error}</div>
-            <input type="text"
+            <input
+              type={type}
               name={this.props.name}
               className="form-control"
               placeholder={this.props.placeholder}

@@ -108,6 +108,7 @@ export default class Login extends React.Component {
                 name="password"
                 label="Mot de passe"
                 ref="password"
+                type="password"
                 error={sectionHelper.getError("password", this.state.errors)}
                 value={this.state.name}
                 changeValue={ (name, value) => { this.changeValue(name, value); } }
