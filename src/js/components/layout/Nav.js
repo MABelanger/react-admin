@@ -3,6 +3,9 @@
 // Vendor modules
 import React                          from "react";
 import { IndexLink, Link }            from "react-router";
+
+import UserStore                      from '../../stores/user/userStore';
+
 import './nav.scss';
 
 export default class Nav extends React.Component {
@@ -53,8 +56,8 @@ export default class Nav extends React.Component {
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li className={loginClass}>
-                {this.props.isLoggedIn ? (
-                  <Link to="/admin/logout" onClick={this.toggleCollapse.bind(this)}>DÉCONNECTION ({this.props.userName})</Link>
+                {UserStore.isLoggedIn() ? (
+                  <Link to="/admin/logout" onClick={this.toggleCollapse.bind(this)}>DÉCONNECTION ({UserStore.getUser()})</Link>
                 ) : (
                   <Link to="/admin/login" onClick={this.toggleCollapse.bind(this)}>CONNECTION</Link>
                 )}

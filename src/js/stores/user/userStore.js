@@ -17,7 +17,6 @@ class UserStoreClass extends EventEmitter {
   constructor() {
     super();
     this.data = null;
-    this.user = null;
     this.token = null;
   }
 
@@ -36,7 +35,6 @@ class UserStoreClass extends EventEmitter {
   doneUser(data){
     this.data = data;
     this.token = data.id_token;
-    this.user = jwt_decode(data.id_token);
 
     // save token into local storage
     localStorage.setItem('token', this.token)
@@ -48,7 +46,6 @@ class UserStoreClass extends EventEmitter {
 
   logout(){
     this.data = null;
-    this.user = null;
     this.token = null;
     // remove token into local storage
     localStorage.removeItem('token');
@@ -60,7 +57,10 @@ class UserStoreClass extends EventEmitter {
   }
 
   getUser(){
-    return this.user;
+    let token = localStorage.getItem('token');
+    if(!!token){
+      return jwt_decode(token).username;
+    }    
   }
 
   _getToken(){

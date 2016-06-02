@@ -19,13 +19,12 @@ import * as Configs                    from "./configs/configs";
 import UserStore                      from './stores/user/userStore';
 
 const APP = document.getElementById('app');
-let appHistory = Configs.getHistory();
+let history = Configs.getHistory();
 
 
 //let myHistory = useRouterHistory(createHashHistory)({ basename: '/' });
 
 function requireAuth(nextState, replace) {
-  console.log('UserStore.isLoggedIn()', UserStore.isLoggedIn())
   if (!UserStore.isLoggedIn()) {
     replace({
       pathname: '/admin/login',
@@ -34,8 +33,16 @@ function requireAuth(nextState, replace) {
   }
 }
 
+function onRouterUpdate(){
+  window.scrollTo(0, 0)
+}
+
 ReactDOM.render(
-  <Router history={appHistory}>
+  <Router 
+    history={history}
+    onUpdate={() => {onRouterUpdate();} }
+  >
+    <Redirect from="/" to="/admin/courses" />
     <Route  path="/"
             component={Layout}>
 
